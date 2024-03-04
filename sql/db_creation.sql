@@ -16,11 +16,11 @@ CREATE SCHEMA IF NOT EXISTS `PA_TP` DEFAULT CHARACTER SET utf8 ;
 USE `PA_TP` ;
 
 -- -----------------------------------------------------
--- Table `PA_TP`.`Role`
+-- Table `PA_TP`.`Roles`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `PA_TP`.`Role` ;
+DROP TABLE IF EXISTS `PA_TP`.`Roles` ;
 
-CREATE TABLE IF NOT EXISTS `PA_TP`.`Role` (
+CREATE TABLE IF NOT EXISTS `PA_TP`.`Roles` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `role` VARCHAR(128) NOT NULL,
   PRIMARY KEY (`id`))
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS `PA_TP`.`Users` (
   `username` VARCHAR(128) NOT NULL,
   `password` VARCHAR(256) NOT NULL,
   `email` VARCHAR(256) NOT NULL,
-  `status` TINYINT NOT NULL DEFAULT 0,
+  `active` TINYINT NOT NULL DEFAULT 0,
   `deleted` TINYINT NOT NULL DEFAULT 0,
   `role_id` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `PA_TP`.`Users` (
   UNIQUE INDEX `username_UNIQUE` (`username` ASC) VISIBLE,
   CONSTRAINT `fk_Users_Role1`
     FOREIGN KEY (`role_id`)
-    REFERENCES `PA_TP`.`Role` (`id`)
+    REFERENCES `PA_TP`.`Roles` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
@@ -328,7 +328,7 @@ CREATE TABLE IF NOT EXISTS `PA_TP`.`RoleNotifications` (
   INDEX `fk_RoleNotifications_Role1_idx` (`role_id` ASC) VISIBLE,
   CONSTRAINT `fk_RoleNotifications_Role1`
     FOREIGN KEY (`role_id`)
-    REFERENCES `PA_TP`.`Role` (`id`)
+    REFERENCES `PA_TP`.`Roles` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
