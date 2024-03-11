@@ -1,0 +1,119 @@
+**** LOGIN ****
+1. Iniciar Sessao
+2. Registar Utilizador
+0. Sair
+
+Escolha:
+
+
+
+
+**** GESTORIA ****
+1. Listar Utilizadores
+2. Listar Pedidos De Revisao
+3. Terminar Sessao
+
+Escolha: 
+
+
+
+
+**** UTILIZADORES ****
+1. Ordenar Por Nome (Ascendente)
+2. Ordenar Por Nome (Descendente)
+3. Pesquisar Por Nome
+4. Pesquisar Por Nome De Utilizador
+5. Pesquisar Por Tipo
+6. Proxima Pagina
+7. Pagina Anterior
+8. Voltar
+
+
+Escolha: 
+
+
+
+
+**** REVISOES ****
+1. Ordenar Por Data De Criacao Mais Recente
+2. Ordenar Por Data De Cricao Mais Antiga
+3. Ordenar Por Titulo (Ascendente)
+4. Ordenar Por Titulo (Descendente)
+5. Ordenar Por Autor (Ascendente)
+6. Ordenar Por Autor (Descendente)
+7. Pesquisar Por ID
+8. Pesquisar Por Estado
+9. Pesquisar Por Autor
+10. Pesquisar Por Data
+11. Proxima Pagina
+12. Pagina Anterior
+13. Listar Processos De Revisao Por Titulo
+14. Voltar
+
+Escolha: 
+
+
+
+
+**** AUTORIA ****
+1. Listar Pedidos De Revisao
+2. Listar Obras
+3. Terminar Sessao
+
+Escolha: 
+
+
+
+
+**** PEDIDOS DE REVISAO ****
+1. Ordenar Por Data De Criacao (Recente)
+2. Ordenar Por Data De Criacao (Antigo)
+3. Ordenar Por Numero De Serie (Ascendente)
+4. Ordenar Por Numero De Serie (Descendente)
+5. Pesquisar Por Data De Criacao
+6. Pesquisar Por Titulo
+7. Pesquisar Por Estado
+8. Proxima Pagina
+9. Pagina Anterior
+10. Voltar
+
+
+
+
+
+**** OBRAS ****
+1. Ordenar Por Data De Submissao (Recente)
+2. Ordenar Por Data De Submissao (Antigo)
+3. Ordenar Por Titulo (Ascendente)
+4. Ordenar Por Titulo (Descendente)
+5. Pesquisar Por Data De Registo
+6. Pesquisar Por Matricula
+7. Proxima Pagina
+8. Pagina Anterior
+9. Voltar
+
+Escolha:  
+
+
+**** REVISOES ****
+1. Listar Pedidos De Revisao
+2. Voltar
+
+Escolha: 
+
+
+
+
+**** PEDIDOS DE REVISAO ****
+1. Ordenar Por Data De Criacao (Recente)
+2. Ordenar Por Data De Criacao (Antigo)
+3. Ordenar Por Titulo (Ascendente)
+4. Ordenar Por Titulo (Descendente)
+5. Pesquisar Por Data De Criacao
+6. Pesquisar Por Titulo
+7. Pesquisar Por Estado
+8. Proxima Pagina
+9. Pagina Anterior
+10. Voltar
+
+Escolha: 
