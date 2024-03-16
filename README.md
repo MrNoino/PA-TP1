@@ -20,8 +20,8 @@
 
 ## Setup
 
-1. Copiar/Clonar este repositório na pasta htdocs do Apache;
-2. Executar os ficheiros bd_creation.sql, procedures.sql, inserts.sql e views.sql localizados na pasta sql no Servidor MySQL;
+1. Copiar/Clonar este repositório;
+2. Executar os ficheiros bd_creation.sql, procedures.sql, views.sql e inserts.sql localizados na pasta sql no Servidor MySQL;
 3. Rodar o projeto via consola.
 
 **Nuno Lopes | Afonso Fonseca**
