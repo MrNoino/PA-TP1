@@ -49,7 +49,7 @@ public class DbWrapper {
             this.connection.close();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            
         }
         return false;
     }
@@ -69,13 +69,13 @@ public class DbWrapper {
                 
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            
         }
         
         try {
             statement.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            
         }
         
         this.closeConnection();

@@ -48,3 +48,8 @@ SELECT users.id as "id",
 FROM users
 INNER JOIN authors
 ON authors.user_id = users.id;
+
+DROP VIEW IF EXISTS `PA_TP`.`total_managers` ;
+CREATE VIEW total_managers AS
+SELECT COUNT(*)
+FROM managers;
