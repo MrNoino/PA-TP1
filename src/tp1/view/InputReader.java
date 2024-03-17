@@ -4,22 +4,32 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
- *
- * @author Nuno
+ * Class to read input from user's keyboard
  */
 public class InputReader {
     
     private static Scanner scanner;
     
+    /**
+     * Class construtor that initialize the scanner
+     */
     public static void openScanner(){
         scanner = new Scanner(System.in);
     }
     
+    /**
+     * Close the scanner
+     */
     public static void closeScanner(){
         scanner.close();
         scanner = null;
     }
     
+    /**
+     * Always reading until an integer is given by the user's keyboard
+     * @param msg message to be displayed before reading the user's keyboard
+     * @return the integer given by the user's keyboard
+     */
     public static int readInt(String msg){
         int number = 0;
         boolean validNumber;
@@ -41,6 +51,14 @@ public class InputReader {
         return number;
     }
     
+    /**
+     * Always reading until an integer is given by the user's keyboard and respect the interval given
+     * @param msg message to be displayed before reading the user's keyboard
+     * @param invalidInputMsg message to be display if the interval is not respected
+     * @param min minimum value the integer is accepted
+     * @param max maximum value the integer is accepted
+     * @return the integer given by the user's keyboard
+     */
     public static int readInt(String msg, String invalidInputMsg, int min, int max){
         int number = 0;
         boolean validNumber;
@@ -65,6 +83,11 @@ public class InputReader {
         return number;
     }
     
+    /**
+     * Always reading until an long is given by the user's keyboard
+     * @param msg message to be displayed before reading the user's keyboard
+     * @return the long given by the user's keyboard
+     */
     public static long readLong(String msg){
         long number = 0;
         boolean validNumber;
@@ -85,6 +108,11 @@ public class InputReader {
         return number; 
     }
     
+    /**
+     * Always reading until an float is given by the user's keyboard
+     * @param msg message to be displayed before reading the user's keyboard
+     * @return the float given by the user's keyboard
+     */
     public static float readFloat(String msg){
         float number = 0;
         boolean validNumber;
@@ -107,11 +135,23 @@ public class InputReader {
         return number;
     }
     
+    /**
+     * Reads a string from user's keyboard
+     * @param msg message to be displayed before reading the user's keyboard
+     * @return the string given by the user's keyboard
+     */
     public static String readString(String msg){
         System.out.print(msg);
         return scanner.nextLine();
     }
     
+    /**
+     * Always reading until a string matching the expression is given by the user's keyboard
+     * @param msg message to be displayed before reading the user's keyboard
+     * @param invalidInputMsg message to be displayed if the string doesn't match the expression
+     * @param expression regular expression that string has to match
+     * @return the string given by the user's keyboard
+     */
     public static String readString(String msg, String invalidInputMsg, String expression){
         String str = "";
         boolean validStr = false;

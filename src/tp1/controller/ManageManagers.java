@@ -7,17 +7,23 @@ import tp1.model.DbWrapper;
 import tp1.model.Manager;
 
 /**
- *
- * @author lighttigerXIV
+ * Class to manage every operations about the managers
  */
 public class ManageManagers {
 
     private ArrayList<Manager> managers;
 
+    /**
+     * Class construtor initializing the ArrayList
+     */
     public ManageManagers() {
         managers = new ArrayList<Manager>();
     }
     
+    /**
+     * Connects to the database and retrieve the number of managers
+     * @return the number of managers in the database
+     */
     public int getTotalManagers(){
         
         DbWrapper dbWrapper = new DbWrapper();
@@ -38,6 +44,7 @@ public class ManageManagers {
 
     /**
      *
+     * 
      * @return Returns a list of managers
      */
     public ArrayList<Manager> getManagers() {
