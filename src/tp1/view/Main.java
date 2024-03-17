@@ -19,7 +19,7 @@ public class Main {
         
         do {
             
-            option = InputReader.readInt("**** LOGIN ****\n1. Iniciar Sessão\n2. Registar Utilizador\n3. Alterar parâmetros de acesso à base de dados\n0. Sair\n\nEscolha: ","\nOpção inválida, tente novamente\n", 0, 2);    
+            option = InputReader.readInt(Menus.LOGIN,"\nOpção inválida, tente novamente\n", 0, 2);    
             System.out.println();
             
             switch (option) {
@@ -54,6 +54,9 @@ public class Main {
                     
                     if(id > 0)
                         System.out.println("ID logado: " + id + "\n");
+                    
+                    // se for manager
+                    Menus.handleManager();
                     
                     
                 }
