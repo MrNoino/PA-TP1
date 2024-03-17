@@ -3,6 +3,9 @@ package tp1.controller;
 import java.util.ArrayList;
 import tp1.model.Author;
 
+/**
+ * A class to manage authors on the database
+ */
 public class ManageAuthors {
 
     private ArrayList<Author> authors;

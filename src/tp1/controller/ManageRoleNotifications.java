@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import tp1.model.RoleNotification;
 
 /**
- *
+ * A class to manage role notifications on the database
  */
 public class ManageRoleNotifications {
 

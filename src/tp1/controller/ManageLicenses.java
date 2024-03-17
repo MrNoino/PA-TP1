@@ -3,6 +3,9 @@ package tp1.controller;
 import java.util.ArrayList;
 import tp1.model.License;
 
+/**
+ * A class to manage licenses on the database
+ */
 public class ManageLicenses {
 
     private ArrayList<License> licenses;

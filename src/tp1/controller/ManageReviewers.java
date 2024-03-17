@@ -3,6 +3,9 @@ package tp1.controller;
 import java.util.ArrayList;
 import tp1.model.Reviewer;
 
+/**
+ * A class to manage reviewers on the database
+ */
 public class ManageReviewers {
 
     private ArrayList<Reviewer> reviewers;

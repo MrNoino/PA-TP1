@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import tp1.model.Review;
 
 /**
- *
+ * A class to manage reviews on the database
  */
 public class ManageReviews {
 
