@@ -97,7 +97,7 @@ DROP PROCEDURE IF EXISTS `PA_TP`.`login` ;
 DELIMITER $$
 CREATE PROCEDURE login(IN a_username VARCHAR(128), IN a_password VARCHAR(256)) 
 BEGIN
-    SELECT id
+    SELECT id, name, username, password, email, active, deleted, role_id
 	FROM users
 	WHERE username = a_username and password = MD5(a_password) and active = 1 and deleted = 0;
 END $$
