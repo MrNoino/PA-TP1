@@ -1,6 +1,8 @@
 package tp1.view;
 
+import tp1.controller.ManageAuthors;
 import tp1.controller.ManageManagers;
+import tp1.controller.ManageReviewers;
 import tp1.controller.ManageUsers;
 import tp1.model.DbWrapper;
 import tp1.model.User;
@@ -74,13 +76,12 @@ public class Main {
                                                         + "0. Voltar\n\n"
                                                         + "Escolha: ", 0, 2);
                     System.out.println();
-                    
                     switch (subOption) {
                         case 1:
-                            
+                            ManageAuthors manageAuthors = new ManageAuthors();
                             break;
                         case 2:
-                            
+                            ManageReviewers manageReviewers = new ManageReviewers();
                             break;
                         case 0:
                             break;
