@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class InputReader {
     
     private static Scanner scanner;
-    private static final String invalidInputMsg = "\nOpção inválida, tente novamente\n";
+    private static final String INVALID_MESSAGE = "\nOpção inválida, tente novamente\n";
     
     /**
      * Class construtor that initialize the scanner
@@ -92,7 +92,7 @@ public class InputReader {
      * @return the integer given by the user's keyboard
      */
     public static int readInt(String msg, int min, int max){
-        return InputReader.readInt(msg, InputReader.invalidInputMsg, min, max);
+        return InputReader.readInt(msg, InputReader.INVALID_MESSAGE, min, max);
     }
     
     /**
