@@ -9,6 +9,7 @@ import java.util.Scanner;
 public class InputReader {
     
     private static Scanner scanner;
+    private static final String invalidInputMsg = "\nOpção inválida, tente novamente\n";
     
     /**
      * Class construtor that initialize the scanner
@@ -81,6 +82,17 @@ public class InputReader {
         }while(!validNumber);
         
         return number;
+    }
+    
+    /**
+     * Always reading until an integer is given by the user's keyboard and respect the interval given
+     * @param msg message to be displayed before reading the user's keyboard
+     * @param min minimum value the integer is accepted
+     * @param max maximum value the integer is accepted
+     * @return the integer given by the user's keyboard
+     */
+    public static int readInt(String msg, int min, int max){
+        return InputReader.readInt(msg, InputReader.invalidInputMsg, min, max);
     }
     
     /**

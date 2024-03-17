@@ -23,20 +23,27 @@ public class ManageUsers {
      * Checks if the login credentials are correct
      * @return The id of the user
      */
-    public long login(String username, String password) {
+    public User login(String username, String password) {
 
         DbWrapper dbWrapper = new DbWrapper();
         ResultSet resultSet = dbWrapper.query("CALL login(?, ?);", new Object[]{username, password});
         
         try {
             if(resultSet == null || !resultSet.next()){
-                System.out.println("Credenciais inválidas");
-                return -1;
+                System.out.println("Credênciais inválidas");
+                return null;
             }
-            return resultSet.getInt("id");
+            return new User(resultSet.getLong("id"), 
+                            resultSet.getString("name"), 
+                            resultSet.getString("username"), 
+                            resultSet.getString("email"),
+                            resultSet.getBoolean("active"),
+                            resultSet.getBoolean("deleted"),
+                            resultSet.getInt("role_id"));
+            
         } catch (SQLException e) {
             e.printStackTrace();
-            return -1;
+            return null;
         } finally{
             dbWrapper.closeConnection();
         }
