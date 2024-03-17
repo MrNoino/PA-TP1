@@ -5,7 +5,6 @@ import tp1.model.RoleNotification;
 
 /**
  *
- * @author lighttigerXIV
  */
 public class ManageRoleNotifications {
 

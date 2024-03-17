@@ -95,11 +95,11 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `PA_TP`.`login` ;
 DELIMITER $$
-CREATE PROCEDURE login(IN a_username VARCHAR(128)) 
+CREATE PROCEDURE login(IN a_username VARCHAR(128), IN a_password VARCHAR(256)) 
 BEGIN
-    SELECT password
+    SELECT id
 	FROM users
-	WHERE username = a_username and active = 1 and deleted = 0;
+	WHERE username = a_username and password = MD5(a_password) and active = 1 and deleted = 0;
 END $$
 DELIMITER ;
 
@@ -111,7 +111,7 @@ CREATE PROCEDURE insert_user(IN a_name VARCHAR(128), IN a_username VARCHAR(100),
 BEGIN
 	INSERT INTO users (name, username, password, email, active, role_id)
     VALUES
-    (a_name, a_username, a_password, a_email, a_active, a_role_id);
+    (a_name, a_username, MD5(a_password), a_email, a_active, a_role_id);
 END $$
 DELIMITER ;
 

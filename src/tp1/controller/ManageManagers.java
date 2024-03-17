@@ -6,9 +6,6 @@ import java.util.ArrayList;
 import tp1.model.DbWrapper;
 import tp1.model.Manager;
 
-/**
- * Class to manage every operations about the managers
- */
 public class ManageManagers {
 
     private ArrayList<Manager> managers;
@@ -31,14 +28,15 @@ public class ManageManagers {
         ResultSet resultSet = dbWrapper.query("SELECT * FROM total_managers;");
         
         try {
-            if(resultSet == null)
+            if(resultSet == null || !resultSet.next())
                 return -1;
 
-            resultSet.next();
             return resultSet.getInt("total_managers");
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
+        } finally{
+            dbWrapper.closeConnection();
         }
     }
 

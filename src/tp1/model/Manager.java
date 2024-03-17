@@ -2,7 +2,6 @@ package tp1.model;
 
 /**
  *
- * @author lighttigerXIV
  */
 public class Manager {
     long userId;

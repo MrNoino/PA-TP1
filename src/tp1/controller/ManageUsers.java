@@ -1,11 +1,13 @@
 package tp1.controller;
 
 import java.util.ArrayList;
+import tp1.model.DbWrapper;
 import tp1.model.User;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
+        
 /**
- *
- * @author Nuno
+ * 
  */
 public class ManageUsers {
 
@@ -19,12 +21,25 @@ public class ManageUsers {
 
     /**
      * Checks if the login credentials are correct
-     * @return Confirms if the login was successful
+     * @return The id of the user
      */
-    public int Login() {
+    public long login(String username, String password) {
 
-        return 0;
-
+        DbWrapper dbWrapper = new DbWrapper();
+        ResultSet resultSet = dbWrapper.query("CALL login(?, ?);", new Object[]{username, password});
+        
+        try {
+            if(resultSet == null || !resultSet.next()){
+                System.out.println("Credenciais inválidas");
+                return -1;
+            }
+            return resultSet.getInt("id");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
+        } finally{
+            dbWrapper.closeConnection();
+        }
     }
 
     /**

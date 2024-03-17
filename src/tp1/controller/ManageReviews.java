@@ -5,7 +5,6 @@ import tp1.model.Review;
 
 /**
  *
- * @author lighttigerXIV
  */
 public class ManageReviews {
 

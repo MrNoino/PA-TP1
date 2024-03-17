@@ -173,7 +173,8 @@ public class DbWrapper {
      */
     public boolean closeConnection(){
         try {
-            this.connection.close();
+            if(this.connection != null)
+                this.connection.close();
             return true;
         } catch (SQLException e) {
             
@@ -187,7 +188,8 @@ public class DbWrapper {
      * @return the data obtained by the query
      */
     public ResultSet query(String sqlQuery){
-        this.getConnection();
+        if(!this.getConnection())
+            return null;
         
         Statement statement = null;
         try {
@@ -205,7 +207,8 @@ public class DbWrapper {
      * @return the data obtained by the query
      */
     public ResultSet query(String sqlQuery, Object[] values){
-        this.getConnection();
+        if(!this.getConnection())
+            return null;
         
         PreparedStatement preparedStatement = null;
         try {
@@ -226,7 +229,8 @@ public class DbWrapper {
      * @return the number of rows affected by the query
      */
     public int manipulate(String sqlQuery, Object[] values){
-        this.getConnection();
+        if(!this.getConnection())
+            return -1;
         
         PreparedStatement preparedStatement = null;
         int rowCount = 0;

@@ -1,10 +1,15 @@
 package tp1.view;
 
+import tp1.controller.ManageManagers;
+import tp1.controller.ManageUsers;
+
 /**
  *
  * @author Nuno
  */
-public class TP1 {
+public class Main {
+    
+    private static long loggedUserId;
 
     public static void main(String[] args) {
         
@@ -44,6 +49,12 @@ public class TP1 {
                     System.out.println("Nr. total de gestores: " + manageManagers.getTotalManagers());
                     */
                     
+                    ManageUsers manageUsers = new ManageUsers();
+                    long id = manageUsers.login("nuno", "pass");
+                    
+                    if(id > 0)
+                        System.out.println("ID logado: " + id + "\n");
+                    
                     
                 }
                 
@@ -76,6 +87,14 @@ public class TP1 {
         
         System.out.println("Programa Encerrado");
         
+    }
+    
+    public static long getLoggedUserId(){
+        return Main.loggedUserId;
+    }
+    
+    public static void setLoggedUserId(long loggedUserId){
+        Main.loggedUserId = loggedUserId;
     }
     
 }

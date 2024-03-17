@@ -4,7 +4,6 @@ import java.time.LocalDate;
 
 /**
  *
- * @author lighttigerXIV
  */
 public class Note {
     long id;

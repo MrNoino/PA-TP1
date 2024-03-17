@@ -5,7 +5,6 @@ import tp1.model.Role;
 
 /**
  *
- * @author lighttigerXIV
  */
 public class ManageRoles {
 
