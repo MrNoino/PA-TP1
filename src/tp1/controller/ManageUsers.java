@@ -6,9 +6,7 @@ import tp1.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
         
-/**
- * 
- */
+
 public class ManageUsers {
 
     private ArrayList<User> users;

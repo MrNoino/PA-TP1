@@ -3,6 +3,9 @@ package tp1.controller;
 import java.util.ArrayList;
 import tp1.model.LiteracyStyle;
 
+/**
+ * A class to manage literacy styles on the database
+ */
 public class ManageLiteracyStyles {
 
     private ArrayList<LiteracyStyle> literacyStyles;

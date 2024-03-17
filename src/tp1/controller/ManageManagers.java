@@ -6,12 +6,15 @@ import java.util.ArrayList;
 import tp1.model.DbWrapper;
 import tp1.model.Manager;
 
+/**
+ * A class to manage managers on the database
+ */
 public class ManageManagers {
 
     private ArrayList<Manager> managers;
 
     /**
-     * Class construtor initializing the ArrayList
+     * Class constructor initializing the ArrayList
      */
     public ManageManagers() {
         managers = new ArrayList<Manager>();

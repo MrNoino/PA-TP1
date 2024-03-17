@@ -3,6 +3,9 @@ package tp1.controller;
 import java.util.ArrayList;
 import tp1.model.Log;
 
+/**
+ * A class to manage logs on the database
+ */
 public class ManageLogs {
 
     private ArrayList<Log> logs;

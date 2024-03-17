@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import tp1.model.Role;
 
 /**
- *
+ * A class to manage roles on the database
  */
 public class ManageRoles {
 
