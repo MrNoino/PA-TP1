@@ -39,7 +39,7 @@ public class ManageManagers {
             e.printStackTrace();
             return -1;
         } finally{
-            dbWrapper.closeConnection();
+            dbWrapper.disconnect();
         }
     }
 

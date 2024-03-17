@@ -2,6 +2,7 @@ package tp1.controller;
 
 import java.util.ArrayList;
 import tp1.model.Author;
+import tp1.model.DbWrapper;
 
 /**
  * A class to manage authors on the database
@@ -29,7 +30,16 @@ public class ManageAuthors {
      * @return Confirms if an author was added successfully
      */
     public boolean addAuthor(Author author) {
-        return true;
+        DbWrapper dbWrapper = new DbWrapper();
+        return dbWrapper.manipulate("CALL insert_author(?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{author.getName(),
+                                                                                                        author.getUsername(),
+                                                                                                        author.getPassword(),
+                                                                                                        author.getEmail(),
+                                                                                                        author.getRoleId(),
+                                                                                                        author.getNif(),
+                                                                                                        author.getPhone(),
+                                                                                                        author.getAddress(),
+                                                                                                        author.getLiteraryStyleId()}) > 0;
     }
 
     /**

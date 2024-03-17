@@ -6,17 +6,17 @@ import java.time.LocalDate;
  *
  */
 public class Review {
-    long id;
-    String serialNumber;
-    LocalDate completionDate;
-    int elapsedTime;
-    String observations;
-    float cost;
-    int bookId;
-    int authorId;
-    int managerId;
-    int reviewerId;
-    String status;
+    private long id;
+    private String serialNumber;
+    private LocalDate completionDate;
+    private int elapsedTime;
+    private String observations;
+    private float cost;
+    private int bookId;
+    private int authorId;
+    private int managerId;
+    private int reviewerId;
+    private String status;
 
     public Review(long aId, String aSerialNumber, LocalDate aCompletionDate, int aElapsedTime, String aObservations, float aCost, int aBookId, int aAuthorId, int aManagerId, int aReviewerId, String aStatus) {
         this.id = aId;

@@ -6,11 +6,11 @@ import java.time.LocalDate;
  *
  */
 public class RoleNotification {
-    long id;
-    boolean read;
-    String content;
-    LocalDate datetime;
-    int roleId;
+    private long id;
+    private boolean read;
+    private String content;
+    private LocalDate datetime;
+    private int roleId;
 
     public RoleNotification(long aId, boolean aRead, String aContent, LocalDate aDatetime, int aRoleId) {
         this.id = aId;

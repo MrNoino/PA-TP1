@@ -7,11 +7,11 @@ import java.time.LocalDate;
  */
 public class Notification {
 
-    long id;
-    long userId;
-    boolean read;
-    String content;
-    LocalDate datetime;
+    private long id;
+    private long userId;
+    private boolean read;
+    private String content;
+    private LocalDate datetime;
 
     public Notification(long aId, long aUserId, boolean aRead, String aContent, LocalDate aDatetime) {
         this.id = aId;

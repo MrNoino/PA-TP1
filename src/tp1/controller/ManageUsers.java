@@ -43,7 +43,7 @@ public class ManageUsers {
             e.printStackTrace();
             return null;
         } finally{
-            dbWrapper.closeConnection();
+            dbWrapper.disconnect();
         }
     }
 

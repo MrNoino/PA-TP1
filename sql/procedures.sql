@@ -93,6 +93,22 @@ BEGIN
 END $$
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `PA_TP`.`exists_nif` ;
+DELIMITER $$
+CREATE PROCEDURE exists_nif(IN a_nif VARCHAR(9)) 
+BEGIN
+	SELECT
+    (SELECT COUNT(authors.nif)
+	FROM authors
+	WHERE authors.nif = a_nif) 
+    + 
+    (SELECT COUNT(reviewers.nif)
+	FROM reviewers
+	WHERE reviewers.nif = a_nif) 
+    as "exists";
+END $$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `PA_TP`.`login` ;
 DELIMITER $$
 CREATE PROCEDURE login(IN a_username VARCHAR(128), IN a_password VARCHAR(256)) 

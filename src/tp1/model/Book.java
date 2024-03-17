@@ -6,18 +6,18 @@ import java.time.LocalDate;
  *
  */
 public class Book {
-    long id;
-    String title;
-    String subtitle;
-    int pages;
-    int words;
-    String isbn;
-    String edition;
-    LocalDate submissionDate;
-    LocalDate approvalDate;
-    int literacyStyleId;
-    String publicationType;
-    int authorId;
+    private long id;
+    private String title;
+    private String subtitle;
+    private int pages;
+    private int words;
+    private String isbn;
+    private String edition;
+    private LocalDate submissionDate;
+    private LocalDate approvalDate;
+    private int literacyStyleId;
+    private String publicationType;
+    private int authorId;
 
     public Book(long aId, String aTitle, String aSubtitle, int aPages, int aWords, String aIsbn, String aEdition, LocalDate aSubmissionDate, LocalDate aApprovalDate, int aLiteracyStyleId, String aPublicationType, int aAuthorId) {
         this.id = aId;

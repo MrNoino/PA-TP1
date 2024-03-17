@@ -1,6 +1,7 @@
 package tp1.controller;
 
 import java.util.ArrayList;
+import tp1.model.DbWrapper;
 import tp1.model.Reviewer;
 
 /**
@@ -23,13 +24,23 @@ public class ManageReviewers {
     }
 
     /**
-     * Adds a reviewer
+     * Insert a reviewer in the databsae
      *
-     * @param reviewer The reviewer to add to the list
-     * @return Confirms if a reviewer was added successfully
+     * @param reviewer The reviewer to insert
+     * @return Confirms if a reviewer was inserted successfully
      */
-    public boolean addReviewer(Reviewer reviewer) {
-        return true;
+    public boolean insertReviewer(Reviewer reviewer) {
+        DbWrapper dbWrapper = new DbWrapper();
+        return dbWrapper.manipulate("CALL insert_reviewer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{reviewer.getName(),
+                                                                                                        reviewer.getUsername(),
+                                                                                                        reviewer.getPassword(),
+                                                                                                        reviewer.getEmail(),
+                                                                                                        reviewer.getRoleId(),
+                                                                                                        reviewer.getNif(),
+                                                                                                        reviewer.getPhone(),
+                                                                                                        reviewer.getAddress(),
+                                                                                                        reviewer.getGraduation(),
+                                                                                                        reviewer.getSpecialization()}) > 0;
     }
 
     /**

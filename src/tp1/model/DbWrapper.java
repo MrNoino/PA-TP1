@@ -151,7 +151,7 @@ public class DbWrapper {
      * Connect to the database with the attributes assigned
      * @return Confirms if the connection was successfully 
      */
-    public boolean getConnection(){
+    public boolean connect(){
         
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -171,7 +171,7 @@ public class DbWrapper {
      * Close the connection with the database
      * @return Confirms if the close occurs with no problems
      */
-    public boolean closeConnection(){
+    public boolean disconnect(){
         try {
             if(this.connection != null)
                 this.connection.close();
@@ -188,7 +188,7 @@ public class DbWrapper {
      * @return the data obtained by the query
      */
     public ResultSet query(String sqlQuery){
-        if(!this.getConnection())
+        if(!this.connect())
             return null;
         
         Statement statement = null;
@@ -207,7 +207,7 @@ public class DbWrapper {
      * @return the data obtained by the query
      */
     public ResultSet query(String sqlQuery, Object[] values){
-        if(!this.getConnection())
+        if(!this.connect())
             return null;
         
         PreparedStatement preparedStatement = null;
@@ -229,7 +229,7 @@ public class DbWrapper {
      * @return the number of rows affected by the query
      */
     public int manipulate(String sqlQuery, Object[] values){
-        if(!this.getConnection())
+        if(!this.connect())
             return -1;
         
         PreparedStatement preparedStatement = null;
@@ -247,7 +247,7 @@ public class DbWrapper {
                 try {
                     preparedStatement.close();
                 } catch (SQLException e) {}
-            this.closeConnection();
+            this.disconnect();
         }
         return rowCount;
     } 

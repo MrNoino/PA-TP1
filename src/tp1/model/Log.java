@@ -6,9 +6,9 @@ import java.time.LocalDate;
  *
  */
 public class Log {
-    int userId;
-    LocalDate datetime;
-    String action;
+    private int userId;
+    private LocalDate datetime;
+    private String action;
 
     public Log(int aUserId, LocalDate aDatetime, String aAction) {
         this.userId = aUserId;

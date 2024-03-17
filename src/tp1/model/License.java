@@ -6,10 +6,10 @@ import java.time.LocalDate;
  *
  */
 public class License {
-    int id;
-    String designation;
-    LocalDate expireDate;
-    int quantity;
+    private int id;
+    private String designation;
+    private LocalDate expireDate;
+    private int quantity;
 
     public License(int aId, String aDesignation, LocalDate aExpireDate, int aQuantity) {
         this.id = aId;

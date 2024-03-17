@@ -6,12 +6,12 @@ import java.time.LocalDate;
  *
  */
 public class Note {
-    long id;
-    String description;
-    int page;
-    int paragraph;
-    LocalDate date;
-    long reviewId;
+    private long id;
+    private String description;
+    private int page;
+    private int paragraph;
+    private LocalDate date;
+    private long reviewId;
 
     public Note(long aId, String aDescription, int aPage, int aParagraph, LocalDate aDate, long aReviewId) {
         this.id = aId;

@@ -84,6 +84,7 @@ CREATE TABLE IF NOT EXISTS `PA_TP`.`Reviewers` (
   `specialization` VARCHAR(128) NOT NULL,
   INDEX `fk_Reviewers_Users1_idx` (`user_id` ASC) VISIBLE,
   PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `nif_UNIQUE` (`nif` ASC) VISIBLE,
   CONSTRAINT `fk_Reviewers_Users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `PA_TP`.`Users` (`id`)
@@ -119,6 +120,7 @@ CREATE TABLE IF NOT EXISTS `PA_TP`.`Authors` (
   INDEX `fk_Authors_Users1_idx` (`user_id` ASC) VISIBLE,
   INDEX `fk_Authors_LiteracyStyles1_idx` (`literary_style_id` ASC) VISIBLE,
   PRIMARY KEY (`user_id`),
+  UNIQUE INDEX `nif_UNIQUE` (`nif` ASC) VISIBLE,
   CONSTRAINT `fk_Authors_Users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `PA_TP`.`Users` (`id`)

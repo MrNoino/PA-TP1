@@ -53,3 +53,8 @@ DROP VIEW IF EXISTS `PA_TP`.`total_managers` ;
 CREATE VIEW total_managers AS
 SELECT COUNT(*) as "total_managers"
 FROM managers;
+
+DROP VIEW IF EXISTS `PA_TP`.`get_literary_styles` ;
+CREATE VIEW get_literary_styles AS
+SELECT *
+FROM literarystyles;
