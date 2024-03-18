@@ -24,6 +24,7 @@ public class ManageUsers {
     public User login(String username, String password) {
 
         DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
         ResultSet resultSet = dbWrapper.query("CALL login(?, ?);", new Object[]{username, password});
         
         try {

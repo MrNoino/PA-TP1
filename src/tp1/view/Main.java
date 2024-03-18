@@ -45,6 +45,7 @@ public class Main {
                     username = InputReader.readString("Nome de utilizador: ");
                 
                 DbWrapper dbWrapper = new DbWrapper();
+                dbWrapper.connect();
                 ResultSet resultSet = dbWrapper.query("CALL exists_username(?);", new Object[]{username});
                 try {
                     if(resultSet != null && resultSet.next()){
@@ -129,6 +130,7 @@ public class Main {
                         String name = InputReader.readString("Nome: "),
                         username = InputReader.readString("Nome de utilizador: ");
                         DbWrapper dbWrapper = new DbWrapper();
+                        dbWrapper.connect();
                         ResultSet resultSet = dbWrapper.query("CALL exists_username(?);", new Object[]{username});
                         try {
                             if(resultSet == null || !resultSet.next())

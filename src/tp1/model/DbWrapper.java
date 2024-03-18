@@ -7,6 +7,8 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * A class to query and manipulate the database and to manipulate the database properties file
@@ -33,6 +35,11 @@ public class DbWrapper {
         this.database = database;
         this.user = user;
         this.password = password;
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
     
     /**
@@ -40,6 +47,11 @@ public class DbWrapper {
      * @param fileName name of the file
      */
     public DbWrapper(String fileName) {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         if(!this.loadProperties(fileName))
             this.setProperties("localhost", "3306", "pa_tp", "root", "root");
     }
@@ -48,6 +60,11 @@ public class DbWrapper {
      * Class construtor that assigns the attributes from a default file
      */
     public DbWrapper() {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         if(!this.loadProperties())
             this.setProperties("localhost", "3306", "pa_tp", "root", "root");
     }
@@ -99,6 +116,14 @@ public class DbWrapper {
         return this.loadProperties("db_properties.txt");
     } 
     
+    /**
+     * Assigns the  attributes
+     * @param host host of the database
+     * @param port port of the database
+     * @param database database name
+     * @param user user to access the database
+     * @param password password to access the database
+     */
     public void setProperties(String host, String port, String database, String user, String password){
         this.host = host;
         this.port = port;
@@ -152,19 +177,12 @@ public class DbWrapper {
      * @return Confirms if the connection was successfully 
      */
     public boolean connect(){
-        
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
             this.connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.user, this.password);
             return true;
-        } catch (ClassNotFoundException e) {
-            
-        } catch (SQLException e) {
-            
-        }
+        } catch (SQLException e) {}
         
         return false;
-        
     }
     
     /**
@@ -175,10 +193,9 @@ public class DbWrapper {
         try {
             if(this.connection != null)
                 this.connection.close();
+            this.connection = null;
             return true;
-        } catch (SQLException e) {
-            
-        }
+        } catch (SQLException e) {}
         return false;
     }
     
@@ -188,10 +205,10 @@ public class DbWrapper {
      * @return the data obtained by the query
      */
     public ResultSet query(String sqlQuery){
-        if(!this.connect())
+        if(this.connection == null)
             return null;
         
-        Statement statement = null;
+        Statement statement;
         try {
             statement = this.connection.createStatement();
             return statement.executeQuery(sqlQuery);
@@ -207,10 +224,10 @@ public class DbWrapper {
      * @return the data obtained by the query
      */
     public ResultSet query(String sqlQuery, Object[] values){
-        if(!this.connect())
+        if(this.connection == null)
             return null;
         
-        PreparedStatement preparedStatement = null;
+        PreparedStatement preparedStatement;
         try {
             preparedStatement = this.connection.prepareStatement(sqlQuery);
             for (int i = 0; i < values.length; i++) {

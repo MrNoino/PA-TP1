@@ -24,6 +24,7 @@ public class ManageLiteracyStyles {
      */
     public ArrayList<LiteraryStyle> getLiteracyStyles() {
         DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
         ResultSet resultSet = dbWrapper.query("SELECT * FROM get_literary_styles;");
         try {
             if(resultSet == null || !resultSet.next())
@@ -34,6 +35,8 @@ public class ManageLiteracyStyles {
         } catch (SQLException e) {
             e.printStackTrace();
             return null;
+        }finally{
+            dbWrapper.disconnect();
         }
         
         return this.literacyStyles;

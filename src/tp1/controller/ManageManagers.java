@@ -28,7 +28,7 @@ public class ManageManagers {
     public int getTotalManagers(){
         
         DbWrapper dbWrapper = new DbWrapper();
-                    
+        dbWrapper.connect();
         ResultSet resultSet = dbWrapper.query("SELECT * FROM total_managers;");
         
         try {
