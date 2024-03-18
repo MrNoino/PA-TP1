@@ -24,12 +24,12 @@ public class ManageAuthors {
     }
 
     /**
-     * Adds an author
+     * Inserts an author in the database
      *
-     * @param author The author to add to the list
-     * @return Confirms if an author was added successfully
+     * @param author The author to insert
+     * @return Confirms if an author was inserted successfully
      */
-    public boolean addAuthor(Author author) {
+    public boolean insertAuthor(Author author) {
         DbWrapper dbWrapper = new DbWrapper();
         return dbWrapper.manipulate("CALL insert_author(?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{author.getName(),
                                                                                                         author.getUsername(),

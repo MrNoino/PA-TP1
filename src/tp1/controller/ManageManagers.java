@@ -3,6 +3,7 @@ package tp1.controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import tp1.model.Author;
 import tp1.model.DbWrapper;
 import tp1.model.Manager;
 
@@ -53,13 +54,18 @@ public class ManageManagers {
     }
 
     /**
-     * Adds a manager
+     * Inserts a manager in the database
      *
-     * @param manager The manager to add to the list
-     * @return Confirms if a manager was added successfully
+     * @param manager The manager to insert
+     * @return Confirms if a manager was inserted successfully
      */
-    public boolean addManager(Manager manager) {
-        return true;
+    public boolean insertManager(Manager manager) {
+        DbWrapper dbWrapper = new DbWrapper();
+        return dbWrapper.manipulate("CALL insert_manager(?, ?, ?, ?, ?);", new Object[]{manager.getName(),
+                                                                                                manager.getUsername(),
+                                                                                                manager.getPassword(),
+                                                                                                manager.getEmail(),
+                                                                                                manager.getRoleId()}) > 0;
     }
 
     /**

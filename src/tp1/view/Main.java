@@ -1,5 +1,6 @@
 package tp1.view;
 
+import java.awt.LayoutManager;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import tp1.controller.ManageAuthors;
@@ -13,7 +14,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import tp1.controller.ManageLiteracyStyles;
+import tp1.controller.ManageManagers;
 import tp1.model.LiteraryStyle;
+import tp1.model.Manager;
 import tp1.model.User;
 
 /**
@@ -26,12 +29,75 @@ public class Main {
 
     public static void main(String[] args) {
 
+        long startProrgamMilis = System.currentTimeMillis();
+        
         InputReader.openScanner();
 
+        boolean insertedManager = false;
+        ManageManagers manageManagers = new ManageManagers();
+        
+        do{
+            
+            if(manageManagers.getTotalManagers() == 0){
+                System.out.println("Registo de Gestor\n");
+
+                String name = InputReader.readString("Nome: "),
+                    username = InputReader.readString("Nome de utilizador: ");
+                
+                DbWrapper dbWrapper = new DbWrapper();
+                ResultSet resultSet = dbWrapper.query("CALL exists_username(?);", new Object[]{username});
+                try {
+                    if(resultSet != null && resultSet.next()){
+                        if(resultSet.getBoolean("exists")){
+                            System.out.println("\nNome de utilizador já em uso.\n");
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    insertedManager = false;
+                    continue;
+                }finally{
+                    dbWrapper.disconnect();
+                }
+                String password = InputReader.readString("Palavra Passe: "),
+                email = InputReader.readString("Email: ", "\nEmail inválido, tente novamente\n", "[\\w._-]{3,}@[\\w_]{3,}.\\w{2,5}");
+                
+                resultSet = dbWrapper.query("CALL exists_email(?);", new Object[]{email});
+                try {
+                    if(resultSet != null && resultSet.next()){
+                        if(resultSet.getBoolean("exists")){
+                            System.out.println("\nEmail já em uso.\n");
+                        }
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    insertedManager = false;
+                    continue;
+                }finally{
+                    dbWrapper.disconnect();
+                }
+                
+                if(manageManagers.insertManager(new Manager(1,
+                                                    name, 
+                                                    username,
+                                                    password,
+                                                    email, 
+                                                    insertedManager, 
+                                                    insertedManager, 1))){
+                    insertedManager = true;
+                    System.out.println("\nRegistado com sucesso\n");
+                }else{
+                    insertedManager = false;
+                    System.out.println("\nErro ao registar\n");
+                }
+            }else{
+                insertedManager = true;
+            }
+            
+        }while(!insertedManager);
+        
         int option;
-
         do {
-
             option = InputReader.readInt("**** LOGIN ****\n"
                     + "1. Iniciar Sessão\n"
                     + "2. Registar Utilizador\n"
@@ -41,36 +107,16 @@ public class Main {
 
             switch (option) {
                 case 1 -> {
-
-                    /*DbWrapper dbWrapper = new DbWrapper();
-                    ResultSet resultSet = dbWrapper.query("SELECT * FROM get_users;");
-                    
-                    if(resultSet == null)
-                        continue;
-                    
-                    try {
-                        System.out.println("\tUtilizadores\n");
-                        while(resultSet.next()){
-                            System.out.println("ID: " + resultSet.getLong("id") + "\nNome: " + resultSet.getString("name"));
-                        }
-                        System.out.println();
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }finally{
-                        dbWrapper.closeConnection();
-                    }
-                    
-                    ManageManagers manageManagers = new ManageManagers();
-                    System.out.println("Nr. total de gestores: " + manageManagers.getTotalManagers());
-                     */
                     ManageUsers manageUsers = new ManageUsers();
                     User user = manageUsers.login(InputReader.readString("Nome de utilizador: "), InputReader.readString("Palavra Passe: "));
-
                     if (user != null) {
-                        Main.loggedUser = user;
-                        System.out.println("\nBem vindo " + user.getUsername() + "\n");
+                        if(user.isActive()){
+                            Main.loggedUser = user;
+                            System.out.println("\nBem vindo " + user.getUsername() + "\n");
+                        }else{
+                            System.out.println("\nUtilizador desativado\n");
+                        }
                     }
-
                 }
                 case 2 -> {
                     int subOption = InputReader.readInt("\n**** Tipo de Utilizador ****\n\n"
@@ -149,7 +195,7 @@ public class Main {
                                 int literaryStyleId = literaryStyles.get(InputReader.readInt(msg, 1, literaryStyles.size()) - 1).getId();
                                 
                                 ManageAuthors manageAuthors = new ManageAuthors();
-                                if(manageAuthors.addAuthor(new Author(-1,
+                                if(manageAuthors.insertAuthor(new Author(-1,
                                                                 name,
                                                               username,
                                                               password,
@@ -211,18 +257,19 @@ public class Main {
 
                 }
                 case 0 -> {
-                    System.exit(0);
+                    break;
                 }
                 default ->
                     System.out.println("\nOpção inválida, tente novamente\n");
 
             }
 
-        } while (option != 1);
+        } while (option != 0);
 
         InputReader.closeScanner();
-
-        System.out.println("Programa Encerrado");
+        
+        long endProgramMilis = System.currentTimeMillis();
+        Main.printExecutionTime(startProrgamMilis, endProgramMilis);
 
     }
 
@@ -232,6 +279,15 @@ public class Main {
 
     public static void setLoggedUserId(User loggedUser) {
         Main.loggedUser = loggedUser;
+    }
+    
+    public static void printExecutionTime(long startTime, long endTime){
+        SimpleDateFormat datetimeFormat = new SimpleDateFormat("EEEE';' yyyy-MM-dd HH:mm:ss");
+        
+        System.out.println("\nInício do processo: " + datetimeFormat.format(new Date(startTime)));
+        System.out.println("Fim do processo: " + datetimeFormat.format(new Date(endTime)));
+        long miliseconds = endTime - startTime, seconds = miliseconds /1000, minutes = seconds /60, hours = minutes /60; 
+        System.out.println("Tempo de execução: " + miliseconds + " Milissegundos (" + seconds + " Segundos; " + minutes + " Minutos; " + hours + " Horas)");
     }
 
 }
