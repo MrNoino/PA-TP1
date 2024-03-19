@@ -3,100 +3,158 @@ package tp1.view;
 public class AuthorViews {
 
     public void showMenu() {
-        int option = InputReader.readInt("**** MENU DE AUTOR ****\n"
-                + "1. Obras\n"
-                + "2. Pedidos de Revisão\n"
-                + "0. Terminar Sessão\n\n" 
-                + "Escolha: ", 0, 2);
 
-        switch (option) {
-            case 0:
-                break;
-            case 1:
-                showReviewsMenu();
-                break;
-            case 2:
-                showBooksMenu();
-                break;
-            default:
-                throw new AssertionError();
+        int option;
+
+        do {
+            option = InputReader.readInt("**** MENU DE AUTOR ****\n"
+                    + "1. Obras\n"
+                    + "2. Pedidos de Revisão\n"
+                    + "0. Terminar Sessão\n\n"
+                    + "Escolha: ", 0, 2);
+
+            switch (option) {
+                case 0:
+                    break;
+                case 1:
+                    showBooksMenu();
+                    break;
+                case 2:
+                    showReviewRequestsMenu();
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        } while (option != 0);
+
+        if (Main.getLoggedUser() != null) {
+            System.out.println("\nAdeus " + Main.getLoggedUser().getUsername() + "\n");
         }
-    }
-
-    private void showReviewsMenu() {
-        int option = InputReader.readInt("**** PEDIDOS DE REVISAO ****\n"
-                + "1. Ordenar Por Data De Criacao (Recente)\n"
-                + "2. Ordenar Por Data De Criacao (Antigo)\n"
-                + "3. Ordenar Por Numero De Serie (Ascendente)\n"
-                + "4. Ordenar Por Numero De Serie (Descendente)\n"
-                + "5. Pesquisar Por Data De Criacao\n"
-                + "6. Pesquisar Por Titulo\n"
-                + "7. Pesquisar Por Estado\n"
-                + "8. Proxima Pagina\n"
-                + "9. Pagina Anterior\n"
-                + "0. Voltar\n\n"
-                + "Escolha: ", 0, 9);
-
-        switch (option) {
-            case 0:
-                showMenu();
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            case 9:
-                break;
-            default:
-                throw new AssertionError();
-        }
+        Main.setLoggedUserId(null);
     }
 
     private void showBooksMenu() {
-        int option = InputReader.readInt("**** OBRAS ****\n"
-                + "1. Ordenar Por Data De Submissao (Recente)\n"
-                + "2. Ordenar Por Data De Submissao (Antigo)\n"
-                + "3. Ordenar Por Titulo (Ascendente)\n"
-                + "4. Ordenar Por Titulo (Descendente)\n"
-                + "5. Pesquisar Por Data De Registo\n"
-                + "6. Pesquisar Por Matricula\n"
-                + "7. Proxima Pagina\n"
-                + "8. Pagina Anterior\n"
-                + "0. Voltar\n\n"
-                + "Escolha:  ", 0, 8);
-        
-        switch (option) {
-            case 0:
-                showMenu();
-            case 1:
-                break;
-            case 2:
-                break;
-            case 3:
-                break;
-            case 4:
-                break;
-            case 5:
-                break;
-            case 6:
-                break;
-            case 7:
-                break;
-            case 8:
-                break;
-            default:
-                throw new AssertionError();
-        }
+        int option;
+
+        do {
+            option = InputReader.readInt("**** OBRAS ****\n"
+                    + "1. Listar Obras\n"
+                    + "2. Inserir Obra\n"
+                    + "3. Atualizar Obra\n"
+                    + "0. Terminar Sessão\n\n"
+                    + "Escolha: ", 0, 3);
+
+            switch (option) {
+                case 0:
+                    break;
+                case 1:
+                    showListBooksMenu();
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+
+        } while (option != 0);
+    }
+
+    private void showListBooksMenu() {
+        int option;
+
+        do {
+            option = InputReader.readInt("**** OBRAS ****\n"
+                    + "1. Ordenar Por Data De Submissao (Recente)\n"
+                    + "2. Ordenar Por Data De Submissao (Antigo)\n"
+                    + "3. Ordenar Por Titulo (Ascendente)\n"
+                    + "4. Ordenar Por Titulo (Descendente)\n"
+                    + "5. Pesquisar Por Data De Registo\n"
+                    + "6. Pesquisar Por Matricula\n"
+                    + "0. Voltar\n\n"
+                    + "Escolha:  ", 0, 6);
+
+            switch (option) {
+                case 0:
+                    showMenu();
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        } while (option != 0);
+    }
+
+    private void showReviewRequestsMenu() {
+        int option;
+
+        do {
+            option = InputReader.readInt("**** PEDIDOS DE REVISÃO ****\n"
+                    + "1. Listar Pedidos de Revisão\n"
+                    + "2. Solicitar uma Revisão\n"
+                    + "0. Voltar\n\n"
+                    + "Escolha: ", 0, 2);
+
+            switch (option) {
+                case 0:
+                    break;
+                case 1:
+                    showReviewRequestsListMenu();
+                    break;
+                case 2:
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        } while (option != 0);
+    }
+
+    private void showReviewRequestsListMenu() {
+        int option;
+
+        do {
+            option = InputReader.readInt("**** LISTAR PEDIDOS DE REVISÃO ****\n"
+                    + "1. Listar Por Data De Criação (Recente)\n"
+                    + "2. Listar Por Data De Criação (Antigo)\n"
+                    + "3. Listar Por Número De Série (Ascendente)\n"
+                    + "4. Listar Por Número De Série (Descendente)\n"
+                    + "5. Pesquisar Por Data De Criação\n"
+                    + "6. Pesquisar Por Título\n"
+                    + "7. Pesquisar Por Estado\n"
+                    + "0. Voltar\n\n"
+                    + "Escolha: ", 0, 7);
+
+            switch (option) {
+                case 0:
+                    showMenu();
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        } while (option != 0);
     }
 }
