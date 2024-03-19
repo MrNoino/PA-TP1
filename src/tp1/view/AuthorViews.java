@@ -3,10 +3,10 @@ package tp1.view;
 public class AuthorViews {
 
     public void showMenu() {
-        int option = InputReader.readInt("**** AUTORIA ****\n"
-                + "1. Listar Pedidos De Revisao\n"
-                + "2. Listar Obras\n"
-                + "3. Terminar Sessao\n\n"
+        int option = InputReader.readInt("**** MENU DE AUTOR ****\n"
+                + "1. Obras\n"
+                + "2. Pedidos de Revisão\n"
+                + "0. Terminar Sessão\n\n" 
                 + "Escolha: ", 0, 2);
 
         switch (option) {

@@ -4,24 +4,32 @@ public class ManagerViews {
 
     public void showMenu() {
 
-        int option = InputReader.readInt("**** GESTORIA ****\n"
-                + "1. Listar Utilizadores\n"
-                + "2. Listar Pedidos De Revisao\n"
-                + "0. Terminar Sessao\n\n"
-                + "Escolha: ", 0, 2);
+        int option;
+        do{
+            option = InputReader.readInt("**** MENU DE GESTOR ****\n"
+                    + "1. Utilizadores\n"
+                    + "2. Pedidos De Revisão\n"
+                    + "0. Terminar Sessão\n\n"
+                    + "Escolha: ", 0, 2);
 
-        switch (option) {
-            case 0:
-                break;
-            case 1:
-                showUsersListMenu();
-                break;
-            case 2:
-                showReviewRequestsMenu();
-                break;
-            default:
-                throw new AssertionError();
-        }
+            switch (option) {
+                case 0:
+                    break;
+                case 1:
+                    showUsersListMenu();
+                    break;
+                case 2:
+                    showReviewRequestsMenu();
+                    break;
+                default:
+                    throw new AssertionError();
+            }
+        }while(option != 0);
+        
+        if(Main.getLoggedUser() != null)
+            System.out.println("\nAdeus " + Main.getLoggedUser().getUsername() + "\n");
+        Main.setLoggedUserId(null);
+        
     }
 
     private void showUsersListMenu() {

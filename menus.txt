@@ -1,5 +1,5 @@
-**** LOGIN ****
-1. Iniciar Sessao
+**** Menu Principal ****
+1. Iniciar Sessão
 2. Registar Utilizador
 0. Sair
 
@@ -8,10 +8,20 @@ Escolha:
 
 
 
-**** GESTORIA ****
-1. Listar Utilizadores
-2. Listar Pedidos De Revisao
-0. Terminar Sessao
+**** REGISTAR UTILIZADOR ****
+1. Autor
+2. Revisor
+0. Voltar
+
+Escolha:
+
+
+
+
+**** MENU DE GESTOR ****
+1. Utilizadores
+2. Pedidos De Revisão
+0. Terminar Sessão
 
 Escolha: 
 
@@ -19,8 +29,17 @@ Escolha:
 
 
 **** UTILIZADORES ****
-1. Ordenar Por Nome (Ascendente)
-2. Ordenar Por Nome (Descendente)
+1. Listar Utilizadores
+2. Inserir Utilizador
+3. Atualizar Utilizador
+0. Voltar
+
+
+
+
+**** LISTAR UTILIZADORES ****
+1. Listar Por Nome (Ascendente)
+2. LIstar Por Nome (Descendente)
 3. Pesquisar Por Nome
 4. Pesquisar Por Nome De Utilizador
 5. Pesquisar Por Tipo
@@ -32,21 +51,11 @@ Escolha:
 
 
 
-
-**** REVISOES ****
-1. Ordenar Por Data De Criacao Mais Recente
-2. Ordenar Por Data De Cricao Mais Antiga
-3. Ordenar Por Titulo (Ascendente)
-4. Ordenar Por Titulo (Descendente)
-5. Ordenar Por Autor (Ascendente)
-6. Ordenar Por Autor (Descendente)
-7. Pesquisar Por ID
-8. Pesquisar Por Estado
-9. Pesquisar Por Autor
-10. Pesquisar Por Data
-11. Proxima Pagina
-12. Pagina Anterior
-13. Listar Processos De Revisao Por Titulo
+**** ATUALIZAR UTILIZADORES ****
+1. Autor
+2. Revisor
+3. Gestor
+4. Ativar/Desativar conta
 0. Voltar
 
 Escolha: 
@@ -54,9 +63,46 @@ Escolha:
 
 
 
-**** AUTORIA ****
-1. Listar Pedidos De Revisao
-2. Listar Obras
+**** CRIAR UTILIZADORES ****
+1. Autor
+2. Revisor
+3. Gestor
+0. Voltar
+
+Escolha:
+
+
+
+
+**** PEDIDOS DE REVISÃO ****
+1. Listar Revisões
+0. Voltar
+
+
+
+
+**** LISTAR REVISÕES ****
+1. Listar Por Data Submissão Mais Recente
+2. Listar Por Data De Submissão Mais Antiga
+3. Listar Por Título (Ascendente)
+4. Listar Por Título (Descendente)
+5. Listar Por Autor (Ascendente)
+6. Listar Por Autor (Descendente)
+7. Pesquisar Por ID
+8. Pesquisar Por Estado
+9. Pesquisar Por Autor
+10. Pesquisar Por Intervalo de Datas
+13. Listar Processos De Revisão Por Título
+0. Voltar
+
+Escolha: 
+
+
+
+
+**** MENU DE AUTOR ****
+1. Obras
+2. Pedidos de Revisão
 0. Terminar Sessão
 
 Escolha: 
@@ -64,38 +110,24 @@ Escolha:
 
 
 
-**** PEDIDOS DE REVISAO ****
-1. Ordenar Por Data De Criacao (Recente)
-2. Ordenar Por Data De Criacao (Antigo)
-3. Ordenar Por Numero De Serie (Ascendente)
-4. Ordenar Por Numero De Serie (Descendente)
-5. Pesquisar Por Data De Criacao
-6. Pesquisar Por Titulo
-7. Pesquisar Por Estado
-8. Proxima Pagina
-9. Pagina Anterior
-10. Voltar
-
-
-
-
-
 **** OBRAS ****
-1. Ordenar Por Data De Submissao (Recente)
-2. Ordenar Por Data De Submissao (Antigo)
-3. Ordenar Por Titulo (Ascendente)
-4. Ordenar Por Titulo (Descendente)
+1. Listar Obras
+2. Inserir Obra
+3. Atualizar Obra
+0. Terminar Sessão
+
+Escolha:
+
+
+
+
+**** LISTAR OBRAS ****
+1. Listar Por Data De Submissão (Recente)
+2. LIstar Por Data De Submissão (Antigo)
+3. Listar Por Título (Ascendente)
+4. Ordenar Por Título (Descendente)
 5. Pesquisar Por Data De Registo
-6. Pesquisar Por Matricula
-7. Proxima Pagina
-8. Pagina Anterior
-0. Voltar
-
-Escolha:  
-
-
-**** REVISOES ****
-1. Listar Pedidos De Revisao
+6. Pesquisar Por Matrícula
 0. Voltar
 
 Escolha: 
@@ -103,16 +135,45 @@ Escolha:
 
 
 
-**** PEDIDOS DE REVISAO ****
-1. Ordenar Por Data De Criacao (Recente)
-2. Ordenar Por Data De Criacao (Antigo)
-3. Ordenar Por Titulo (Ascendente)
-4. Ordenar Por Titulo (Descendente)
-5. Pesquisar Por Data De Criacao
-6. Pesquisar Por Titulo
+**** PEDIDOS DE REVISÃO ****
+1. Listar Pedidos de Revisão
+2. Solicitar uma Revisão
+0. Voltar
+
+
+
+
+**** LISTAR PEDIDOS DE REVISÃO ****
+1. Listar Por Data De Criação (Recente)
+2. Listar Por Data De Criação (Antigo)
+3. Listar Por Número De Série (Ascendente)
+4. Listar Por Número De Série (Descendente)
+5. Pesquisar Por Data De Criação
+6. Pesquisar Por Título
 7. Pesquisar Por Estado
-8. Proxima Pagina
-9. Pagina Anterior
+0. Voltar
+
+
+
+
+**** MENU DE REVISOR ****
+1. Listar Pedidos De Revisão
+2. Rever uma obra
+0. Voltar
+
+Escolha: 
+
+
+
+
+**** LISTAR PEDIDOS DE REVISÃO ****
+1. Listar Por Data De Criação (Recente)
+2. Listar Por Data De Criação (Antigo)
+3. Listar Por Título (Ascendente)
+4. Listar Por Título (Descendente)
+5. Pesquisar Por Data De Criação
+6. Pesquisar Por Título
+7. Pesquisar Por Estado
 0. Voltar
 
 Escolha: 

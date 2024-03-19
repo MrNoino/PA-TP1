@@ -4,9 +4,10 @@ public class ReviewerViews {
 
     public void showMenu() {
         int input = InputReader.readInt("**** REVISOES ****\n"
-                + "1. Listar Pedidos De Revisao\n"
+                + "1. Listar Pedidos De Revisão\n"
+                + "2. Rever uma obra\n"
                 + "0. Terminar Sessao\n\n"
-                + "Escolha: ", 0, 1);
+                + "Escolha: ", 0, 2);
 
         switch (input) {
             case 0:
