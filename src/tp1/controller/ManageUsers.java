@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import tp1.model.DbWrapper;
 import tp1.model.User;
 import java.sql.ResultSet;
-import java.sql.SQLException;
-        
+import java.sql.SQLException;       
 
 public class ManageUsers {
 
@@ -46,6 +45,66 @@ public class ManageUsers {
         } finally{
             dbWrapper.disconnect();
         }
+    }
+    
+    public boolean existsUsername(String username){
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+        ResultSet resultSet = dbWrapper.query("CALL exists_username(?);", new Object[]{username});
+        try {
+            if(resultSet == null || !resultSet.next())
+                return false;
+
+            if(resultSet.getBoolean("exists")){
+                System.out.println("\nNome de utilizador já em uso.\n");
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            dbWrapper.disconnect();
+        }
+        return false;
+    }
+    
+    public boolean existsEmail(String email){
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+        ResultSet resultSet = dbWrapper.query("CALL exists_email(?);", new Object[]{email});
+        try {
+            if(resultSet == null || !resultSet.next())
+                return false;
+
+            if(resultSet.getBoolean("exists")){
+                System.out.println("\nEmail já em uso.\n");
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            dbWrapper.disconnect();
+        }
+        return false;
+    }
+    
+    public boolean existsNIF(String nif){
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+        ResultSet resultSet = dbWrapper.query("CALL exists_nif(?);", new Object[]{nif});
+        try {
+            if(resultSet == null || !resultSet.next())
+                return false;
+
+            if(resultSet.getBoolean("exists")){
+                System.out.println("\nNIF já em uso.\n");
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }finally{
+            dbWrapper.disconnect();
+        }
+        return false;
     }
 
     /**

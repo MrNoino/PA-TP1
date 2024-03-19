@@ -150,55 +150,16 @@ public class MainViews {
         if(subOption != 0) {  
             String name = InputReader.readString("Nome: "),
             username = InputReader.readString("Nome de utilizador: ");
-            DbWrapper dbWrapper = new DbWrapper();
-            dbWrapper.connect();
-            ResultSet resultSet = dbWrapper.query("CALL exists_username(?);", new Object[]{username});
-            try {
-                if(resultSet == null || !resultSet.next())
-                    return;
-
-                if(resultSet.getBoolean("exists")){
-                    System.out.println("\nNome de utilizador já em uso.\n");
-                    return;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }finally{
-                dbWrapper.disconnect();
-            }
+            ManageUsers manageUsers = new ManageUsers();
+            if(manageUsers.existsUsername(username))
+                return;
             String password = InputReader.readString("Palavra Passe: "),
             email = InputReader.readString("Email: ", "\nEmail inválido, tente novamente\n", "[\\w._-]{3,}@[\\w_]{3,}.\\w{2,5}");
-            dbWrapper.connect();
-            resultSet = dbWrapper.query("CALL exists_email(?);", new Object[]{email});
-            try {
-                if(resultSet == null || !resultSet.next())
-                    return;
-
-                if(resultSet.getBoolean("exists")){
-                    System.out.println("\nEmail já em uso.\n");
-                    return;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }finally{
-                dbWrapper.disconnect();
-            }
+            if(manageUsers.existsEmail(email))
+                return;
             String nif = InputReader.readString("NIF: ", "\nNIF inválido, tente novamente\n", "\\d{9}");
-            dbWrapper.connect();
-            resultSet = dbWrapper.query("CALL exists_nif(?);", new Object[]{nif});
-            try {
-                if(resultSet == null || !resultSet.next())
-                    return;
-
-                if(resultSet.getBoolean("exists")){
-                    System.out.println("\nNIF já em uso.\n");
-                    return;
-                }
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }finally{
-                dbWrapper.disconnect();
-            }
+            if(manageUsers.existsNIF(nif))
+                return;
             String phone = InputReader.readString("Telemóvel: ", "\nTelemóvel inválido, tente novamente\n", "[239]\\d{8}"),
             address = InputReader.readString("Morada: ");
 
