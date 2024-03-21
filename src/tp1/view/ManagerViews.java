@@ -1,5 +1,19 @@
 package tp1.view;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import tp1.controller.ManageAuthors;
+import tp1.controller.ManageLiteracyStyles;
+import tp1.controller.ManageManagers;
+import tp1.controller.ManageReviewers;
+import tp1.controller.ManageUsers;
+import tp1.model.Author;
+import tp1.model.LiteraryStyle;
+import tp1.model.Manager;
+import tp1.model.Reviewer;
+import tp1.model.User;
+
 public class ManagerViews {
 
     public void showMenu() {
@@ -11,24 +25,23 @@ public class ManagerViews {
                     + "2. Pedidos De Revisão\n"
                     + "0. Terminar Sessão\n\n"
                     + "Escolha: ", 0, 2);
+            System.out.println();
 
             switch (option) {
-                case 0:
+                case 1:
                     showUsersMenu();
                     break;
-                case 1:
+                case 2:
                     showReviewRequestsMenu();
                     break;
+                case 0:
+                    break;
                 default:
-                    throw new AssertionError();
+                    System.out.println("\nOpção inválida, tente novamente\n");
             }
         } while (option != 0);
-
-        if (Main.getLoggedUser() != null) {
-            System.out.println("\nAdeus " + Main.getLoggedUser().getUsername() + "\n");
-        }
-        Main.setLoggedUserId(null);
-
+        
+        Main.logout();
     }
 
     private void showUsersMenu() {
@@ -42,10 +55,9 @@ public class ManagerViews {
                     + "3. Atualizar Utilizador\n"
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 3);
+            System.out.println();
 
             switch (option) {
-                case 0:
-                    break;
                 case 1:
                     showListUsersMenu();
                     break;
@@ -55,8 +67,10 @@ public class ManagerViews {
                 case 3:
                     showUpdateUserMenu();
                     break;
+                case 0:
+                    break;
                 default:
-                    throw new AssertionError();
+                    System.out.println("\nOpção inválida, tente novamente\n");
             }
         } while (option != 0);
     }
@@ -73,6 +87,7 @@ public class ManagerViews {
                     + "5. Pesquisar Por Tipo\n"
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 5);
+            System.out.println();
 
             switch (option) {
                 case 0:
@@ -95,7 +110,6 @@ public class ManagerViews {
 
     private void showInsertUserMenu() {
         int option;
-
         do {
             option = InputReader.readInt("**** CRIAR UTILIZADORES ****\n"
                     + "1. Autor\n"
@@ -103,22 +117,106 @@ public class ManagerViews {
                     + "3. Gestor\n"
                     + "0. Voltar\n\n"
                     + "Escolha:", 0, 4);
+            System.out.println();
 
-            switch (option) {
-                case 0:
-                    break;
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                default:
-                    throw new AssertionError();
+            String name = InputReader.readString("Nome: "),
+                    username = InputReader.readString("Nome de utilizador: ");
+            ManageUsers manageUsers = new ManageUsers();
+            if (manageUsers.existsUsername(username)) {
+                return;
             }
+            String password = InputReader.readString("Palavra Passe: "),
+                    email = InputReader.readString("Email: ", "\nEmail inválido, tente novamente\n", "[\\w._-]{3,}@[\\w_]{3,}.\\w{2,5}");
+            if (manageUsers.existsEmail(email)) {
+                return;
+            }
+            
+            if(option == 1 || option == 2){
+                String nif = InputReader.readString("NIF: ", "\nNIF inválido, tente novamente\n", "\\d{9}");
+                if (manageUsers.existsNIF(nif)) {
+                    return;
+                }
+                String phone = InputReader.readString("Telemóvel: ", "\nTelemóvel inválido, tente novamente\n", "[239]\\d{8}"),
+                        address = InputReader.readString("Morada: ");
+                        
+                switch (option) {
+                    case 1:
+                        ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
+                        ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteracyStyles();
+                        if (literaryStyles == null) {
+                            System.out.println("\nEstilos literários inixestentes.\n");
+                            return;
+                        }
+                        String msg = "Estilos Literários\n";
+                        for (int i = 0; i < literaryStyles.size(); i++) {
+                            msg += (i + 1) + ". " + literaryStyles.get(i).getLiteraryStyle() + "\n";
+                        }
+                        msg += "Escolha: ";
 
+                        int literaryStyleId = literaryStyles.get(InputReader.readInt(msg, 1, literaryStyles.size()) - 1).getId();
+
+                        ManageAuthors manageAuthors = new ManageAuthors();
+                        if (manageAuthors.insertAuthor(new Author(-1,
+                                name,
+                                username,
+                                password,
+                                email,
+                                false,
+                                false,
+                                3,
+                                nif,
+                                phone,
+                                address,
+                                new SimpleDateFormat("yyyy-MM-dd").format(new Date()),
+                                literaryStyleId))) {
+                            System.out.println("\nRegistado com sucesso\n");
+                        } else {
+                            System.out.println("\nErro ao registar\n");
+                        }
+                        break;
+                    case 2:
+                        String graduation = InputReader.readString("Formação Académica: "),
+                         specialization = InputReader.readString("Área de especialização: ");
+
+                        ManageReviewers manageReviewers = new ManageReviewers();
+                        if (manageReviewers.insertReviewer(new Reviewer(-1,
+                                name,
+                                username,
+                                password,
+                                email,
+                                false,
+                                false,
+                                2,
+                                nif,
+                                phone,
+                                address,
+                                graduation,
+                                specialization))) {
+                            System.out.println("\nRegistado com sucesso\n");
+                        } else {
+                            System.out.println("\nErro ao registar\n");
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+            }else if(option == 3){
+                ManageManagers manageManagers = new ManageManagers();
+                if (manageManagers.insertManager(new Manager(-1,
+                        name,
+                        username,
+                        password,
+                        email,
+                        false,
+                        false,
+                        1))) {
+                    System.out.println("\nRegistado com sucesso\n");
+                } else {
+                    System.out.println("\nErro ao registar\n");
+                }
+            }else
+                System.out.println("\nOpção inválida, tente novamente\n");
         } while (option != 0);
     }
 
@@ -127,28 +225,160 @@ public class ManagerViews {
 
         do {
             option = InputReader.readInt("**** ATUALIZAR UTILIZADORES ****\n"
-                    + "1. Autor\n"
-                    + "2. Revisor\n"
-                    + "3. Gestor\n"
-                    + "4. Ativar/Desativar conta\n"
+                    + "1. Atualizar Tudo\n"
+                    + "2. Ativar/Desativar conta\n"
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 4);
+            System.out.println();
 
+            if(option == 0)
+                continue;
+            
+            long id = InputReader.readLong("ID: ");
+            
+            User user = new ManageUsers().getUser(id);
+            
+            if(user == null){
+                System.out.println("\nNão foi possivel encontrar o utlizador\n");
+                break;
+            }
+            ManageUsers manageUsers = new ManageUsers();
             switch (option) {
-                case 0:
-                    break;
                 case 1:
+                    String name = InputReader.readString("Nome: "),
+                            username = InputReader.readString("Nome de utilizador: ");
+                    if (!user.getUsername().equals(username) && manageUsers.existsUsername(username)) {
+                        continue;
+                    }
+                    String password = InputReader.readString("Palavra Passe: "),
+                            email = InputReader.readString("Email: ", "\nEmail inválido, tente novamente\n", "[\\w._-]{3,}@[\\w_]{3,}.\\w{2,5}");
+                    if (!user.getEmail().equals(email) && manageUsers.existsEmail(email)) {
+                        continue;
+                    }
+                        String nif, phone, address;
+                        switch (user.getRoleId()) {
+                            case 1:
+                                ManageManagers manageManagers = new ManageManagers();
+                                if (manageManagers.updateManager(new Manager(id,
+                                        name,
+                                        username,
+                                        password,
+                                        email,
+                                        false,
+                                        false,
+                                        1))) {
+                                    System.out.println("\nAtualizado com sucesso\n");
+                                } else {
+                                    System.out.println("\nErro ao atualizar\n");
+                                }
+                                break;
+                            case 2:
+                                ManageReviewers manageReviewers = new ManageReviewers();
+                                Reviewer reviewer = manageReviewers.getReviewer(id);
+                                nif = InputReader.readString("NIF: ", "\nNIF inválido, tente novamente\n", "\\d{9}");
+                                if (!reviewer.getNif().equals(nif) && manageUsers.existsNIF(nif)) {
+                                    continue;
+                                }
+                                phone = InputReader.readString("Telemóvel: ", "\nTelemóvel inválido, tente novamente\n", "[239]\\d{8}");
+                                address = InputReader.readString("Morada: ");
+                                String graduation = InputReader.readString("Formação Académica: "),
+                                 specialization = InputReader.readString("Área de especialização: ");
+
+                                manageReviewers = new ManageReviewers();
+                                if (manageReviewers.updateReviewer(new Reviewer(id,
+                                        name,
+                                        username,
+                                        password,
+                                        email,
+                                        false,
+                                        false,
+                                        2,
+                                        nif,
+                                        phone,
+                                        address,
+                                        graduation,
+                                        specialization))) {
+                                    System.out.println("\nAtualizado com sucesso\n");
+                                } else {
+                                    System.out.println("\nErro ao atualizar\n");
+                                }
+                                break;
+                            case 3:
+                                ManageAuthors manageAuthors = new ManageAuthors();
+                                Author author = manageAuthors.getAuthor(id);
+                                nif = InputReader.readString("NIF: ", "\nNIF inválido, tente novamente\n", "\\d{9}");
+                                if (!author.getNif().equals(nif) && manageUsers.existsNIF(nif)) {
+                                    continue;
+                                }
+                                phone = InputReader.readString("Telemóvel: ", "\nTelemóvel inválido, tente novamente\n", "[239]\\d{8}");
+                                address = InputReader.readString("Morada: ");
+                                ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
+                                ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteracyStyles();
+                                if (literaryStyles == null) {
+                                    System.out.println("\nEstilos literários inixestentes.\n");
+                                    break;
+                                }
+                                String msg = "Estilos Literários\n";
+                                for (int i = 0; i < literaryStyles.size(); i++) {
+                                    msg += (i + 1) + ". " + literaryStyles.get(i).getLiteraryStyle() + "\n";
+                                }
+                                msg += "Escolha: ";
+
+                                int literaryStyleId = literaryStyles.get(InputReader.readInt(msg, 1, literaryStyles.size()) - 1).getId();
+
+                                manageAuthors = new ManageAuthors();
+                                if (manageAuthors.updateAuthor(new Author(id,
+                                        name,
+                                        username,
+                                        password,
+                                        email,
+                                        false,
+                                        false,
+                                        3,
+                                        nif,
+                                        phone,
+                                        address,
+                                        new SimpleDateFormat("yyyy-MM-dd").format(new Date()),
+                                        literaryStyleId))) {
+                                    System.out.println("\nAtualizado com sucesso\n");
+                                } else {
+                                    System.out.println("\nErro ao atualizar\n");
+                                }
+                                break;
+                            default:
+                                System.out.println("\nOpção inválida, tente novamente\n");
+                                break;
+                        }
                     break;
                 case 2:
+                    int active = InputReader.readInt("\n1. Ativar\n2. Desativar\n0. Voltar\n\nEscolha: ", 0, 2);
+                    System.out.println();
+                    switch (active) {
+                        case 1:
+                            if(manageUsers.changeUserStatus(id, true))
+                                System.out.println("\nEstado do utilizador alterado\n");
+                            else
+                                System.out.println("\nEstado não alterado\n");
+                            break;
+                        case 2:
+                            if(manageUsers.changeUserStatus(id, false))
+                                System.out.println("\nEstado do utilizador alterado\n");
+                            else
+                                System.out.println("\nEstado não alterado\n");
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            System.out.println("\nOpção inválida\n");
+                    }
                     break;
-                case 3:
-                    break;
-                case 4:
+                case 0: 
                     break;
                 default:
-                    throw new AssertionError();
+                    System.out.println("\nOpção inválida, tente novamente\n");
             }
-
+            
+            
         } while (option != 0);
     }
 
@@ -174,6 +404,7 @@ public class ManagerViews {
                     + "11. Listar Processos De Revisão Por Título\n"
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 11);
+            System.out.println();
 
             switch (option) {
                 case 0:

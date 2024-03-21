@@ -180,7 +180,9 @@ public class DbWrapper {
         try {
             this.connection = DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.user, this.password);
             return true;
-        } catch (SQLException e) {}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         
         return false;
     }
@@ -195,7 +197,9 @@ public class DbWrapper {
                 this.connection.close();
             this.connection = null;
             return true;
-        } catch (SQLException e) {}
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
     }
     
@@ -213,6 +217,7 @@ public class DbWrapper {
             statement = this.connection.createStatement();
             return statement.executeQuery(sqlQuery);
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -235,6 +240,7 @@ public class DbWrapper {
             }
             return preparedStatement.executeQuery();
         } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
     }
@@ -258,12 +264,15 @@ public class DbWrapper {
             }
             rowCount = preparedStatement.executeUpdate();
         } catch (SQLException e) {
+            e.printStackTrace();
             rowCount = 0;
         }finally{
             if(preparedStatement != null)
                 try {
                     preparedStatement.close();
-                } catch (SQLException e) {}
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             this.disconnect();
         }
         return rowCount;

@@ -5,6 +5,8 @@ import tp1.model.DbWrapper;
 import tp1.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;       
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ManageUsers {
 
@@ -106,13 +108,31 @@ public class ManageUsers {
         }
         return false;
     }
-
+    
     /**
-     *
-     * @return Returns a list of users
+     * Search an user from database by id
+     * @param id id of the user
+     * @return the user searched
      */
-    public ArrayList<User> getUsers() {
-        return this.users;
+    public User getUser(long id) {
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+        ResultSet resultSet = dbWrapper.query("CALL get_user_by_id(?);", new Object[]{id});
+        try {
+            if(resultSet == null || !resultSet.next())
+                return null;
+            
+            return new User(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getString("username"), resultSet.getString("email"), resultSet.getBoolean("active"), resultSet.getBoolean("deleted"), resultSet.getInt("role_id"));
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public boolean changeUserStatus(long id, boolean active){
+        DbWrapper dbWrapper = new DbWrapper();
+        return dbWrapper.manipulate("CALL change_user_status(?, ?);", new Object[]{id, active}) > 0;
     }
 
     /**

@@ -10,9 +10,10 @@ CREATE VIEW get_managers AS
 SELECT users.id as "id", 
 		users.name as "name", 
         users.username as "username", 
+        users.email as "email",
         users.active as "active", 
         users.deleted as "deleted", 
-        users.role_id as "roleId"
+        users.role_id as "role_id"
 FROM users
 INNER JOIN managers
 ON managers.user_id = users.id;
@@ -22,9 +23,10 @@ CREATE VIEW get_reviewers AS
 SELECT users.id as "id", 
 		users.name "name", 
         users.username as "username", 
+        users.email as "email",
         users.active as "active", 
         users.deleted as "deleted", 
-        users.role_id as "roleId", 
+        users.role_id as "role_id", 
         reviewers.nif as "nif", 
         reviewers.phone as "phone", 
         reviewers.address as "address", 
@@ -39,14 +41,15 @@ CREATE VIEW get_authors AS
 SELECT users.id as "id", 
 		users.name as "name", 
         users.username as "username", 
+        users.email as "email",
         users.active as "active", 
         users.deleted as "deleted", 
-        users.role_id as "roleId", 
+        users.role_id as "role_id", 
         authors.nif as "nif", 
         authors.phone as "phone", 
         authors.address as "address", 
-        authors.activity_begin_date as "activityBeginDate", 
-        authors.literary_style_id as "literaryStyleId"
+        authors.activity_begin_date as "activity_begin_date", 
+        authors.literary_style_id as "literary_style_id"
 FROM users
 INNER JOIN authors
 ON authors.user_id = users.id;

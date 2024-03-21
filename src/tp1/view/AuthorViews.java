@@ -12,6 +12,7 @@ public class AuthorViews {
                     + "2. Pedidos de Revisão\n"
                     + "0. Terminar Sessão\n\n"
                     + "Escolha: ", 0, 2);
+            System.out.println();
 
             switch (option) {
                 case 0:
@@ -27,10 +28,7 @@ public class AuthorViews {
             }
         } while (option != 0);
 
-        if (Main.getLoggedUser() != null) {
-            System.out.println("\nAdeus " + Main.getLoggedUser().getUsername() + "\n");
-        }
-        Main.setLoggedUserId(null);
+        Main.logout();
     }
 
     private void showBooksMenu() {

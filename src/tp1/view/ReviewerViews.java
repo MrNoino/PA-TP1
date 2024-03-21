@@ -11,6 +11,7 @@ public class ReviewerViews {
                     + "2. Rever uma obra\n"
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 2);
+            System.out.println();
 
             switch (option) {
                 case 0:
@@ -25,10 +26,7 @@ public class ReviewerViews {
             }
         } while (option != 0);
 
-        if (Main.getLoggedUser() != null) {
-            System.out.println("\nAdeus " + Main.getLoggedUser().getUsername() + "\n");
-        }
-        Main.setLoggedUserId(null);
+        Main.logout();
     }
 
     private void showReviewRequestsMenu() {

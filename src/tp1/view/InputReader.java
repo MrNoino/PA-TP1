@@ -48,7 +48,7 @@ public class InputReader {
                 scanner.nextLine();
             }
         }while(!validNumber);
-        
+
         return number;
     }
     
@@ -80,7 +80,7 @@ public class InputReader {
                 scanner.nextLine();
             }
         }while(!validNumber);
-        
+
         return number;
     }
     
@@ -116,7 +116,7 @@ public class InputReader {
                 scanner.nextLine();
             }
         }while(!validNumber);
-        
+
         return number; 
     }
     
@@ -143,7 +143,7 @@ public class InputReader {
                 scanner.nextLine();
             }
         }while(!validNumber);
-        
+
         return number;
     }
     
@@ -177,7 +177,7 @@ public class InputReader {
             if(!validStr)
                 System.out.println(invalidInputMsg);
         }while(!validStr);
-        
+
         return str;
     }
 }

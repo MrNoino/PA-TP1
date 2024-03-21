@@ -3,7 +3,6 @@ package tp1.controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import tp1.model.Author;
 import tp1.model.DbWrapper;
 import tp1.model.Manager;
 
@@ -75,7 +74,13 @@ public class ManageManagers {
      * @return Confirms if a manager was updated successfully
      */
     public boolean updateManager(Manager manager) {
-        return true;
+        DbWrapper dbWrapper = new DbWrapper();
+        return dbWrapper.manipulate("CALL update_user(?, ?, ?, ?, ?, ?);", new Object[]{manager.getId(),
+            manager.getName(),
+            manager.getUsername(),
+            manager.getPassword(),
+            manager.getEmail(),
+            manager.getRoleId()}) > 0;
     }
 
     /**
