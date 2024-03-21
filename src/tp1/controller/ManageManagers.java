@@ -3,6 +3,7 @@ package tp1.controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import tp1.model.Author;
 import tp1.model.DbWrapper;
 import tp1.model.Manager;
 
@@ -41,6 +42,28 @@ public class ManageManagers {
         } finally{
             dbWrapper.disconnect();
         }
+    }
+    
+    public Manager getManager(long id) {
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+        ResultSet resultSet = dbWrapper.query("CALL get_manager_by_id(?);", new Object[]{id});
+        try {
+            if(resultSet == null || !resultSet.next())
+                return null;
+            
+            return new Manager(resultSet.getLong("id"), 
+                    resultSet.getString("name"), 
+                    resultSet.getString("username"), 
+                    resultSet.getString("email"), 
+                    resultSet.getBoolean("active"), 
+                    resultSet.getBoolean("deleted"), 
+                    resultSet.getInt("role_id"));
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -82,14 +105,5 @@ public class ManageManagers {
             manager.getEmail(),
             manager.getRoleId()}) > 0;
     }
-
-    /**
-     * Deletes a manager
-     *
-     * @param manager The manager to be deleted
-     * @return Confirms if a manager was deleted successfully
-     */
-    public boolean deleteManager(Manager manager) {
-        return true;
-    }
+    
 }

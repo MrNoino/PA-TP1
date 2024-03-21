@@ -245,7 +245,7 @@ BEGIN
     SET 
     name = a_name,
     username = a_username,
-    password = MD5(a_password), 
+    password = IFNULL(MD5(a_password), password), 
     email = a_email,
     role_id = a_role_id
     WHERE id = a_id;

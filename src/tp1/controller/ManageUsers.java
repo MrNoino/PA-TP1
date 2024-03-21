@@ -31,7 +31,7 @@ public class ManageUsers {
 
         try {
             if (resultSet == null || !resultSet.next()) {
-                System.out.println("Credênciais inválidas");
+                System.out.println("\nCredênciais inválidas\n");
                 return null;
             }
             return new User(resultSet.getLong("id"),

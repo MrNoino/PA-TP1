@@ -117,7 +117,7 @@ public class MainViews {
         } while (option != 0);
     }
 
-    public void showLoginMenu() {
+    private void showLoginMenu() {
         ManageUsers manageUsers = new ManageUsers();
         User user = manageUsers.login(InputReader.readString("Nome de utilizador: "), InputReader.readString("Palavra Passe: "));
         if (user != null) {
@@ -141,7 +141,7 @@ public class MainViews {
         }
     }
 
-    public void showRegisterUserMenu() {
+    private void showRegisterUserMenu() {
         int subOption = InputReader.readInt("\n**** REGISTAR UTILIZADOR ****\n\n"
                 + "1. Autor\n"
                 + "2. Revisor\n"
@@ -235,7 +235,7 @@ public class MainViews {
 
     }
 
-    public void showChangeDatabasePropertiesMenu() {
+    private void showChangeDatabasePropertiesMenu() {
         System.out.println("Alterações das propriedades da base de dados\n");
         DbWrapper dbWrapper = new DbWrapper(InputReader.readString("Host: "),
                 InputReader.readString("Porto: "),

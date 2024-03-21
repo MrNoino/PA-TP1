@@ -23,8 +23,9 @@ public class ManagerViews {
             option = InputReader.readInt("**** MENU DE GESTOR ****\n"
                     + "1. Utilizadores\n"
                     + "2. Pedidos De Revisão\n"
+                    + "3. Atualizar Perfil\n"
                     + "0. Terminar Sessão\n\n"
-                    + "Escolha: ", 0, 2);
+                    + "Escolha: ", 0, 3);
             System.out.println();
 
             switch (option) {
@@ -33,6 +34,9 @@ public class ManagerViews {
                     break;
                 case 2:
                     showReviewRequestsMenu();
+                    break;
+                case 3:
+                    showUpdateProfileMenu();
                     break;
                 case 0:
                     break;
@@ -93,10 +97,10 @@ public class ManagerViews {
             switch (option) {
                 case 1:
                     users = manageUsers.getUsers("ASC", 1);
-                    
-                    if(users == null)
+
+                    if (users == null) {
                         continue;
-                    else if (users.isEmpty()) {
+                    } else if (users.isEmpty()) {
                         System.out.println("\nNenhum utilizador encontrado\n");
                         continue;
                     }
@@ -114,10 +118,10 @@ public class ManagerViews {
                     break;
                 case 2:
                     users = manageUsers.getUsers("DESC", 1);
-                    
-                    if(users == null)
+
+                    if (users == null) {
                         continue;
-                    else if (users.isEmpty()) {
+                    } else if (users.isEmpty()) {
                         System.out.println("\nNenhum utilizador encontrado\n");
                         continue;
                     }
@@ -135,10 +139,10 @@ public class ManagerViews {
                     break;
                 case 3:
                     users = manageUsers.getUsersByName(InputReader.readString("Nome a pesquisar: "));
-                    
-                    if(users == null)
+
+                    if (users == null) {
                         continue;
-                    else if (users.isEmpty()) {
+                    } else if (users.isEmpty()) {
                         System.out.println("\nNenhum utilizador encontrado\n");
                         continue;
                     }
@@ -156,10 +160,10 @@ public class ManagerViews {
                     break;
                 case 4:
                     users = manageUsers.getUsersByUsername(InputReader.readString("Nome de utilizador a pesquisar: "));
-                    
-                    if(users == null)
+
+                    if (users == null) {
                         continue;
-                    else if (users.isEmpty()) {
+                    } else if (users.isEmpty()) {
                         System.out.println("\nNenhum utilizador encontrado\n");
                         continue;
                     }
@@ -177,10 +181,10 @@ public class ManagerViews {
                     break;
                 case 5:
                     users = manageUsers.getUsersByRole(InputReader.readString("Tipo de utilizador a pesquisar: "));
-                    
-                    if(users == null)
+
+                    if (users == null) {
                         continue;
-                    else if (users.isEmpty()) {
+                    } else if (users.isEmpty()) {
                         System.out.println("\nNenhum utilizador encontrado\n");
                         continue;
                     }
@@ -348,8 +352,7 @@ public class ManagerViews {
                     if (!user.getUsername().equals(username) && manageUsers.existsUsername(username)) {
                         continue;
                     }
-                    String password = InputReader.readString("Palavra Passe: "),
-                     email = InputReader.readString("Email: ", "\nEmail inválido, tente novamente\n", "[\\w._-]{3,}@[\\w_]{3,}.\\w{2,5}");
+                    String email = InputReader.readString("Email: ", "\nEmail inválido, tente novamente\n", "[\\w._-]{3,}@[\\w_]{3,}.\\w{2,5}");
                     if (!user.getEmail().equals(email) && manageUsers.existsEmail(email)) {
                         continue;
                     }
@@ -362,9 +365,8 @@ public class ManagerViews {
                             if (manageManagers.updateManager(new Manager(id,
                                     name,
                                     username,
-                                    password,
                                     email,
-                                    false,
+                                    true,
                                     false,
                                     1))) {
                                 System.out.println("\nAtualizado com sucesso\n");
@@ -388,9 +390,8 @@ public class ManagerViews {
                             if (manageReviewers.updateReviewer(new Reviewer(id,
                                     name,
                                     username,
-                                    password,
                                     email,
-                                    false,
+                                    true,
                                     false,
                                     2,
                                     nif,
@@ -430,9 +431,8 @@ public class ManagerViews {
                             if (manageAuthors.updateAuthor(new Author(id,
                                     name,
                                     username,
-                                    password,
                                     email,
-                                    false,
+                                    true,
                                     false,
                                     3,
                                     nif,
@@ -536,5 +536,42 @@ public class ManagerViews {
                     throw new AssertionError();
             }
         } while (option != 0);
+    }
+
+    private void showUpdateProfileMenu() {
+
+        System.out.println("Atualizar Perfil\n");
+
+        ManageManagers manageManagers = new ManageManagers();
+
+        Manager manager = manageManagers.getManager(Main.getLoggedUser().getId());
+
+        if (manager == null) {
+            System.out.println("Não foi possivel encontrar o gestor\n");
+            return;
+        }
+        ManageUsers manageUsers = new ManageUsers();
+        String name = InputReader.readString("Nome: "),
+                username = InputReader.readString("Nome de utilizador: ");
+        if (!manager.getUsername().equals(username) && manageUsers.existsUsername(username)) {
+            return;
+        }
+        String password = InputReader.readString("Palavra passe: "),
+        email = InputReader.readString("Email: ", "\nEmail inválido, tente novamente\n", "[\\w._-]{3,}@[\\w_]{3,}.\\w{2,5}");
+        if (!manager.getEmail().equals(email) && manageUsers.existsEmail(email)) {
+            return;
+        }
+        if (manageManagers.updateManager(new Manager(Main.getLoggedUser().getId(),
+                name,
+                username,
+                password,
+                email,
+                true,
+                false,
+                1))) {
+            System.out.println("\nAtualizado com sucesso\n");
+        } else {
+            System.out.println("\nErro ao atualizar\n");
+        }
     }
 }
