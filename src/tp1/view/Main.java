@@ -71,7 +71,7 @@ public class Main {
     public static void printExecutionTime(long startTime, long endTime) {
         SimpleDateFormat datetimeFormat = new SimpleDateFormat("EEEE';' yyyy-MM-dd HH:mm:ss");
 
-        System.out.println("\nInício do processo: " + datetimeFormat.format(new Date(startTime)));
+        System.out.println("Início do processo: " + datetimeFormat.format(new Date(startTime)));
         System.out.println("Fim do processo: " + datetimeFormat.format(new Date(endTime)));
         long miliseconds = endTime - startTime, seconds = miliseconds / 1000, minutes = seconds / 60, hours = minutes / 60;
         System.out.println("Tempo de execução: " + miliseconds + " Milissegundos (" + seconds + " Segundos; " + minutes + " Minutos; " + hours + " Horas)");
