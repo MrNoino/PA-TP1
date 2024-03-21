@@ -1,5 +1,12 @@
 package tp1.view;
 
+import java.util.ArrayList;
+import tp1.controller.ManageAuthors;
+import tp1.controller.ManageLiteracyStyles;
+import tp1.controller.ManageUsers;
+import tp1.model.Author;
+import tp1.model.LiteraryStyle;
+
 public class AuthorViews {
 
     public void showMenu() {
@@ -10,8 +17,9 @@ public class AuthorViews {
             option = InputReader.readInt("**** MENU DE AUTOR ****\n"
                     + "1. Obras\n"
                     + "2. Pedidos de Revisão\n"
+                    + "3. Atualizar Perfil\n"
                     + "0. Terminar Sessão\n\n"
-                    + "Escolha: ", 0, 2);
+                    + "Escolha: ", 0, 3);
             System.out.println();
 
             switch (option) {
@@ -22,6 +30,9 @@ public class AuthorViews {
                     break;
                 case 2:
                     showReviewRequestsMenu();
+                    break;
+                case 3:
+                    showUpdateProfileMenu();
                     break;
                 default:
                     throw new AssertionError();
@@ -154,5 +165,66 @@ public class AuthorViews {
                     throw new AssertionError();
             }
         } while (option != 0);
+    }
+    
+    private void showUpdateProfileMenu() {
+
+        System.out.println("Atualizar Perfil\n");
+
+        ManageAuthors manageAuthors = new ManageAuthors();
+        Author author = manageAuthors.getAuthor(Main.getLoggedUser().getId());
+
+        if (author == null) {
+            System.out.println("Não foi possivel encontrar o revisor\n");
+            return;
+        }
+        ManageUsers manageUsers = new ManageUsers();
+        String name = InputReader.readString("Nome: "),
+                username = InputReader.readString("Nome de utilizador: ");
+        if (!author.getUsername().equals(username) && manageUsers.existsUsername(username)) {
+            return;
+        }
+        String password = InputReader.readString("Palavra passe: "),
+                email = InputReader.readString("Email: ", "\nEmail inválido, tente novamente\n", "[\\w._-]{3,}@[\\w_]{3,}.\\w{2,5}");
+        if (!author.getEmail().equals(email) && manageUsers.existsEmail(email)) {
+            return;
+        }
+        String nif = InputReader.readString("NIF: ", "\nNIF inválido, tente novamente\n", "\\d{9}");
+        if (!author.getNif().equals(nif) && manageUsers.existsNIF(nif)) {
+            return;
+        }
+        String phone = InputReader.readString("Telemóvel: ", "\nTelemóvel inválido, tente novamente\n", "[239]\\d{8}"),
+                address = InputReader.readString("Morada: ");
+        
+        ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
+        ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteracyStyles();
+        if (literaryStyles == null) {
+            System.out.println("\nEstilos literários inixestentes.\n");
+            return;
+        }
+        String msg = "Estilos Literários\n";
+        for (int i = 0; i < literaryStyles.size(); i++) {
+            msg += (i + 1) + ". " + literaryStyles.get(i).getLiteraryStyle() + "\n";
+        }
+        msg += "Escolha: ";
+
+        int literaryStyleId = literaryStyles.get(InputReader.readInt(msg, 1, literaryStyles.size()) - 1).getId();
+        if (manageAuthors.updateAuthor(new Author(Main.getLoggedUser().getId(),
+                name,
+                username,
+                password,
+                email,
+                true,
+                false,
+                3,
+                nif,
+                phone,
+                address,
+                null,
+                literaryStyleId))) {
+            System.out.println("\nAtualizado com sucesso\n");
+        } else {
+            System.out.println("\nErro ao atualizar\n");
+        }
     }
 }
