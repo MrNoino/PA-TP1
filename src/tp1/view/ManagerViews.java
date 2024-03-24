@@ -244,7 +244,7 @@ public class ManagerViews {
                         ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
                         ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteracyStyles();
                         if (literaryStyles == null) {
-                            System.out.println("\nEstilos literários inixestentes.\n");
+                            System.out.println("\nEstilos literários inixestentes\n");
                             return;
                         }
                         String msg = "Estilos Literários\n";

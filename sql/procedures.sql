@@ -132,9 +132,9 @@ BEGIN
 END $$
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS `PA_TP`.`get_users_by_page` ;
+DROP PROCEDURE IF EXISTS `PA_TP`.`get_users_paginated` ;
 DELIMITER $$
-CREATE PROCEDURE get_users_by_page(IN sort_order VARCHAR(32), IN page INT) 
+CREATE PROCEDURE get_users_paginated(IN sort_order VARCHAR(32), IN page INT) 
 BEGIN
 	DECLARE page_start INT;
 	DECLARE page_end INT;
@@ -192,7 +192,8 @@ DELIMITER $$
 CREATE PROCEDURE get_book_by_id(IN a_id BIGINT) 
 BEGIN
 	SELECT id, title, subtitle, pages, words, isbn, edition, submission_date, approval_date, literary_style_id, publication_type, author_id
-	FROM books;
+	FROM books
+    WHERE id = a_id;
 END $$
 DELIMITER ;
 
@@ -205,6 +206,128 @@ BEGIN
     INNER JOIN authors
     ON authors.id = books.author_id
     WHERE authors.id = a_author_id;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`exists_title` ;
+DELIMITER $$
+CREATE PROCEDURE exists_title(IN a_title VARCHAR(256)) 
+BEGIN
+	SELECT COUNT(title) as "exists"
+    FROM books
+    WHERE title = a_title;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`exists_isbn` ;
+DELIMITER $$
+CREATE PROCEDURE exists_isbn(IN a_isbn VARCHAR(13)) 
+BEGIN
+	SELECT COUNT(isbn) as "exists"
+    FROM books
+    WHERE isbn = a_isbn;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`get_books_ordered_submission_date_paginated` ;
+DELIMITER $$
+CREATE PROCEDURE get_books_ordered_submission_date_paginated(IN a_author_id BIGINT, IN sort_order VARCHAR(32), IN page INT) 
+BEGIN
+	DECLARE page_start INT;
+	DECLARE page_end INT;
+    SET page_start = (page-1)*10;
+	SET page_end = page*10;
+    
+    IF sort_order = 'ASC' THEN
+		SELECT books.id as "id", 
+        books.title as "title", 
+        books.subtitle as "subtitle", 
+        books.pages as "pages", 
+        books.words as "words", 
+        books.isbn as "isbn", 
+        books.edition as "edition",
+        books.submission_date as "submission_date", 
+        books.approval_date as "approval_date", 
+        books.literary_style_id as "literary_style_id", 
+        books.publication_type as "publication_type", 
+        books.author_id as "author_id"
+		FROM books
+        INNER JOIN authors
+        ON authors.user_id = books.author_id
+        WHERE authors.user_id = a_author_id
+        ORDER BY submission_date ASC
+		LIMIT page_start, page_end;
+	ELSE
+		SELECT books.id as "id", 
+        books.title as "title", 
+        books.subtitle as "subtitle", 
+        books.pages as "pages", 
+        books.words as "words", 
+        books.isbn as "isbn", 
+        books.edition as "edition",
+        books.submission_date as "submission_date", 
+        books.approval_date as "approval_date", 
+        books.literary_style_id as "literary_style_id", 
+        books.publication_type as "publication_type", 
+        books.author_id as "author_id"
+		FROM books
+        INNER JOIN authors
+        ON authors.user_id = books.author_id
+        WHERE authors.user_id = a_author_id
+        ORDER BY submission_date DESC
+		LIMIT page_start, page_end;
+    END IF;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`get_books_ordered_title_paginated` ;
+DELIMITER $$
+CREATE PROCEDURE get_books_ordered_title_paginated(IN a_author_id BIGINT, IN sort_order VARCHAR(32), IN page INT) 
+BEGIN
+	DECLARE page_start INT;
+	DECLARE page_end INT;
+    SET page_start = (page-1)*10;
+	SET page_end = page*10;
+    
+    IF sort_order = 'ASC' THEN
+		SELECT books.id as "id", 
+        books.title as "title", 
+        books.subtitle as "subtitle", 
+        books.pages as "pages", 
+        books.words as "words", 
+        books.isbn as "isbn", 
+        books.edition as "edition",
+        books.submission_date as "submission_date", 
+        books.approval_date as "approval_date", 
+        books.literary_style_id as "literary_style_id", 
+        books.publication_type as "publication_type", 
+        books.author_id as "author_id"
+		FROM books
+        INNER JOIN authors
+        ON authors.user_id = books.author_id
+        WHERE authors.user_id = a_author_id
+        ORDER BY title ASC
+		LIMIT page_start, page_end;
+	ELSE
+		SELECT books.id as "id", 
+        books.title as "title", 
+        books.subtitle as "subtitle", 
+        books.pages as "pages", 
+        books.words as "words", 
+        books.isbn as "isbn", 
+        books.edition as "edition",
+        books.submission_date as "submission_date", 
+        books.approval_date as "approval_date", 
+        books.literary_style_id as "literary_style_id", 
+        books.publication_type as "publication_type", 
+        books.author_id as "author_id"
+		FROM books
+        INNER JOIN authors
+        ON authors.user_id = books.author_id
+        WHERE authors.user_id = a_author_id
+        ORDER BY title DESC
+		LIMIT page_start, page_end;
+    END IF;
 END $$
 DELIMITER ;
 
@@ -258,7 +381,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `PA_TP`.`insert_book` ;
 DELIMITER $$
-CREATE PROCEDURE insert_book(IN a_title VARCHAR(256), IN a_subtitle VARCHAR(256), IN a_pages INT, IN a_words INT, IN a_isbn VARCHAR(7), IN a_edition VARCHAR(128), IN a_literary_style_id INT, IN a_publication_type VARCHAR(128), IN  a_author_id BIGINT)
+CREATE PROCEDURE insert_book(IN a_title VARCHAR(256), IN a_subtitle VARCHAR(256), IN a_pages INT, IN a_words INT, IN a_isbn VARCHAR(13), IN a_edition VARCHAR(128), IN a_literary_style_id INT, IN a_publication_type VARCHAR(128), IN  a_author_id BIGINT)
 BEGIN
 	INSERT INTO books(title, subtitle , pages, words, isbn, edition, literary_style_id, publication_type,  author_id)
     VALUES
@@ -332,6 +455,25 @@ BEGIN
     UPDATE users
     SET 
     active = a_active
+    WHERE id = a_id;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`update_book` ;
+DELIMITER $$
+CREATE PROCEDURE update_book(IN a_id BIGINT, IN a_title VARCHAR(256), IN a_subtitle VARCHAR(256), IN a_pages INT, IN a_words INT, IN a_isbn VARCHAR(13), IN a_edition VARCHAR(128), IN a_literary_style_id INT, IN a_publication_type VARCHAR(128), IN  a_author_id BIGINT)
+BEGIN
+	UPDATE books
+    SET 
+    title= a_title,
+    subtitle= a_subtitle,
+    pages= a_pages,
+    words= a_words,
+    isbn= a_isbn,
+    edition= a_edition,
+    literary_style_id= a_literary_style_id,
+    publication_type= a_publication_type,
+    author_id= a_author_id
     WHERE id = a_id;
 END $$
 DELIMITER ;

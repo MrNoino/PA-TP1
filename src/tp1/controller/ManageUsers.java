@@ -171,7 +171,7 @@ public class ManageUsers {
     public ArrayList<User> getUsers(String sortOrder, int page) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
-        ResultSet resultSet = dbWrapper.query("CALL get_users_by_page(?, ?);", new Object[]{sortOrder, page});
+        ResultSet resultSet = dbWrapper.query("CALL get_users_paginated(?, ?);", new Object[]{sortOrder, page});
         try {
             if (resultSet == null) {
                 return null;

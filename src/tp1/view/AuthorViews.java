@@ -1,10 +1,14 @@
 package tp1.view;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import tp1.controller.ManageAuthors;
+import tp1.controller.ManageBooks;
 import tp1.controller.ManageLiteracyStyles;
 import tp1.controller.ManageUsers;
 import tp1.model.Author;
+import tp1.model.Book;
 import tp1.model.LiteraryStyle;
 
 public class AuthorViews {
@@ -23,8 +27,6 @@ public class AuthorViews {
             System.out.println();
 
             switch (option) {
-                case 0:
-                    break;
                 case 1:
                     showBooksMenu();
                     break;
@@ -34,8 +36,10 @@ public class AuthorViews {
                 case 3:
                     showUpdateProfileMenu();
                     break;
+                case 0:
+                    break;
                 default:
-                    throw new AssertionError();
+                    System.out.println("\nOpção inválida, tente novamente\n");
             }
         } while (option != 0);
 
@@ -50,21 +54,71 @@ public class AuthorViews {
                     + "1. Listar Obras\n"
                     + "2. Inserir Obra\n"
                     + "3. Atualizar Obra\n"
-                    + "0. Terminar Sessão\n\n"
+                    + "0. Voltar\n\n"
                     + "Escolha: ", 0, 3);
+            System.out.println();
 
             switch (option) {
-                case 0:
-                    break;
                 case 1:
                     showListBooksMenu();
                     break;
                 case 2:
+                    ManageBooks manageBooks = new ManageBooks();
+                    String title = InputReader.readString("Título: ");
+                    if (manageBooks.existsTitle(title)) {
+                        continue;
+                    }
+
+                    String subtitle = InputReader.readString("Subtítulo: ");
+
+                    int pages = InputReader.readInt("Número de páginas: "),
+                     words = InputReader.readInt("Número de palavras: ");
+
+                    String isbn = InputReader.readString("ISBN: ");
+                    if (manageBooks.existsIsbn(isbn)) {
+                        continue;
+                    }
+
+                    String edition = InputReader.readString("Edição: ");
+
+                    ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
+                    ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteracyStyles();
+                    if (literaryStyles == null) {
+                        System.out.println("\nEstilos literários inixestentes\n");
+                        return;
+                    }
+                    String msg = "Estilos Literários\n";
+                    for (int i = 0; i < literaryStyles.size(); i++) {
+                        msg += (i + 1) + ". " + literaryStyles.get(i).getLiteraryStyle() + "\n";
+                    }
+                    msg += "Escolha: ";
+
+                    int literaryStyleId = literaryStyles.get(InputReader.readInt(msg, 1, literaryStyles.size()) - 1).getId();
+                    String publicationType = InputReader.readString("Tipo de publicação: ");
+
+                    if (manageBooks.insertBook(new Book(-1,
+                            title,
+                            subtitle,
+                            pages,
+                            words,
+                            isbn,
+                            edition,
+                            new SimpleDateFormat("yyyy-MM-dd").format(new Date()),
+                            literaryStyleId,
+                            publicationType,
+                            Main.getLoggedUser().getId()))) {
+                        System.out.println("\nInserido com sucesso\n");
+                    } else {
+                        System.out.println("\nNão inserido\n");
+                    }
+
                     break;
                 case 3:
                     break;
+                case 0:
+                    break;
                 default:
-                    throw new AssertionError();
+                    System.out.println("Opção inválida, tente novamente\n");
             }
 
         } while (option != 0);
@@ -75,33 +129,58 @@ public class AuthorViews {
 
         do {
             option = InputReader.readInt("**** OBRAS ****\n"
-                    + "1. Ordenar Por Data De Submissao (Recente)\n"
-                    + "2. Ordenar Por Data De Submissao (Antigo)\n"
-                    + "3. Ordenar Por Titulo (Ascendente)\n"
-                    + "4. Ordenar Por Titulo (Descendente)\n"
+                    + "1. Listar Por Data De Submissão (Recente)\n"
+                    + "2. Listar Por Data De Submissão (Antigo)\n"
+                    + "3. Listar Por Título (Ascendente)\n"
+                    + "4. Listar Por Título (Descendente)"
                     + "5. Pesquisar Por Data De Registo\n"
-                    + "6. Pesquisar Por Matricula\n"
+                    + "6. Pesquisar Por Matrícula\n"
                     + "0. Voltar\n\n"
                     + "Escolha:  ", 0, 6);
+            System.out.println();
 
+            ManageBooks manageBooks = new ManageBooks();
+            ArrayList<Book> books = null;
             switch (option) {
-                case 0:
-                    showMenu();
                 case 1:
+                    books = manageBooks.getBooks(Main.getLoggedUser().getId(), "submission_date", "DESC", 1);
                     break;
                 case 2:
+                    books = manageBooks.getBooks(Main.getLoggedUser().getId(), "submission_date", "ASC", 1);
                     break;
                 case 3:
+                    books = manageBooks.getBooks(Main.getLoggedUser().getId(), "title", "ASC", 1);
                     break;
                 case 4:
+                    books = manageBooks.getBooks(Main.getLoggedUser().getId(), "title", "DESC", 1);
                     break;
                 case 5:
                     break;
                 case 6:
                     break;
+                case 0:
+                    continue;
                 default:
-                    throw new AssertionError();
+                    System.out.println("Opção inválida, tente novamente\n");
             }
+
+            System.out.println("| ID | Título | Subtítulo | Nº Páginas | Nº Palavras | ISBN | Edição | Data de Submissão |"
+                    + " Data de aprovação | Id estilo literário | Tipo de publicação | Id author |");
+            for (Book book : books) {
+                System.out.println("| " + book.getId() + " | "
+                        + book.getTitle() + " | "
+                        + book.getSubtitle() + " | "
+                        + book.getPages() + " | "
+                        + book.getWords() + " | "
+                        + book.getIsbn() + " | "
+                        + book.getEdition() + " | "
+                        + book.getSubmissionDate() + " | "
+                        + book.getApprovalDate() + " | "
+                        + book.getLiteracyStyleId() + " | "
+                        + book.getPublicationType() + " | "
+                        + book.getAuthorId() + " | ");
+            }
+            System.out.println();
         } while (option != 0);
     }
 
@@ -114,17 +193,18 @@ public class AuthorViews {
                     + "2. Solicitar uma Revisão\n"
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 2);
+            System.out.println();
 
             switch (option) {
-                case 0:
-                    break;
                 case 1:
                     showReviewRequestsListMenu();
                     break;
                 case 2:
                     break;
+                case 0:
+                    break;
                 default:
-                    throw new AssertionError();
+                    System.out.println("Opção inválida, tente novamente\n");
             }
         } while (option != 0);
     }
@@ -143,10 +223,9 @@ public class AuthorViews {
                     + "7. Pesquisar Por Estado\n"
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 7);
+            System.out.println();
 
             switch (option) {
-                case 0:
-                    showMenu();
                 case 1:
                     break;
                 case 2:
@@ -161,12 +240,14 @@ public class AuthorViews {
                     break;
                 case 7:
                     break;
+                case 0:
+                    break;
                 default:
-                    throw new AssertionError();
+                    System.out.println("Opção inválida, tente novamente\n");
             }
         } while (option != 0);
     }
-    
+
     private void showUpdateProfileMenu() {
 
         System.out.println("Atualizar Perfil\n");
@@ -195,7 +276,7 @@ public class AuthorViews {
         }
         String phone = InputReader.readString("Telemóvel: ", "\nTelemóvel inválido, tente novamente\n", "[239]\\d{8}"),
                 address = InputReader.readString("Morada: ");
-        
+
         ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
         ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteracyStyles();
         if (literaryStyles == null) {

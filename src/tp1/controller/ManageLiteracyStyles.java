@@ -27,7 +27,7 @@ public class ManageLiteracyStyles {
         dbWrapper.connect();
         ResultSet resultSet = dbWrapper.query("SELECT * FROM get_literary_styles;");
         try {
-            if(resultSet == null || !resultSet.next())
+            if(resultSet == null)
                 return null;
             while(resultSet.next())
                 this.literacyStyles.add(new LiteraryStyle(resultSet.getInt("id"), resultSet.getString("literary_style")));

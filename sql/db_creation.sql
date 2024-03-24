@@ -145,7 +145,7 @@ CREATE TABLE IF NOT EXISTS `PA_TP`.`Books` (
   `subtitle` VARCHAR(256) NULL,
   `pages` INT NOT NULL,
   `words` INT NOT NULL,
-  `isbn` VARCHAR(7) NOT NULL,
+  `isbn` VARCHAR(13) NOT NULL,
   `edition` VARCHAR(128) NULL,
   `submission_date` DATE NOT NULL DEFAULT (CURRENT_DATE),
   `approval_date` DATE NULL,
@@ -156,6 +156,7 @@ CREATE TABLE IF NOT EXISTS `PA_TP`.`Books` (
   UNIQUE INDEX `title_UNIQUE` (`title` ASC) VISIBLE,
   INDEX `fk_Books_LiteracyStyles1_idx` (`literary_style_id` ASC) VISIBLE,
   INDEX `fk_Books_Authors1_idx` (`author_id` ASC) VISIBLE,
+  UNIQUE INDEX `isbn_UNIQUE` (`isbn` ASC) VISIBLE,
   CONSTRAINT `fk_Books_LiteracyStyles1`
     FOREIGN KEY (`literary_style_id`)
     REFERENCES `PA_TP`.`LiteraryStyles` (`id`)
