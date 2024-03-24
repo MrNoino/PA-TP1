@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS `PA_TP`.`Books` (
   `pages` INT NOT NULL,
   `words` INT NOT NULL,
   `isbn` VARCHAR(7) NOT NULL,
-  `edtion` VARCHAR(128) NULL,
+  `edition` VARCHAR(128) NULL,
   `submission_date` DATE NOT NULL DEFAULT (CURRENT_DATE),
   `approval_date` DATE NULL,
   `literary_style_id` INT NOT NULL,
