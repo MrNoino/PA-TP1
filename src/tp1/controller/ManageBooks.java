@@ -2,10 +2,14 @@ package tp1.controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import tp1.model.Book;
 import tp1.model.DbWrapper;
+import tp1.model.Log;
 import tp1.model.User;
+import tp1.view.Main;
 
 /**
  * A class to manage books on the database
@@ -17,7 +21,7 @@ public class ManageBooks {
     public ManageBooks() {
         books = new ArrayList<Book>();
     }
-    
+
     public Book getBookById(long authorId, long bookId) {
 
         DbWrapper dbWrapper = new DbWrapper();
@@ -29,17 +33,17 @@ public class ManageBooks {
             }
 
             return new Book(resultSet.getLong("id"),
-                        resultSet.getString("title"),
-                        resultSet.getString("subtitle"),
-                        resultSet.getInt("pages"),
-                        resultSet.getInt("words"),
-                        resultSet.getString("isbn"),
-                        resultSet.getString("edition"),
-                        resultSet.getString("submission_date"),
-                        resultSet.getString("approval_date"),
-                        resultSet.getInt("literary_style_id"),
-                        resultSet.getString("publication_type"),
-                        resultSet.getInt("author_id"));
+                    resultSet.getString("title"),
+                    resultSet.getString("subtitle"),
+                    resultSet.getInt("pages"),
+                    resultSet.getInt("words"),
+                    resultSet.getString("isbn"),
+                    resultSet.getString("edition"),
+                    resultSet.getString("submission_date"),
+                    resultSet.getString("approval_date"),
+                    resultSet.getInt("literary_style_id"),
+                    resultSet.getString("publication_type"),
+                    resultSet.getInt("author_id"));
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -205,7 +209,7 @@ public class ManageBooks {
      */
     public boolean insertBook(Book book) {
         DbWrapper dbWrapper = new DbWrapper();
-        return dbWrapper.manipulate("CALL insert_book(?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{book.getTitle(),
+        boolean inserted = dbWrapper.manipulate("CALL insert_book(?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{book.getTitle(),
             book.getSubtitle(),
             book.getPages(),
             book.getWords(),
@@ -214,6 +218,11 @@ public class ManageBooks {
             book.getLiteracyStyleId(),
             book.getPublicationType(),
             book.getAuthorId()}) > 0;
+
+        if (inserted && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), new SimpleDateFormat("yyyy-mm-dd").format(new Date()), "Inseriu Obra"));
+        }
+        return inserted;
     }
 
     /**

@@ -6,21 +6,21 @@ import java.time.LocalDate;
  *
  */
 public class Log {
-    private int userId;
+    private long userId;
     private String datetime;
     private String action;
 
-    public Log(int aUserId, String aDatetime, String aAction) {
+    public Log(long aUserId, String aDatetime, String aAction) {
         this.userId = aUserId;
         this.datetime = aDatetime;
         this.action = aAction;
     }
 
-    public int getUserId() {
+    public long getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(long userId) {
         this.userId = userId;
     }
 

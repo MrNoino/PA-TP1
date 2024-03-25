@@ -2,10 +2,14 @@ package tp1.controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import tp1.model.Author;
 import tp1.model.DbWrapper;
+import tp1.model.Log;
 import tp1.model.Manager;
+import tp1.view.Main;
 
 /**
  * A class to manage managers on the database
@@ -83,11 +87,17 @@ public class ManageManagers {
      */
     public boolean insertManager(Manager manager) {
         DbWrapper dbWrapper = new DbWrapper();
-        return dbWrapper.manipulate("CALL insert_manager(?, ?, ?, ?, ?);", new Object[]{manager.getName(),
+        boolean inserted = dbWrapper.manipulate("CALL insert_manager(?, ?, ?, ?, ?);", new Object[]{manager.getName(),
                                                                                                 manager.getUsername(),
                                                                                                 manager.getPassword(),
                                                                                                 manager.getEmail(),
                                                                                                 manager.getRoleId()}) > 0;
+        
+        if(inserted && Main.getLoggedUser() != null){
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), new SimpleDateFormat("yyyy-mm-dd").format(new Date()), "Inseriu Gestor"));
+        }
+        
+        return inserted;
     }
 
     /**

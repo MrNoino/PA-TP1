@@ -42,18 +42,19 @@ public class ManageLogs {
             e.printStackTrace();
         }
 
-        return this.logs;
+        return null;
     }
 
     /**
      *
+     * @param userId id of the user
      * @return Returns a list of logs
      */
-    public ArrayList<Log> getLogsByUser(int userId, int page) {
+    public ArrayList<Log> getLogsByUser(long userId) {
 
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
-        ResultSet resultSet = dbWrapper.query("CALL get_logs_by_user_paginated(?,?)", new Object[]{userId, page});
+        ResultSet resultSet = dbWrapper.query("CALL get_logs_by_user(?)", new Object[]{userId});
 
         try {
             if (resultSet == null) {
@@ -70,40 +71,21 @@ public class ManageLogs {
             e.printStackTrace();
         }
 
-        return this.logs;
+        return null;
     }
 
     /**
-     * Adds a log
+     * Inserts a log in the database
      *
-     * @param log The log to add to the list
-     * @return Confirms if a log was added successfully
+     * @param log The log to insert to the database
+     * @return Confirms if a log was inserted successfully
      */
-    public boolean addLog(Log log) {
+    public boolean insertLog(Log log) {
 
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
 
         return dbWrapper.manipulate("CALL insert_log(?,?);", new Object[]{log.getUserId(), log.getAction()}) > 0;
     }
-
-    /**
-     * Updates a log
-     *
-     * @param log The log to be updated
-     * @return Confirms if a log was updated successfully
-     */
-    public boolean updateLog(Log log) {
-        return true;
-    }
-
-    /**
-     * Deletes a log
-     *
-     * @param log The log to be deleted
-     * @return Confirms if a log was deleted successfully
-     */
-    public boolean deleteLog(Log log) {
-        return true;
-    }
+    
 }

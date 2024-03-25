@@ -553,19 +553,28 @@ public class ManagerViews {
                     + "2. Listar Logs por utilizador\n"
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 2);
-
+            System.out.println();
+            
             if (option == 0) {
                 continue;
             }
 
             ManageLogs manageLogs = new ManageLogs();
+            ArrayList<Log> logs;
 
             switch (option) {
                 case 1:
 
-                    System.out.println("ID Utilizador\t\tData\t\tAção\n");
+                    logs = manageLogs.getLogs(1);
 
-                    for (Log log : manageLogs.getLogs(1)) {
+                    if(logs.isEmpty()){
+                        System.out.println("Nenhum log encontrado\n");
+                        continue;
+                    }
+                    
+                    System.out.println("ID Utilizador\t\tData\t\tAção\n");
+                    
+                    for (Log log : logs) {
                         System.out.println(log.getUserId() + "\t\t" + log.getDatetime() + "\t\t" + log.getAction());
                     }
 
@@ -574,15 +583,22 @@ public class ManagerViews {
 
                     int userId = InputReader.readInt("Insira o id de utilizador: ");
 
+                    logs = manageLogs.getLogsByUser(userId);
+                    
+                    if(logs.isEmpty()){
+                        System.out.println("Nenhum log encontrado\n");
+                        continue;
+                    }
+                    
                     System.out.println("Data\t\tAção\n");
-
-                    for (Log log : manageLogs.getLogsByUser(userId, 1)) {
+                    
+                    for (Log log : logs) {
                         System.out.println(log.getUserId() + "\t\t" + log.getDatetime() + "\t\t" + log.getAction());
                     }
 
                     break;
                 default:
-                    System.out.println("\nOpção inválida, tente novamente\n");
+                    System.out.println("Opção inválida, tente novamente\n");
             }
 
         } while (option != 0);
