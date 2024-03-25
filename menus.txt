@@ -21,6 +21,7 @@ Escolha:
 **** MENU DE GESTOR ****
 1. Utilizadores
 2. Pedidos De Revisão
+3. Auditoria
 0. Terminar Sessão
 
 Escolha: 
@@ -101,6 +102,13 @@ Escolha:
 
 
 
+
+**** AUDITORIA ****
+1. Listar Logs
+2. Listar Logs por utilizador
+0. Voltar
+
+Escolha: 
 
 **** MENU DE AUTOR ****
 1. Obras

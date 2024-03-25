@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import tp1.controller.ManageAuthors;
 import tp1.controller.ManageLiteracyStyles;
+import tp1.controller.ManageLogs;
 import tp1.controller.ManageManagers;
 import tp1.controller.ManageReviewers;
 import tp1.controller.ManageUsers;
 import tp1.model.Author;
 import tp1.model.LiteraryStyle;
+import tp1.model.Log;
 import tp1.model.Manager;
 import tp1.model.Reviewer;
 import tp1.model.User;
@@ -23,7 +25,8 @@ public class ManagerViews {
             option = InputReader.readInt("**** MENU DE GESTOR ****\n"
                     + "1. Utilizadores\n"
                     + "2. Pedidos De Revisão\n"
-                    + "3. Atualizar Perfil\n"
+                    + "3. Auditioria\n"
+                    + "4. Atualizar Perfil\n"
                     + "0. Terminar Sessão\n\n"
                     + "Escolha: ", 0, 3);
             System.out.println();
@@ -36,6 +39,9 @@ public class ManagerViews {
                     showReviewRequestsMenu();
                     break;
                 case 3:
+                    showAuditMenu();
+                    break;
+                case 4:
                     showUpdateProfileMenu();
                     break;
                 case 0:
@@ -538,6 +544,50 @@ public class ManagerViews {
         } while (option != 0);
     }
 
+    private void showAuditMenu() {
+        int option;
+
+        do {
+            option = InputReader.readInt("**** AUDITORIA ****\n"
+                    + "1. Listar Logs\n"
+                    + "2. Listar Logs por utilizador\n"
+                    + "0. Voltar\n\n"
+                    + "Escolha: ", 0, 2);
+
+            if (option == 0) {
+                continue;
+            }
+
+            ManageLogs manageLogs = new ManageLogs();
+
+            switch (option) {
+                case 1:
+
+                    System.out.println("ID Utilizador\t\tData\t\tAção\n");
+
+                    for (Log log : manageLogs.getLogs(1)) {
+                        System.out.println(log.getUserId() + "\t\t" + log.getDatetime() + "\t\t" + log.getAction());
+                    }
+
+                    break;
+                case 2:
+
+                    int userId = InputReader.readInt("Insira o id de utilizador: ");
+
+                    System.out.println("Data\t\tAção\n");
+
+                    for (Log log : manageLogs.getLogsByUser(userId, 1)) {
+                        System.out.println(log.getUserId() + "\t\t" + log.getDatetime() + "\t\t" + log.getAction());
+                    }
+
+                    break;
+                default:
+                    System.out.println("\nOpção inválida, tente novamente\n");
+            }
+
+        } while (option != 0);
+    }
+
     private void showUpdateProfileMenu() {
 
         System.out.println("Atualizar Perfil\n");
@@ -557,7 +607,7 @@ public class ManagerViews {
             return;
         }
         String password = InputReader.readString("Palavra passe: "),
-        email = InputReader.readString("Email: ", "\nEmail inválido, tente novamente\n", "[\\w._-]{3,}@[\\w_]{3,}.\\w{2,5}");
+                email = InputReader.readString("Email: ", "\nEmail inválido, tente novamente\n", "[\\w._-]{3,}@[\\w_]{3,}.\\w{2,5}");
         if (!manager.getEmail().equals(email) && manageUsers.existsEmail(email)) {
             return;
         }
