@@ -2,6 +2,9 @@ package tp1.controller;
 
 import java.util.ArrayList;
 import tp1.model.Log;
+import tp1.model.DbWrapper;
+import java.sql.*;
+import tp1.model.User;
 
 /**
  * A class to manage logs on the database
@@ -18,7 +21,55 @@ public class ManageLogs {
      *
      * @return Returns a list of logs
      */
-    public ArrayList<Log> getLogs() {
+    public ArrayList<Log> getLogs(int page) {
+
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+        ResultSet resultSet = dbWrapper.query("CALL get_logs_paginated(?)", new Object[]{page});
+
+        try {
+            if (resultSet == null) {
+                return null;
+            }
+
+            while (resultSet.next()) {
+                this.logs.add(new Log(resultSet.getInt("user_id"),
+                        resultSet.getString("datetime"),
+                        resultSet.getString("action")));
+            }
+            return this.logs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return this.logs;
+    }
+
+    /**
+     *
+     * @return Returns a list of logs
+     */
+    public ArrayList<Log> getLogsByUser(int userId, int page) {
+
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+        ResultSet resultSet = dbWrapper.query("CALL get_logs_by_user_paginated(?,?)", new Object[]{userId, page});
+
+        try {
+            if (resultSet == null) {
+                return null;
+            }
+
+            while (resultSet.next()) {
+                this.logs.add(new Log(resultSet.getInt("user_id"),
+                        resultSet.getString("datetime"),
+                        resultSet.getString("action")));
+            }
+            return this.logs;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
         return this.logs;
     }
 
@@ -29,7 +80,11 @@ public class ManageLogs {
      * @return Confirms if a log was added successfully
      */
     public boolean addLog(Log log) {
-        return true;
+
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+
+        return dbWrapper.manipulate("CALL insert_log(?,?);", new Object[]{log.getUserId(), log.getAction()}) > 0;
     }
 
     /**
