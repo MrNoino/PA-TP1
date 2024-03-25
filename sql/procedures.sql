@@ -478,6 +478,15 @@ BEGIN
 END $$
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `PA_TP`.`insert_log`;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `insert_log`(IN a_user_id BIGINT, IN a_action VARCHAR(512))
+BEGIN
+	INSERT INTO logs (user_id, action)
+    VALUES (a_user_id, a_action);
+END$$
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `PA_TP`.`get_logs_paginated`;
 DELIMITER $$
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_logs_paginated`(IN page INT)
