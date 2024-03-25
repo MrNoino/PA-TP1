@@ -17,6 +17,35 @@ public class ManageBooks {
     public ManageBooks() {
         books = new ArrayList<Book>();
     }
+    
+    public Book getBookById(long authorId, long bookId) {
+
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+        ResultSet resultSet = dbWrapper.query("CALL get_book_by_id(?, ?);", new Object[]{authorId, bookId});
+        try {
+            if (resultSet == null || !resultSet.next()) {
+                return null;
+            }
+
+            return new Book(resultSet.getLong("id"),
+                        resultSet.getString("title"),
+                        resultSet.getString("subtitle"),
+                        resultSet.getInt("pages"),
+                        resultSet.getInt("words"),
+                        resultSet.getString("isbn"),
+                        resultSet.getString("edition"),
+                        resultSet.getString("submission_date"),
+                        resultSet.getString("approval_date"),
+                        resultSet.getInt("literary_style_id"),
+                        resultSet.getString("publication_type"),
+                        resultSet.getInt("author_id"));
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     /**
      *
@@ -32,11 +61,73 @@ public class ManageBooks {
         } else {
             return null;
         }
-        sql += "(?, ?, ?)";
+        sql += "(?, ?, ?);";
 
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
         ResultSet resultSet = dbWrapper.query(sql, new Object[]{authorId, sortOrder, page});
+        try {
+            if (resultSet == null) {
+                return null;
+            }
+
+            while (resultSet.next()) {
+                this.books.add(new Book(resultSet.getLong("id"),
+                        resultSet.getString("title"),
+                        resultSet.getString("subtitle"),
+                        resultSet.getInt("pages"),
+                        resultSet.getInt("words"),
+                        resultSet.getString("isbn"),
+                        resultSet.getString("edition"),
+                        resultSet.getString("submission_date"),
+                        resultSet.getString("approval_date"),
+                        resultSet.getInt("literary_style_id"),
+                        resultSet.getString("publication_type"),
+                        resultSet.getInt("author_id")));
+            }
+            return this.books;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<Book> getBooksBySubmissionDate(long authorId, String submissionDate) {
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+        ResultSet resultSet = dbWrapper.query("CALL get_books_by_submission_date(?, STR_TO_DATE(?, \"%d-%m-%Y\"));", new Object[]{authorId, submissionDate});
+        try {
+            if (resultSet == null) {
+                return null;
+            }
+
+            while (resultSet.next()) {
+                this.books.add(new Book(resultSet.getLong("id"),
+                        resultSet.getString("title"),
+                        resultSet.getString("subtitle"),
+                        resultSet.getInt("pages"),
+                        resultSet.getInt("words"),
+                        resultSet.getString("isbn"),
+                        resultSet.getString("edition"),
+                        resultSet.getString("submission_date"),
+                        resultSet.getString("approval_date"),
+                        resultSet.getInt("literary_style_id"),
+                        resultSet.getString("publication_type"),
+                        resultSet.getInt("author_id")));
+            }
+            return this.books;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<Book> getBooksByIsbn(long authorId, String isbn) {
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+        ResultSet resultSet = dbWrapper.query("CALL get_books_by_isbn(?, ?);", new Object[]{authorId, isbn});
         try {
             if (resultSet == null) {
                 return null;
@@ -126,13 +217,23 @@ public class ManageBooks {
     }
 
     /**
-     * Updates a book
+     * Updates a book in the database
      *
      * @param book The book to be updated
      * @return Confirms if a book was updated successfully
      */
     public boolean updateBook(Book book) {
-        return true;
+        DbWrapper dbWrapper = new DbWrapper();
+        return dbWrapper.manipulate("CALL update_book(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{book.getId(),
+            book.getTitle(),
+            book.getSubtitle(),
+            book.getPages(),
+            book.getWords(),
+            book.getIsbn(),
+            book.getEdition(),
+            book.getLiteracyStyleId(),
+            book.getPublicationType(),
+            book.getAuthorId()}) > 0;
     }
 
     /**

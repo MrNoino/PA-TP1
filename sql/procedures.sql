@@ -189,23 +189,47 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `PA_TP`.`get_book_by_id` ;
 DELIMITER $$
-CREATE PROCEDURE get_book_by_id(IN a_id BIGINT) 
+CREATE PROCEDURE get_book_by_id(IN a_author_id BIGINT, IN a_id BIGINT) 
 BEGIN
 	SELECT id, title, subtitle, pages, words, isbn, edition, submission_date, approval_date, literary_style_id, publication_type, author_id
 	FROM books
-    WHERE id = a_id;
+    WHERE author_id = a_author_id AND id = a_id;
 END $$
 DELIMITER ;
 
-DROP PROCEDURE IF EXISTS `PA_TP`.`get_books_by_author` ;
+DROP PROCEDURE IF EXISTS `PA_TP`.`get_books_by_submission_date` ;
 DELIMITER $$
-CREATE PROCEDURE get_books_by_author(IN a_author_id BIGINT) 
+CREATE PROCEDURE get_books_by_submission_date(IN a_author_id BIGINT, IN a_submission_date DATE) 
 BEGIN
 	SELECT books.id, books.title as "title", books.subtitle as "subtitle", books.pages as "pages", books.words as "words", books.isbn as "isbn", books.edition as "edition", books.submission_date as "submission_date", books.approval_date as "approval_date", books.literary_style_id as "literary_style_id", books.publication_type as "publication_type", books.author_id  as "author_id"
 	FROM books
     INNER JOIN authors
     ON authors.id = books.author_id
-    WHERE authors.id = a_author_id;
+    WHERE authors.id = a_author_id and books.submission_date = a_submission_date;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`get_books_by_submission_date` ;
+DELIMITER $$
+CREATE PROCEDURE get_books_by_submission_date(IN a_author_id BIGINT, IN a_submission_date DATE) 
+BEGIN
+	SELECT books.id, books.title as "title", books.subtitle as "subtitle", books.pages as "pages", books.words as "words", books.isbn as "isbn", books.edition as "edition", books.submission_date as "submission_date", books.approval_date as "approval_date", books.literary_style_id as "literary_style_id", books.publication_type as "publication_type", books.author_id  as "author_id"
+	FROM books
+    INNER JOIN authors
+    ON authors.user_id = books.author_id
+    WHERE authors.user_id = a_author_id and books.submission_date = a_submission_date;
+END $$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`get_books_by_isbn` ;
+DELIMITER $$
+CREATE PROCEDURE get_books_by_isbn(IN a_author_id BIGINT, IN a_isbn VARCHAR(13)) 
+BEGIN
+	SELECT books.id, books.title as "title", books.subtitle as "subtitle", books.pages as "pages", books.words as "words", books.isbn as "isbn", books.edition as "edition", books.submission_date as "submission_date", books.approval_date as "approval_date", books.literary_style_id as "literary_style_id", books.publication_type as "publication_type", books.author_id  as "author_id"
+	FROM books
+    INNER JOIN authors
+    ON authors.user_id = books.author_id
+    WHERE authors.user_id = a_author_id and books.isbn like CONCAT ('%', a_isbn, '%');
 END $$
 DELIMITER ;
 

@@ -1,5 +1,6 @@
 package tp1.view;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -57,44 +58,47 @@ public class AuthorViews {
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 3);
             System.out.println();
-
+            ManageBooks manageBooks = new ManageBooks();
+            String title, subtitle, isbn, edition, msg, publicationType;
+            int pages, words, literaryStyleId;
+            ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
+            ArrayList<LiteraryStyle> literaryStyles;
             switch (option) {
                 case 1:
                     showListBooksMenu();
                     break;
                 case 2:
-                    ManageBooks manageBooks = new ManageBooks();
-                    String title = InputReader.readString("Título: ");
+                    
+                    title = InputReader.readString("Título: ");
                     if (manageBooks.existsTitle(title)) {
                         continue;
                     }
 
-                    String subtitle = InputReader.readString("Subtítulo: ");
+                    subtitle = InputReader.readString("Subtítulo: ");
 
-                    int pages = InputReader.readInt("Número de páginas: "),
-                     words = InputReader.readInt("Número de palavras: ");
+                    pages = InputReader.readInt("Número de páginas: ");
+                    words = InputReader.readInt("Número de palavras: ");
 
-                    String isbn = InputReader.readString("ISBN: ");
+                    isbn = InputReader.readString("ISBN: ");
                     if (manageBooks.existsIsbn(isbn)) {
                         continue;
                     }
 
-                    String edition = InputReader.readString("Edição: ");
+                    edition = InputReader.readString("Edição: ");
 
-                    ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
-                    ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteracyStyles();
+                    literaryStyles = manageLiteracyStyles.getLiteracyStyles();
                     if (literaryStyles == null) {
                         System.out.println("\nEstilos literários inixestentes\n");
                         return;
                     }
-                    String msg = "Estilos Literários\n";
+                    msg = "Estilos Literários\n";
                     for (int i = 0; i < literaryStyles.size(); i++) {
                         msg += (i + 1) + ". " + literaryStyles.get(i).getLiteraryStyle() + "\n";
                     }
                     msg += "Escolha: ";
 
-                    int literaryStyleId = literaryStyles.get(InputReader.readInt(msg, 1, literaryStyles.size()) - 1).getId();
-                    String publicationType = InputReader.readString("Tipo de publicação: ");
+                    literaryStyleId = literaryStyles.get(InputReader.readInt(msg, 1, literaryStyles.size()) - 1).getId();
+                    publicationType = InputReader.readString("Tipo de publicação: ");
 
                     if (manageBooks.insertBook(new Book(-1,
                             title,
@@ -111,9 +115,56 @@ public class AuthorViews {
                     } else {
                         System.out.println("\nNão inserido\n");
                     }
-
                     break;
                 case 3:
+                    long id = InputReader.readLong("ID da obra: ");
+                    Book book = manageBooks.getBookById(Main.getLoggedUser().getId(), id);
+                    title = InputReader.readString("Título: ");
+                    if (!book.getTitle().equals(title) && manageBooks.existsTitle(title)) {
+                        continue;
+                    }
+
+                    subtitle = InputReader.readString("Subtítulo: ");
+
+                    pages = InputReader.readInt("Número de páginas: ");
+                    words = InputReader.readInt("Número de palavras: ");
+
+                    isbn = InputReader.readString("ISBN: ");
+                    if (!book.getIsbn().equals(isbn) && manageBooks.existsIsbn(isbn)) {
+                        continue;
+                    }
+
+                    edition = InputReader.readString("Edição: ");
+
+                    literaryStyles = manageLiteracyStyles.getLiteracyStyles();
+                    if (literaryStyles == null) {
+                        System.out.println("\nEstilos literários inixestentes\n");
+                        return;
+                    }
+                    msg = "Estilos Literários\n";
+                    for (int i = 0; i < literaryStyles.size(); i++) {
+                        msg += (i + 1) + ". " + literaryStyles.get(i).getLiteraryStyle() + "\n";
+                    }
+                    msg += "Escolha: ";
+
+                    literaryStyleId = literaryStyles.get(InputReader.readInt(msg, 1, literaryStyles.size()) - 1).getId();
+                    publicationType = InputReader.readString("Tipo de publicação: ");
+
+                    if (manageBooks.updateBook(new Book(id,
+                            title,
+                            subtitle,
+                            pages,
+                            words,
+                            isbn,
+                            edition,
+                            new SimpleDateFormat("yyyy-MM-dd").format(new Date()),
+                            literaryStyleId,
+                            publicationType,
+                            Main.getLoggedUser().getId()))) {
+                        System.out.println("\nAtualizado com sucesso\n");
+                    } else {
+                        System.out.println("\nNão atualizado\n");
+                    }
                     break;
                 case 0:
                     break;
@@ -132,9 +183,9 @@ public class AuthorViews {
                     + "1. Listar Por Data De Submissão (Recente)\n"
                     + "2. Listar Por Data De Submissão (Antigo)\n"
                     + "3. Listar Por Título (Ascendente)\n"
-                    + "4. Listar Por Título (Descendente)"
-                    + "5. Pesquisar Por Data De Registo\n"
-                    + "6. Pesquisar Por Matrícula\n"
+                    + "4. Listar Por Título (Descendente)\n"
+                    + "5. Pesquisar Por Data De Submissão\n"
+                    + "6. Pesquisar Por ISBN\n"
                     + "0. Voltar\n\n"
                     + "Escolha:  ", 0, 6);
             System.out.println();
@@ -155,8 +206,20 @@ public class AuthorViews {
                     books = manageBooks.getBooks(Main.getLoggedUser().getId(), "title", "DESC", 1);
                     break;
                 case 5:
+                    String date = InputReader.readString("Data de submisssão a pesquisar: ");
+                    date = date.replace("\\", "-");
+                
+                    try {
+                        new SimpleDateFormat("dd-mm-yyyy").parse(date);
+                    } catch (ParseException e) {
+                        System.out.println("\nData inválida\n");
+                        continue;
+                    }
+                    books = manageBooks.getBooksBySubmissionDate(Main.getLoggedUser().getId(), date);
                     break;
+
                 case 6:
+                    books = manageBooks.getBooksByIsbn(Main.getLoggedUser().getId(), InputReader.readString("ISBN a pesquisar: "));
                     break;
                 case 0:
                     continue;
@@ -164,6 +227,11 @@ public class AuthorViews {
                     System.out.println("Opção inválida, tente novamente\n");
             }
 
+            if(books.size() == 0){
+                System.out.println("\nNenhuma obra encontrada\n");
+                continue;
+            }
+            
             System.out.println("| ID | Título | Subtítulo | Nº Páginas | Nº Palavras | ISBN | Edição | Data de Submissão |"
                     + " Data de aprovação | Id estilo literário | Tipo de publicação | Id author |");
             for (Book book : books) {
