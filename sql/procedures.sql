@@ -477,3 +477,34 @@ BEGIN
     WHERE id = a_id;
 END $$
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`get_logs_paginated`;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_logs_paginated`(IN page INT)
+BEGIN
+	DECLARE page_start INT;
+	DECLARE page_end INT;
+    SET page_start = (page-1)*10;
+	SET page_end = page*10;
+    
+    SELECT * 
+    FROM logs
+    LIMIT page_start, page_end;
+END$$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`get_logs_by_user_paginated`;
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_logs_by_user_paginated`(IN a_user_id BIGINT, IN page INT)
+BEGIN
+	DECLARE page_start INT;
+	DECLARE page_end INT;
+    SET page_start = (page-1)*10;
+	SET page_end = page*10;
+    
+    SELECT *
+    FROM logs 
+    WHERE user_id = a_user_id
+    LIMIT page_start, page_end;
+END$$
+DELIMITER ;
