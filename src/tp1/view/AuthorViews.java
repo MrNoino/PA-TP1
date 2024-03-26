@@ -8,6 +8,7 @@ import tp1.controller.ManageAuthors;
 import tp1.controller.ManageBooks;
 import tp1.controller.ManageLiteracyStyles;
 import tp1.controller.ManageLogs;
+import tp1.controller.ManageReviews;
 import tp1.controller.ManageUsers;
 import tp1.model.Author;
 import tp1.model.Book;
@@ -70,7 +71,7 @@ public class AuthorViews {
                     showListBooksMenu();
                     break;
                 case 2:
-                    
+
                     title = InputReader.readString("Título: ");
                     if (manageBooks.existsTitle(title)) {
                         continue;
@@ -210,7 +211,7 @@ public class AuthorViews {
                 case 5:
                     String date = InputReader.readString("Data de submisssão a pesquisar: ");
                     date = date.replace("\\", "-");
-                
+
                     try {
                         new SimpleDateFormat("dd-mm-yyyy").parse(date);
                     } catch (ParseException e) {
@@ -229,11 +230,11 @@ public class AuthorViews {
                     System.out.println("Opção inválida, tente novamente\n");
             }
 
-            if(books.size() == 0){
+            if (books.size() == 0) {
                 System.out.println("\nNenhuma obra encontrada\n");
                 continue;
             }
-            
+
             System.out.println("| ID | Título | Subtítulo | Nº Páginas | Nº Palavras | ISBN | Edição | Data de Submissão |"
                     + " Data de aprovação | Id estilo literário | Tipo de publicação | Id author |");
             for (Book book : books) {
@@ -270,6 +271,34 @@ public class AuthorViews {
                     showReviewRequestsListMenu();
                     break;
                 case 2:
+
+                    ManageBooks manageBooks = new ManageBooks();
+                    ArrayList<Book> books = manageBooks.getBooksByAuthor(Main.getLoggedUser().getId());
+
+                    if (books.isEmpty()) {
+                        System.out.println("Não existem obras em seu nome");
+                        continue;
+                    }
+
+                    String message = "Obras\n";
+
+                    for (int i = 0; i < books.size(); i++) {
+                        message += (i + 1) + ". " + books.get(i).getTitle() + "\n";
+                    }
+
+                    message += "\nEscolha: ";
+
+                    Long bookId = books.get(InputReader.readInt(message, 1, books.size()) - 1).getId();
+                    
+                    ManageReviews manageReviews = new ManageReviews();
+                    boolean success = manageReviews.addReview(bookId, Main.getLoggedUser().getId());
+                    
+                    if(success){
+                        System.out.println("Pedido revisão adicionado com sucesso\n");
+                    }else{
+                        System.out.println("Ocorreu um erro ao pedir revisão\n");
+                    }
+
                     break;
                 case 0:
                     break;
