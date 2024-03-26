@@ -377,3 +377,15 @@ BEGIN
     WHERE user_id = a_user_id;
 END$$
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`get_books_by_author`;
+DELIMITER $$
+CREATE PROCEDURE `get_books_by_author`(IN a_author_id BIGINT)
+BEGIN
+	SELECT books.id, books.title as "title", books.subtitle as "subtitle", books.pages as "pages", books.words as "words", books.isbn as "isbn", books.edition as "edition", books.submission_date as "submission_date", books.approval_date as "approval_date", books.literary_style_id as "literary_style_id", books.publication_type as "publication_type", books.author_id  as "author_id"
+	FROM books
+    INNER JOIN authors
+    ON authors.user_id = books.author_id
+    WHERE authors.user_id = a_author_id;
+END$$
+DELIMITER ;
