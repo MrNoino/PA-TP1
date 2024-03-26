@@ -2,6 +2,8 @@ package tp1.view;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import tp1.controller.ManageLogs;
+import tp1.model.Log;
 import tp1.model.User;
 
 /**
@@ -43,22 +45,29 @@ public class Main {
     }
 
     /**
-     * Assigns the user that logged in
+     * Assigns the user that logged in, inserts a log and prints a welcome message
      *
      * @param loggedUser the user logged in
      */
-    public static void setLoggedUserId(User loggedUser) {
+    public static void login(User loggedUser) {
         Main.loggedUser = loggedUser;
+        new ManageLogs().insertLog(new Log(Main.loggedUser.getId(), 
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()), 
+                        Main.loggedUser.getUsername() + " Iniciou Sessão"));
+        System.out.println("\nBem vindo " + Main.loggedUser.getUsername() + "\n");
     }
 
     /**
-     * Logout by print a goodbye message and setting user as null
+     * Logout by inserting a log, print a goodbye message and assigns user as null
      */
     public static void logout() {
         if (Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                new SimpleDateFormat("yyyy-mm-dd").format(new Date()),
+                Main.getLoggedUser().getUsername() + " Terminou Sessão"));
             System.out.println("Adeus " + Main.getLoggedUser().getUsername() + "\n");
         }
-        Main.setLoggedUserId(null);
+        Main.loggedUser = null;
     }
 
     /**

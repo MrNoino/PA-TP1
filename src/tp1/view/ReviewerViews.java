@@ -1,8 +1,12 @@
 package tp1.view;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import tp1.controller.ManageLogs;
 import tp1.controller.ManageManagers;
 import tp1.controller.ManageReviewers;
 import tp1.controller.ManageUsers;
+import tp1.model.Log;
 import tp1.model.Manager;
 import tp1.model.Reviewer;
 
@@ -21,8 +25,6 @@ public class ReviewerViews {
             System.out.println();
 
             switch (option) {
-                case 0:
-                    break;
                 case 1:
                     showReviewRequestsMenu();
                     break;
@@ -30,6 +32,11 @@ public class ReviewerViews {
                     break;
                 case 3:
                     showUpdateProfileMenu();
+                    break;
+                case 0:
+                    new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), 
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()), 
+                        Main.getLoggedUser().getUsername() + " terminou sessão"));
                     break;
                 default:
                     throw new AssertionError();

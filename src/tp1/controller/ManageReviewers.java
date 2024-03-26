@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import tp1.model.DbWrapper;
 import tp1.model.Reviewer;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import tp1.model.Log;
+import tp1.view.Main;
 
 /**
  * A class to manage reviewers on the database
@@ -31,7 +34,11 @@ public class ManageReviewers {
         try {
             if(resultSet == null || !resultSet.next())
                 return null;
-            
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                        new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                        "Pesquisou Revisor por ID: " + id));
+            }
             return new Reviewer(resultSet.getLong("id"), 
                     resultSet.getString("name"), 
                     resultSet.getString("username"), 
@@ -59,7 +66,7 @@ public class ManageReviewers {
      */
     public boolean insertReviewer(Reviewer reviewer) {
         DbWrapper dbWrapper = new DbWrapper();
-        return dbWrapper.manipulate("CALL insert_reviewer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{reviewer.getName(),
+        boolean inserted =  dbWrapper.manipulate("CALL insert_reviewer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{reviewer.getName(),
                                                                                                         reviewer.getUsername(),
                                                                                                         reviewer.getPassword(),
                                                                                                         reviewer.getEmail(),
@@ -69,6 +76,12 @@ public class ManageReviewers {
                                                                                                         reviewer.getAddress(),
                                                                                                         reviewer.getGraduation(),
                                                                                                         reviewer.getSpecialization()}) > 0;
+        if (inserted && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                    new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                    "Inseriu Revisor"));
+        }
+        return inserted;
     }
 
     /**
@@ -79,7 +92,7 @@ public class ManageReviewers {
      */
     public boolean updateReviewer(Reviewer reviewer) {
         DbWrapper dbWrapper = new DbWrapper();
-        return dbWrapper.manipulate("CALL update_reviewer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{reviewer.getId(),
+        boolean updated = dbWrapper.manipulate("CALL update_reviewer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{reviewer.getId(),
             reviewer.getName(),
             reviewer.getUsername(),
             reviewer.getPassword(),
@@ -90,15 +103,11 @@ public class ManageReviewers {
             reviewer.getAddress(),
             reviewer.getGraduation(),
             reviewer.getSpecialization()}) > 0;
-    }
-
-    /**
-     * Deletes a reviewer
-     *
-     * @param reviewer The reviewer to be deleted
-     * @return Confirms if a reviewer was deleted successfully
-     */
-    public boolean deleteReviewer(Reviewer reviewer) {
-        return true;
+        if (updated && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                    new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                    "Atualizou Revisor (ID: " + reviewer.getId() + ")"));
+        }
+        return updated;
     }
 }

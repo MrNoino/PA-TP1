@@ -24,59 +24,59 @@ public class ManageManagers {
     public ManageManagers() {
         managers = new ArrayList<Manager>();
     }
-    
+
     /**
      * Connects to the database and retrieve the number of managers
+     *
      * @return the number of managers in the database
      */
-    public int getTotalManagers(){
-        
+    public int getTotalManagers() {
+
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
         ResultSet resultSet = dbWrapper.query("SELECT * FROM total_managers;");
-        
+
         try {
-            if(resultSet == null || !resultSet.next())
+            if (resultSet == null || !resultSet.next()) {
                 return -1;
+            }
 
             return resultSet.getInt("total_managers");
         } catch (SQLException e) {
             e.printStackTrace();
             return -1;
-        } finally{
+        } finally {
             dbWrapper.disconnect();
         }
     }
-    
+
     public Manager getManager(long id) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
         ResultSet resultSet = dbWrapper.query("CALL get_manager_by_id(?);", new Object[]{id});
         try {
-            if(resultSet == null || !resultSet.next())
+            if (resultSet == null || !resultSet.next()) {
                 return null;
+            }
+
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), 
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()), 
+                        "Pesquisou Gestor (ID: " + id + ")"));
+            }
             
-            return new Manager(resultSet.getLong("id"), 
-                    resultSet.getString("name"), 
-                    resultSet.getString("username"), 
-                    resultSet.getString("email"), 
-                    resultSet.getBoolean("active"), 
-                    resultSet.getBoolean("deleted"), 
+            return new Manager(resultSet.getLong("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("username"),
+                    resultSet.getString("email"),
+                    resultSet.getBoolean("active"),
+                    resultSet.getBoolean("deleted"),
                     resultSet.getInt("role_id"));
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
-    }
-
-    /**
-     *
-     * 
-     * @return Returns a list of managers
-     */
-    public ArrayList<Manager> getManagers() {
-        return this.managers;
     }
 
     /**
@@ -88,15 +88,17 @@ public class ManageManagers {
     public boolean insertManager(Manager manager) {
         DbWrapper dbWrapper = new DbWrapper();
         boolean inserted = dbWrapper.manipulate("CALL insert_manager(?, ?, ?, ?, ?);", new Object[]{manager.getName(),
-                                                                                                manager.getUsername(),
-                                                                                                manager.getPassword(),
-                                                                                                manager.getEmail(),
-                                                                                                manager.getRoleId()}) > 0;
-        
-        if(inserted && Main.getLoggedUser() != null){
-            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), new SimpleDateFormat("yyyy-mm-dd").format(new Date()), "Inseriu Gestor"));
+            manager.getUsername(),
+            manager.getPassword(),
+            manager.getEmail(),
+            manager.getRoleId()}) > 0;
+
+        if (inserted && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                    new SimpleDateFormat("yyyy-mm-dd").format(new Date()),
+                    "Inseriu Gestor"));
         }
-        
+
         return inserted;
     }
 
@@ -108,12 +110,19 @@ public class ManageManagers {
      */
     public boolean updateManager(Manager manager) {
         DbWrapper dbWrapper = new DbWrapper();
-        return dbWrapper.manipulate("CALL update_user(?, ?, ?, ?, ?, ?);", new Object[]{manager.getId(),
+        boolean updated = dbWrapper.manipulate("CALL update_user(?, ?, ?, ?, ?, ?);", new Object[]{manager.getId(),
             manager.getName(),
             manager.getUsername(),
             manager.getPassword(),
             manager.getEmail(),
             manager.getRoleId()}) > 0;
+
+        if (updated && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), 
+                    new SimpleDateFormat("yyyy-mm-dd").format(new Date()), 
+                    "Atualizou Gestor (ID: " + manager.getId() + ")"));
+        }
+        return updated;
     }
-    
+
 }

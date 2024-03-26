@@ -31,7 +31,11 @@ public class ManageBooks {
             if (resultSet == null || !resultSet.next()) {
                 return null;
             }
-
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), 
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()), 
+                        "Pesquisou Obra por ID: " + bookId));
+            }
             return new Book(resultSet.getLong("id"),
                     resultSet.getString("title"),
                     resultSet.getString("subtitle"),
@@ -74,7 +78,11 @@ public class ManageBooks {
             if (resultSet == null) {
                 return null;
             }
-
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), 
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()), 
+                        "Listou Obras"));
+            }
             while (resultSet.next()) {
                 this.books.add(new Book(resultSet.getLong("id"),
                         resultSet.getString("title"),
@@ -105,7 +113,11 @@ public class ManageBooks {
             if (resultSet == null) {
                 return null;
             }
-
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), 
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()), 
+                        "Pesquisou Obras por Data de Submissão: " + submissionDate));
+            }
             while (resultSet.next()) {
                 this.books.add(new Book(resultSet.getLong("id"),
                         resultSet.getString("title"),
@@ -136,7 +148,11 @@ public class ManageBooks {
             if (resultSet == null) {
                 return null;
             }
-
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), 
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()), 
+                        "Pesquisou Obras por ISBN: " + isbn));
+            }
             while (resultSet.next()) {
                 this.books.add(new Book(resultSet.getLong("id"),
                         resultSet.getString("title"),
@@ -220,7 +236,9 @@ public class ManageBooks {
             book.getAuthorId()}) > 0;
 
         if (inserted && Main.getLoggedUser() != null) {
-            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), new SimpleDateFormat("yyyy-mm-dd").format(new Date()), "Inseriu Obra"));
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), 
+                    new SimpleDateFormat("yyyy-mm-dd").format(new Date()), 
+                    "Inseriu Obra"));
         }
         return inserted;
     }
@@ -233,7 +251,7 @@ public class ManageBooks {
      */
     public boolean updateBook(Book book) {
         DbWrapper dbWrapper = new DbWrapper();
-        return dbWrapper.manipulate("CALL update_book(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{book.getId(),
+        boolean updated = dbWrapper.manipulate("CALL update_book(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{book.getId(),
             book.getTitle(),
             book.getSubtitle(),
             book.getPages(),
@@ -243,15 +261,12 @@ public class ManageBooks {
             book.getLiteracyStyleId(),
             book.getPublicationType(),
             book.getAuthorId()}) > 0;
-    }
-
-    /**
-     * Deletes a book
-     *
-     * @param book The book to be deleted
-     * @return Confirms if a book was deleted successfully
-     */
-    public boolean deleteBook(Book book) {
-        return true;
+        
+        if (updated && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), 
+                    new SimpleDateFormat("yyyy-mm-dd").format(new Date()), 
+                    "Atualizou Obra (ID: " + book.getId() + ")"));
+        }
+        return updated;
     }
 }

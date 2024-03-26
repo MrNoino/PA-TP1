@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import tp1.model.Author;
 import tp1.model.DbWrapper;
 import java.sql.*;
+import java.text.SimpleDateFormat;
+import tp1.model.Log;
+import tp1.view.Main;
 
 /**
  * A class to manage authors on the database
@@ -32,6 +35,11 @@ public class ManageAuthors {
             if(resultSet == null || !resultSet.next())
                 return null;
             
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                        new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                        "Pesquisou Autor pelo ID: " + id));
+            }
             return new Author(resultSet.getLong("id"), 
                     resultSet.getString("name"), 
                     resultSet.getString("username"), 
@@ -59,7 +67,7 @@ public class ManageAuthors {
      */
     public boolean insertAuthor(Author author) {
         DbWrapper dbWrapper = new DbWrapper();
-        return dbWrapper.manipulate("CALL insert_author(?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{author.getName(),
+        boolean inserted = dbWrapper.manipulate("CALL insert_author(?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{author.getName(),
             author.getUsername(),
             author.getPassword(),
             author.getEmail(),
@@ -68,6 +76,12 @@ public class ManageAuthors {
             author.getPhone(),
             author.getAddress(),
             author.getLiteraryStyleId()}) > 0;
+        if (inserted && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                    new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                    "Inseriu Autor"));
+        }
+        return inserted;
     }
 
     /**
@@ -78,7 +92,7 @@ public class ManageAuthors {
      */
     public boolean updateAuthor(Author author) {
         DbWrapper dbWrapper = new DbWrapper();
-        return dbWrapper.manipulate("CALL update_author(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{author.getId(),
+        boolean updated = dbWrapper.manipulate("CALL update_author(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{author.getId(),
             author.getName(),
             author.getUsername(),
             author.getPassword(),
@@ -88,15 +102,12 @@ public class ManageAuthors {
             author.getPhone(),
             author.getAddress(),
             author.getLiteraryStyleId()}) > 0;
+        if (updated && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                    new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                    "Atualizou Autor (ID: " + author.getId() + ")"));
+        }
+        return updated;
     }
 
-    /**
-     * Deletes an author
-     *
-     * @param author The author to be deleted
-     * @return Confirms if an author was deleted successfully
-     */
-    public boolean deleteAuthor(Author author) {
-        return true;
-    }
 }

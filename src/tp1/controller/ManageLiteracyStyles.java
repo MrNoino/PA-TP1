@@ -4,8 +4,11 @@ import java.util.ArrayList;
 import tp1.model.DbWrapper;
 import tp1.model.LiteraryStyle;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import tp1.model.Log;
+import tp1.view.Main;
 
 /**
  * A class to manage literacy styles on the database
@@ -29,6 +32,11 @@ public class ManageLiteracyStyles {
         try {
             if(resultSet == null)
                 return null;
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                        new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                        "Listou Estilos Literários"));
+            }
             while(resultSet.next())
                 this.literacyStyles.add(new LiteraryStyle(resultSet.getInt("id"), resultSet.getString("literary_style")));
             
@@ -40,35 +48,5 @@ public class ManageLiteracyStyles {
         }
         
         return this.literacyStyles;
-    }
-
-    /**
-     * Adds a literacy style
-     *
-     * @param literacyStyle The literacy style to add to the list
-     * @return Confirms if a literacy style was added successfully
-     */
-    public boolean addLiteracyStyle(LiteraryStyle literacyStyle) {
-        return true;
-    }
-
-    /**
-     * Updates a literacy style
-     *
-     * @param literacyStyle The literacy style to be updated
-     * @return Confirms if a literacy style was updated successfully
-     */
-    public boolean updateLiteracyStyle(LiteraryStyle literacyStyle) {
-        return true;
-    }
-
-    /**
-     * Deletes a literacy style
-     *
-     * @param literacyStyle The literacy style to be deleted
-     * @return Confirms if a literacy style was deleted successfully
-     */
-    public boolean deleteLiteracyStyle(LiteraryStyle literacyStyle) {
-        return true;
     }
 }

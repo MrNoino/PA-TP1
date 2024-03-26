@@ -7,10 +7,12 @@ import java.util.Date;
 import tp1.controller.ManageAuthors;
 import tp1.controller.ManageBooks;
 import tp1.controller.ManageLiteracyStyles;
+import tp1.controller.ManageLogs;
 import tp1.controller.ManageUsers;
 import tp1.model.Author;
 import tp1.model.Book;
 import tp1.model.LiteraryStyle;
+import tp1.model.Log;
 
 public class AuthorViews {
 

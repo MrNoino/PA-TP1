@@ -7,12 +7,14 @@ import java.util.ArrayList;
 import java.util.Date;
 import tp1.controller.ManageAuthors;
 import tp1.controller.ManageLiteracyStyles;
+import tp1.controller.ManageLogs;
 import tp1.controller.ManageManagers;
 import tp1.controller.ManageReviewers;
 import tp1.controller.ManageUsers;
 import tp1.model.Author;
 import tp1.model.DbWrapper;
 import tp1.model.LiteraryStyle;
+import tp1.model.Log;
 import tp1.model.Manager;
 import tp1.model.Reviewer;
 import tp1.model.User;
@@ -122,8 +124,7 @@ public class MainViews {
         User user = manageUsers.login(InputReader.readString("Nome de utilizador: "), InputReader.readString("Palavra Passe: "));
         if (user != null) {
             if (user.isActive()) {
-                Main.setLoggedUserId(user);
-                System.out.println("\nBem vindo " + user.getUsername() + "\n");
+                Main.login(user);
                 switch (user.getRoleId()) {
                     case 1:
                         new ManagerViews().showMenu();

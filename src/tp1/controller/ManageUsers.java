@@ -5,8 +5,10 @@ import tp1.model.DbWrapper;
 import tp1.model.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import tp1.model.Log;
+import tp1.view.Main;
 
 public class ManageUsers {
 
@@ -142,7 +144,11 @@ public class ManageUsers {
             if (resultSet == null || !resultSet.next()) {
                 return null;
             }
-
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()),
+                        "Pesquisou Utilizador (ID: " + id + ")"));
+            }
             return new User(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getString("username"), resultSet.getString("email"), resultSet.getBoolean("active"), resultSet.getBoolean("deleted"), resultSet.getInt("role_id"));
 
         } catch (SQLException e) {
@@ -157,9 +163,15 @@ public class ManageUsers {
      * @param active status to be changed
      * @return if the status was changed
      */
-    public boolean changeUserStatus(long id, boolean active) {
+    public boolean updateUserStatus(long id, boolean active) {
         DbWrapper dbWrapper = new DbWrapper();
-        return dbWrapper.manipulate("CALL change_user_status(?, ?);", new Object[]{id, active}) > 0;
+        boolean updated = dbWrapper.manipulate("CALL change_user_status(?, ?);", new Object[]{id, active}) > 0;
+        if (updated && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                    new SimpleDateFormat("yyyy-mm-dd").format(new Date()),
+                    "Atualizou Estado do Utilizador (ID: " + id + ")"));
+        }
+        return updated;
     }
 
     /**
@@ -176,7 +188,11 @@ public class ManageUsers {
             if (resultSet == null) {
                 return null;
             }
-
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()),
+                        "Listou Utilizadores"));
+            }
             while (resultSet.next()) {
                 this.users.add(new User(resultSet.getLong("id"),
                         resultSet.getString("name"),
@@ -208,7 +224,11 @@ public class ManageUsers {
             if (resultSet == null) {
                 return null;
             }
-
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()),
+                        "Pesquisou Utilizadores por Nome: " + name));
+            }
             while (resultSet.next()) {
                 this.users.add(new User(resultSet.getLong("id"),
                         resultSet.getString("name"),
@@ -239,7 +259,11 @@ public class ManageUsers {
             if (resultSet == null) {
                 return null;
             }
-
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()),
+                        "Pesquisou Utilizadores por Nome De Utilizador: " + username));
+            }
             while (resultSet.next()) {
                 this.users.add(new User(resultSet.getLong("id"),
                         resultSet.getString("name"),
@@ -270,7 +294,11 @@ public class ManageUsers {
             if (resultSet == null) {
                 return null;
             }
-
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()),
+                        "Pesquisou Utilizadores por Tipo: " + role));
+            }
             while (resultSet.next()) {
                 this.users.add(new User(resultSet.getLong("id"),
                         resultSet.getString("name"),

@@ -461,14 +461,14 @@ public class ManagerViews {
                     System.out.println();
                     switch (active) {
                         case 1:
-                            if (manageUsers.changeUserStatus(id, true)) {
+                            if (manageUsers.updateUserStatus(id, true)) {
                                 System.out.println("\nEstado do utilizador alterado\n");
                             } else {
                                 System.out.println("\nEstado não alterado\n");
                             }
                             break;
                         case 2:
-                            if (manageUsers.changeUserStatus(id, false)) {
+                            if (manageUsers.updateUserStatus(id, false)) {
                                 System.out.println("\nEstado do utilizador alterado\n");
                             } else {
                                 System.out.println("\nEstado não alterado\n");
@@ -566,23 +566,20 @@ public class ManagerViews {
                 case 1:
 
                     logs = manageLogs.getLogs(1);
-
                     if(logs.isEmpty()){
                         System.out.println("Nenhum log encontrado\n");
                         continue;
                     }
                     
                     System.out.println("ID Utilizador\t\tData\t\tAção\n");
-                    
                     for (Log log : logs) {
                         System.out.println(log.getUserId() + "\t\t" + log.getDatetime() + "\t\t" + log.getAction());
                     }
-
+                    System.out.println();
                     break;
                 case 2:
 
                     int userId = InputReader.readInt("Insira o id de utilizador: ");
-
                     logs = manageLogs.getLogsByUser(userId);
                     
                     if(logs.isEmpty()){
@@ -591,11 +588,10 @@ public class ManagerViews {
                     }
                     
                     System.out.println("Data\t\tAção\n");
-                    
                     for (Log log : logs) {
-                        System.out.println(log.getUserId() + "\t\t" + log.getDatetime() + "\t\t" + log.getAction());
+                        System.out.println(log.getDatetime() + "\t\t" + log.getAction());
                     }
-
+                    System.out.println();
                     break;
                 default:
                     System.out.println("Opção inválida, tente novamente\n");
