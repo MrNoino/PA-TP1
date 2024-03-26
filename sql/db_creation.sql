@@ -176,11 +176,12 @@ ENGINE = InnoDB;
 DROP TABLE IF EXISTS `PA_TP`.`Logs` ;
 
 CREATE TABLE IF NOT EXISTS `PA_TP`.`Logs` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `user_id` BIGINT NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT NOW(),
   `action` VARCHAR(512) NOT NULL,
   INDEX `fk_Logs_Users1_idx` (`user_id` ASC) VISIBLE,
-  PRIMARY KEY (`user_id`, `datetime`),
+  PRIMARY KEY (`id`),
   CONSTRAINT `fk_Logs_Users1`
     FOREIGN KEY (`user_id`)
     REFERENCES `PA_TP`.`Users` (`id`)

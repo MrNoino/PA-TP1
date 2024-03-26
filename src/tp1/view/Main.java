@@ -1,5 +1,12 @@
 package tp1.view;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import tp1.controller.ManageLogs;
@@ -23,6 +30,53 @@ public class Main {
         long startProrgamMilis = System.currentTimeMillis();
 
         InputReader.openScanner();
+        
+        File file  = new File("system_execution.txt");
+
+        long executionQuantity = 0;
+        
+        if(file.exists()){
+            FileReader reader = null;
+            try {
+                reader = new FileReader(file);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            BufferedReader input = new BufferedReader( reader );
+            try { 
+                input.readLine();
+                executionQuantity = Long.parseLong(input.readLine());
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally{
+                try {
+                    input.close();
+                    reader.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter( file );
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        BufferedWriter output = new BufferedWriter( writer );
+        try {
+            output.write(new SimpleDateFormat("dd-mm-yyyy").format(new Date()) + "\n" + (executionQuantity+1));
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally{
+            try {
+                output.close();
+                writer.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
 
         MainViews mainViews = new MainViews();
         mainViews.showNoManagerMenu();

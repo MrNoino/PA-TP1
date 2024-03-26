@@ -7,14 +7,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import tp1.controller.ManageAuthors;
 import tp1.controller.ManageLiteracyStyles;
-import tp1.controller.ManageLogs;
 import tp1.controller.ManageManagers;
 import tp1.controller.ManageReviewers;
 import tp1.controller.ManageUsers;
 import tp1.model.Author;
 import tp1.model.DbWrapper;
 import tp1.model.LiteraryStyle;
-import tp1.model.Log;
 import tp1.model.Manager;
 import tp1.model.Reviewer;
 import tp1.model.User;
@@ -90,6 +88,7 @@ public class MainViews {
     public void showMainMenu() {
         int option;
         do {
+            
             option = InputReader.readInt("**** MENU PRINCIPAL ****\n"
                     + "1. Iniciar Sessão\n"
                     + "2. Registar Utilizador\n"

@@ -25,10 +25,11 @@ public class ManagerViews {
             option = InputReader.readInt("**** MENU DE GESTOR ****\n"
                     + "1. Utilizadores\n"
                     + "2. Pedidos De Revisão\n"
-                    + "3. Auditioria\n"
-                    + "4. Atualizar Perfil\n"
+                    + "3. Licensas\n"
+                    + "4. Auditioria\n"
+                    + "5. Perfil\n"
                     + "0. Terminar Sessão\n\n"
-                    + "Escolha: ", 0, 3);
+                    + "Escolha: ", 0, 5);
             System.out.println();
 
             switch (option) {
@@ -39,10 +40,13 @@ public class ManagerViews {
                     showReviewRequestsMenu();
                     break;
                 case 3:
-                    showAuditMenu();
+                    showLicensesMenu();
                     break;
                 case 4:
-                    showUpdateProfileMenu();
+                    showAuditMenu();
+                    break;
+                case 5:
+                    showProfileMenu();
                     break;
                 case 0:
                     break;
@@ -544,6 +548,31 @@ public class ManagerViews {
         } while (option != 0);
     }
 
+    private void showLicensesMenu(){
+        int option;
+        do {
+            option = InputReader.readInt("**** LICENSAS ****\n"
+                    + "1. Inserir Licensa\n"
+                    + "2. Autalizar Quantidade de Licensas\n"
+                    + "0. Sair\n\n"
+                    + "Escolha: ", 0, 2);
+            System.out.println();
+
+            switch (option) {
+                case 1:
+                    
+                    break;
+                case 2:
+                    
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("\nOpção inválida, tente novamente\n");
+            }
+        } while (option != 0);
+    }
+    
     private void showAuditMenu() {
         int option;
 
@@ -600,6 +629,31 @@ public class ManagerViews {
         } while (option != 0);
     }
 
+    private void showProfileMenu(){
+        int option;
+        do {
+            option = InputReader.readInt("**** PERFIL ****\n"
+                    + "1. Atualizar\n"
+                    + "2. Eliminar\n"
+                    + "0. Voltar\n\n"
+                    + "Escolha: ", 0, 2);
+            System.out.println();
+
+            switch (option) {
+                case 1:
+                    this.showUpdateProfileMenu();
+                    break;
+                case 2:
+                    this.showDeleteProfileMenu();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("\nOpção inválida, tente novamente\n");
+            }
+        } while (option != 0);
+    }
+    
     private void showUpdateProfileMenu() {
 
         System.out.println("Atualizar Perfil\n");
@@ -634,6 +688,21 @@ public class ManagerViews {
             System.out.println("\nAtualizado com sucesso\n");
         } else {
             System.out.println("\nErro ao atualizar\n");
+        }
+    }
+    
+    private void showDeleteProfileMenu(){
+        System.out.println("Eliminar Perfil\n");
+
+        int option = InputReader.readInt("Deseja mesmo eliminar o perfil?\n1. Sim\n0. Não\n\nEscolha: ", 0, 1);
+        
+        switch (option) {
+            case 1:
+                break;
+            case 0:
+                break;
+            default:
+                System.out.println("\nOpção inválida\n");
         }
     }
 }
