@@ -389,3 +389,11 @@ BEGIN
     WHERE authors.user_id = a_author_id;
 END$$
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`get_reviews_max_id`;
+DELIMITER $$
+CREATE PROCEDURE `get_reviews_max_id`()
+BEGIN
+	SELECT MAX(id) as `max` FROM reviews;
+END$$
+DELIMITER ;
