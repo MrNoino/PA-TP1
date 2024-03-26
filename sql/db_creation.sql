@@ -199,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `PA_TP`.`Reviews` (
   `serial_number` VARCHAR(128) NOT NULL,
   `submission_date` DATE NOT NULL DEFAULT (CURRENT_DATE),
   `approval_date` DATE NULL,
-  `completation_date` DATE NULL,
+  `completion_date` DATE NULL,
   `elapsed_time` INT NULL,
   `observations` VARCHAR(512) NULL,
   `cost` FLOAT NULL,
