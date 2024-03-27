@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import tp1.controller.ManageLogs;
 import tp1.controller.ManageReviewers;
+import tp1.controller.ManageReviews;
 import tp1.controller.ManageUsers;
 import tp1.model.Log;
 import tp1.model.Reviewer;
@@ -24,7 +25,7 @@ public class ReviewerViews {
 
             switch (option) {
                 case 1:
-                    showReviewRequestsMenu();
+                    showReviewRequestsMenu("submission_date");
                     break;
                 case 2:
                     break;
@@ -32,9 +33,9 @@ public class ReviewerViews {
                     showProfileMenu();
                     break;
                 case 0:
-                    new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), 
-                        new SimpleDateFormat("yyyy-mm-dd").format(new Date()), 
-                        Main.getLoggedUser().getUsername() + " terminou sessão"));
+                    new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                            new SimpleDateFormat("yyyy-mm-dd").format(new Date()),
+                            Main.getLoggedUser().getUsername() + " terminou sessão"));
                     break;
                 default:
                     throw new AssertionError();
@@ -44,9 +45,9 @@ public class ReviewerViews {
         Main.logout();
     }
 
-    private void showReviewRequestsMenu() {
+    private void showReviewRequestsMenu(String sortType) {
 
-        int input = InputReader.readInt("**** LISTAR PEDIDOS DE REVISÃO ****\n"
+        String menu = "**** LISTAR PEDIDOS DE REVISÃO ****\n"
                 + "1. Listar Por Data De Criação (Recente)\n"
                 + "2. Listar Por Data De Criação (Antigo)\n"
                 + "3. Listar Por Título (Ascendente)\n"
@@ -55,7 +56,9 @@ public class ReviewerViews {
                 + "6. Pesquisar Por Título\n"
                 + "7. Pesquisar Por Estado\n"
                 + "0. Voltar\n\n"
-                + "Escolha: ", 0, 7);
+                + "\n\nEscolha: ";
+
+        int input = InputReader.readInt(menu, 0, 7);
 
         switch (input) {
             case 0:
