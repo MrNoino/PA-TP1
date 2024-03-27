@@ -73,3 +73,12 @@ BEGIN
     VALUES (a_serial_number, a_book_id, a_author_id, 'iniciada');
 END$$
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`insert_license`;
+DELIMITER $$
+CREATE PROCEDURE `insert_license`(IN a_designation VARCHAR(128), IN a_expire_date DATE, IN a_quantity INT)
+BEGIN
+	INSERT INTO licenses (designation, expire_date, quantity)
+    VALUES (a_designation, a_expire_date, a_quantity);
+END$$
+DELIMITER ;

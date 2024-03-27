@@ -1,8 +1,15 @@
 package tp1.controller;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import tp1.model.Author;
 import tp1.model.DbWrapper;
 import tp1.model.License;
+import tp1.model.Log;
+import tp1.view.Main;
 
 /**
  * A class to manage licenses on the database
@@ -20,7 +27,31 @@ public class ManageLicenses {
      * @return Returns a list of licenses
      */
     public ArrayList<License> getLicenses() {
-        return this.licenses;
+        DbWrapper dbWrapper = new DbWrapper();
+        dbWrapper.connect();
+        ResultSet resultSet = dbWrapper.query("SELECT * FROM get_licenses;");
+        try {
+            if (resultSet == null) {
+                return null;
+            }
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                        new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                        "Listou Licenças"));
+            }
+            while (resultSet.next()) {
+                this.licenses.add(new License(resultSet.getInt("id"),
+                        resultSet.getString("designation"),
+                        resultSet.getString("expire_date"),
+                        resultSet.getInt("quantity")));
+            }
+
+            return this.licenses;
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -30,17 +61,33 @@ public class ManageLicenses {
      * @return Confirms if a license was inserted successfully
      */
     public boolean insertLicense(License license) {
-        return true;
+        DbWrapper dbWrapper = new DbWrapper();
+        boolean inserted = dbWrapper.manipulate("CALL insert_license(?, STR_TO_DATE(?, \"%d-%m-%Y\"), ?);", new Object[]{license.getDesignation(),
+            license.getExpireDate(),
+            license.getQuantity()}) > 0;
+        if (inserted && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                    new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                    "Inseriu Licença"));
+        }
+        return inserted;
     }
 
     /**
      * Updates a license quantity in the database
      *
-     * @param quantity tge amount to be updated
+     * @param licenseId the license id to be updated
+     * @param quantity the amount to be updated
      * @return Confirms if the quantity was updated successfully
      */
-    public boolean updateLicenseQuantity(int quantity) {
+    public boolean updateLicenseQuantity(int licenseId, int quantity) {
         DbWrapper dbWrapper = new DbWrapper();
-        return true;
+        boolean updated = dbWrapper.manipulate("CALL update_license_quantity(?, ?);", new Object[]{licenseId, quantity}) > 0;
+        if (updated && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                    new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                    "Autalizou Licença (ID: " + licenseId + ")"));
+        }
+        return updated;
     }
 }

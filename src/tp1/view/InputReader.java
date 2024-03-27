@@ -1,5 +1,8 @@
 package tp1.view;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -179,5 +182,31 @@ public class InputReader {
         }while(!validStr);
 
         return str;
+    }
+    
+    /**
+     * Always reading until a valid date is given by the user's keyboard
+     * @param msg message to be displayed before reading the user's keyboard
+     * @param datePattern pattern to be mathec with the given date
+     * @return a string with the date given by the user's keyboard
+     */
+    public static String readDate(String msg, String datePattern){
+        String date;
+        boolean validDate;
+        DateFormat dateFormat = new SimpleDateFormat(datePattern);
+        dateFormat.setLenient(false);
+        do {   
+            date = InputReader.readString(msg);
+            date = date.replace("/", "-");
+            try {
+                dateFormat.parse(date);
+                validDate = true;
+            } catch (ParseException e) {
+                System.out.println("\nData inválida, tente novamente\n");
+                validDate = false;
+            }
+        } while (!validDate);
+        
+        return date;
     }
 }

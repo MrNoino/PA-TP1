@@ -4,12 +4,14 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import tp1.controller.ManageAuthors;
+import tp1.controller.ManageLicenses;
 import tp1.controller.ManageLiteracyStyles;
 import tp1.controller.ManageLogs;
 import tp1.controller.ManageManagers;
 import tp1.controller.ManageReviewers;
 import tp1.controller.ManageUsers;
 import tp1.model.Author;
+import tp1.model.License;
 import tp1.model.LiteraryStyle;
 import tp1.model.Log;
 import tp1.model.Manager;
@@ -17,9 +19,9 @@ import tp1.model.Reviewer;
 import tp1.model.User;
 
 public class ManagerViews {
-
+    
     public void showMenu() {
-
+        
         int option;
         do {
             option = InputReader.readInt("**** MENU DE GESTOR ****\n"
@@ -31,7 +33,7 @@ public class ManagerViews {
                     + "0. Terminar Sessão\n\n"
                     + "Escolha: ", 0, 5);
             System.out.println();
-
+            
             switch (option) {
                 case 1:
                     showUsersMenu();
@@ -54,14 +56,14 @@ public class ManagerViews {
                     System.out.println("\nOpção inválida, tente novamente\n");
             }
         } while (option != 0);
-
+        
         Main.logout();
     }
-
+    
     private void showUsersMenu() {
-
+        
         int option;
-
+        
         do {
             option = InputReader.readInt("**** UTILIZADORES ****\n"
                     + "1. Listar Utilizadores\n"
@@ -70,7 +72,7 @@ public class ManagerViews {
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 3);
             System.out.println();
-
+            
             switch (option) {
                 case 1:
                     showListUsersMenu();
@@ -88,10 +90,10 @@ public class ManagerViews {
             }
         } while (option != 0);
     }
-
+    
     private void showListUsersMenu() {
         int option;
-
+        
         do {
             option = InputReader.readInt("**** LISTAR UTILIZADORES ****\n"
                     + "1. Listar Por Nome (Ascendente)\n"
@@ -107,7 +109,7 @@ public class ManagerViews {
             switch (option) {
                 case 1:
                     users = manageUsers.getUsers("ASC", 1);
-
+                    
                     if (users == null) {
                         continue;
                     } else if (users.isEmpty()) {
@@ -128,7 +130,7 @@ public class ManagerViews {
                     break;
                 case 2:
                     users = manageUsers.getUsers("DESC", 1);
-
+                    
                     if (users == null) {
                         continue;
                     } else if (users.isEmpty()) {
@@ -149,7 +151,7 @@ public class ManagerViews {
                     break;
                 case 3:
                     users = manageUsers.getUsersByName(InputReader.readString("Nome a pesquisar: "));
-
+                    
                     if (users == null) {
                         continue;
                     } else if (users.isEmpty()) {
@@ -170,7 +172,7 @@ public class ManagerViews {
                     break;
                 case 4:
                     users = manageUsers.getUsersByUsername(InputReader.readString("Nome de utilizador a pesquisar: "));
-
+                    
                     if (users == null) {
                         continue;
                     } else if (users.isEmpty()) {
@@ -191,7 +193,7 @@ public class ManagerViews {
                     break;
                 case 5:
                     users = manageUsers.getUsersByRole(InputReader.readString("Tipo de utilizador a pesquisar: "));
-
+                    
                     if (users == null) {
                         continue;
                     } else if (users.isEmpty()) {
@@ -217,7 +219,7 @@ public class ManagerViews {
             }
         } while (option != 0);
     }
-
+    
     private void showInsertUserMenu() {
         int option;
         do {
@@ -228,7 +230,7 @@ public class ManagerViews {
                     + "0. Voltar\n\n"
                     + "Escolha:", 0, 4);
             System.out.println();
-
+            
             String name = InputReader.readString("Nome: "),
                     username = InputReader.readString("Nome de utilizador: ");
             ManageUsers manageUsers = new ManageUsers();
@@ -240,7 +242,7 @@ public class ManagerViews {
             if (manageUsers.existsEmail(email)) {
                 return;
             }
-
+            
             if (option == 1 || option == 2) {
                 String nif = InputReader.readString("NIF: ", "\nNIF inválido, tente novamente\n", "\\d{9}");
                 if (manageUsers.existsNIF(nif)) {
@@ -248,7 +250,7 @@ public class ManagerViews {
                 }
                 String phone = InputReader.readString("Telemóvel: ", "\nTelemóvel inválido, tente novamente\n", "[239]\\d{8}"),
                         address = InputReader.readString("Morada: ");
-
+                
                 switch (option) {
                     case 1:
                         ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
@@ -262,9 +264,9 @@ public class ManagerViews {
                             msg += (i + 1) + ". " + literaryStyles.get(i).getLiteraryStyle() + "\n";
                         }
                         msg += "Escolha: ";
-
+                        
                         int literaryStyleId = literaryStyles.get(InputReader.readInt(msg, 1, literaryStyles.size()) - 1).getId();
-
+                        
                         ManageAuthors manageAuthors = new ManageAuthors();
                         if (manageAuthors.insertAuthor(new Author(-1,
                                 name,
@@ -287,7 +289,7 @@ public class ManagerViews {
                     case 2:
                         String graduation = InputReader.readString("Formação Académica: "),
                          specialization = InputReader.readString("Área de especialização: ");
-
+                        
                         ManageReviewers manageReviewers = new ManageReviewers();
                         if (manageReviewers.insertReviewer(new Reviewer(-1,
                                 name,
@@ -310,7 +312,7 @@ public class ManagerViews {
                     default:
                         break;
                 }
-
+                
             } else if (option == 3) {
                 ManageManagers manageManagers = new ManageManagers();
                 if (manageManagers.insertManager(new Manager(-1,
@@ -330,10 +332,10 @@ public class ManagerViews {
             }
         } while (option != 0);
     }
-
+    
     private void showUpdateUserMenu() {
         int option;
-
+        
         do {
             option = InputReader.readInt("**** ATUALIZAR UTILIZADORES ****\n"
                     + "1. Atualizar Tudo\n"
@@ -341,15 +343,15 @@ public class ManagerViews {
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 4);
             System.out.println();
-
+            
             if (option == 0) {
                 continue;
             }
-
+            
             long id = InputReader.readLong("ID: ");
-
+            
             User user = new ManageUsers().getUser(id);
-
+            
             if (user == null) {
                 System.out.println("\nNão foi possivel encontrar o utlizador\n");
                 break;
@@ -395,7 +397,7 @@ public class ManagerViews {
                             address = InputReader.readString("Morada: ");
                             String graduation = InputReader.readString("Formação Académica: "),
                              specialization = InputReader.readString("Área de especialização: ");
-
+                            
                             manageReviewers = new ManageReviewers();
                             if (manageReviewers.updateReviewer(new Reviewer(id,
                                     name,
@@ -434,9 +436,9 @@ public class ManagerViews {
                                 msg += (i + 1) + ". " + literaryStyles.get(i).getLiteraryStyle() + "\n";
                             }
                             msg += "Escolha: ";
-
+                            
                             int literaryStyleId = literaryStyles.get(InputReader.readInt(msg, 1, literaryStyles.size()) - 1).getId();
-
+                            
                             manageAuthors = new ManageAuthors();
                             if (manageAuthors.updateAuthor(new Author(id,
                                     name,
@@ -489,17 +491,17 @@ public class ManagerViews {
                 default:
                     System.out.println("\nOpção inválida, tente novamente\n");
             }
-
+            
         } while (option != 0);
     }
-
+    
     private void showReviewRequestsMenu() {
-
+        
     }
-
+    
     private void showListReviewsMenu() {
         int option;
-
+        
         do {
             option = InputReader.readInt("**** LISTAR REVISÕES ****\n"
                     + "1. Listar Por Data Submissão Mais Recente\n"
@@ -516,7 +518,7 @@ public class ManagerViews {
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 11);
             System.out.println();
-
+            
             switch (option) {
                 case 0:
                     showMenu();
@@ -547,23 +549,50 @@ public class ManagerViews {
             }
         } while (option != 0);
     }
-
-    private void showLicensesMenu(){
+    
+    private void showLicensesMenu() {
         int option;
         do {
             option = InputReader.readInt("**** LICENÇAS ****\n"
-                    + "1. Inserir Licença\n"
-                    + "2. Autalizar Quantidade de Licenças\n"
+                    + "1. Listar Licenças\n"
+                    + "2. Inserir Licença\n"
+                    + "3. Atualizar Quantidade de Licenças\n"
                     + "0. Sair\n\n"
-                    + "Escolha: ", 0, 2);
+                    + "Escolha: ", 0, 3);
             System.out.println();
-
+            
+            ManageLicenses manageLicenses = new ManageLicenses();
             switch (option) {
                 case 1:
+                    ArrayList<License> licenses = manageLicenses.getLicenses();
+                    if (licenses.isEmpty()) {
+                        System.out.println("Nenhuma licença encontrada\n");
+                        continue;
+                    }
+                    System.out.println("| ID | Designação | Data de Expiração | Quantidade |");
                     
+                    for (License license : licenses) {
+                        System.out.println("| " + license.getId()
+                                + " | " + license.getDesignation()
+                                + " | " + license.getExpireDate()
+                                + " | " + license.getQuantity() + " |");
+                    }
+                    System.out.println();
                     break;
                 case 2:
-                    
+                    if(manageLicenses.insertLicense(new License(-1,
+                            InputReader.readString("Designação: "),
+                            InputReader.readDate("Data de Expiração: ", "dd-MM-YYYY"),
+                            InputReader.readInt("Quantidade: "))))
+                        System.out.println("\nInserido com sucesso\n");
+                    else
+                        System.out.println("\nNão inserido\n");
+                    break;
+                case 3:
+                    if(manageLicenses.updateLicenseQuantity(InputReader.readInt("ID: "), InputReader.readInt("Quantidade (Positiva -> Adiciona | Negativa -> subtraí): ")))
+                        System.out.println("\nAtualizado com sucesso\n");
+                    else
+                        System.out.println("\nNão atualizado\n");
                     break;
                 case 0:
                     break;
@@ -575,7 +604,7 @@ public class ManagerViews {
     
     private void showAuditMenu() {
         int option;
-
+        
         do {
             option = InputReader.readInt("**** AUDITORIA ****\n"
                     + "1. Listar Logs\n"
@@ -587,15 +616,15 @@ public class ManagerViews {
             if (option == 0) {
                 continue;
             }
-
+            
             ManageLogs manageLogs = new ManageLogs();
             ArrayList<Log> logs;
-
+            
             switch (option) {
                 case 1:
-
+                    
                     logs = manageLogs.getLogs(1);
-                    if(logs.isEmpty()){
+                    if (logs.isEmpty()) {
                         System.out.println("Nenhum log encontrado\n");
                         continue;
                     }
@@ -607,11 +636,11 @@ public class ManagerViews {
                     System.out.println();
                     break;
                 case 2:
-
+                    
                     int userId = InputReader.readInt("Insira o id de utilizador: ");
                     logs = manageLogs.getLogsByUser(userId);
                     
-                    if(logs.isEmpty()){
+                    if (logs.isEmpty()) {
                         System.out.println("Nenhum log encontrado\n");
                         continue;
                     }
@@ -625,11 +654,11 @@ public class ManagerViews {
                 default:
                     System.out.println("Opção inválida, tente novamente\n");
             }
-
+            
         } while (option != 0);
     }
-
-    private void showProfileMenu(){
+    
+    private void showProfileMenu() {
         int option;
         do {
             option = InputReader.readInt("**** PERFIL ****\n"
@@ -638,7 +667,7 @@ public class ManagerViews {
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 2);
             System.out.println();
-
+            
             switch (option) {
                 case 1:
                     this.showUpdateProfileMenu();
@@ -655,13 +684,13 @@ public class ManagerViews {
     }
     
     private void showUpdateProfileMenu() {
-
+        
         System.out.println("Atualizar Perfil\n");
-
+        
         ManageManagers manageManagers = new ManageManagers();
-
+        
         Manager manager = manageManagers.getManager(Main.getLoggedUser().getId());
-
+        
         if (manager == null) {
             System.out.println("Não foi possivel encontrar o gestor\n");
             return;
@@ -691,9 +720,9 @@ public class ManagerViews {
         }
     }
     
-    private void showDeleteProfileMenu(){
+    private void showDeleteProfileMenu() {
         System.out.println("Eliminar Perfil\n");
-
+        
         int option = InputReader.readInt("Deseja mesmo eliminar o perfil?\n1. Sim\n0. Não\n\nEscolha: ", 0, 1);
         
         switch (option) {

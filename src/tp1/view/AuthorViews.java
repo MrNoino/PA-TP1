@@ -7,13 +7,11 @@ import java.util.Date;
 import tp1.controller.ManageAuthors;
 import tp1.controller.ManageBooks;
 import tp1.controller.ManageLiteracyStyles;
-import tp1.controller.ManageLogs;
 import tp1.controller.ManageReviews;
 import tp1.controller.ManageUsers;
 import tp1.model.Author;
 import tp1.model.Book;
 import tp1.model.LiteraryStyle;
-import tp1.model.Log;
 
 public class AuthorViews {
 
@@ -209,15 +207,7 @@ public class AuthorViews {
                     books = manageBooks.getBooks(Main.getLoggedUser().getId(), "title", "DESC", 1);
                     break;
                 case 5:
-                    String date = InputReader.readString("Data de submisssão a pesquisar: ");
-                    date = date.replace("\\", "-");
-
-                    try {
-                        new SimpleDateFormat("dd-mm-yyyy").parse(date);
-                    } catch (ParseException e) {
-                        System.out.println("\nData inválida\n");
-                        continue;
-                    }
+                    String date = InputReader.readDate("Data de submisssão a pesquisar: ", "dd-mm-yyyy");
                     books = manageBooks.getBooksBySubmissionDate(Main.getLoggedUser().getId(), date);
                     break;
 
@@ -230,7 +220,7 @@ public class AuthorViews {
                     System.out.println("Opção inválida, tente novamente\n");
             }
 
-            if (books.size() == 0) {
+            if (books.isEmpty()) {
                 System.out.println("\nNenhuma obra encontrada\n");
                 continue;
             }

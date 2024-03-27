@@ -86,3 +86,13 @@ BEGIN
     WHERE id = a_id;
 END $$
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`update_license_quantity`;
+DELIMITER $$
+CREATE PROCEDURE `update_license_quantity`(IN a_id INT, IN a_quantity INT)
+BEGIN
+	UPDATE licenses
+    SET quantity = IF((quantity + a_quantity) >= 0, (quantity + a_quantity), quantity)
+    WHERE id = a_id;
+END$$
+DELIMITER ;

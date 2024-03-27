@@ -63,3 +63,8 @@ DROP VIEW IF EXISTS `PA_TP`.`get_literary_styles` ;
 CREATE VIEW get_literary_styles AS
 SELECT *
 FROM literarystyles;
+
+DROP VIEW IF EXISTS `PA_TP`.`get_licenses` ;
+CREATE VIEW get_licenses AS
+SELECT *
+FROM licenses;
