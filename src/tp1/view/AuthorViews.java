@@ -268,7 +268,7 @@ public class AuthorViews {
 
             switch (option) {
                 case 1:
-                    showReviewRequestsListMenu("submission_date_desc", null, null);
+                    showReviewRequestsListMenu();
                     break;
                 case 2:
 
@@ -308,14 +308,9 @@ public class AuthorViews {
         } while (option != 0);
     }
 
-    private void showReviewRequestsListMenu(String sortType, String searchType, String search) {
+    private void showReviewRequestsListMenu() {
+
         int option;
-        String list = "";
-        
-        if(sortType != null && searchType == null && search == null){
-            list = new ManageReviews().getSortedReviews(Main.getLoggedUser().getId(), sortType);
-        }
-        
 
         do {
             option = InputReader.readInt("**** LISTAR PEDIDOS DE REVISÃO ****\n"
@@ -327,27 +322,32 @@ public class AuthorViews {
                     + "6. Pesquisar Por Título\n"
                     + "7. Pesquisar Por Estado\n"
                     + "0. Voltar\n\n"
-                    + list
-                    + "\n\nEscolha: ", 0, 7);
-            
+                    + "Escolha: ", 0, 7);
+
+            ManageReviews manageReviews = new ManageReviews();
+            long userId = Main.getLoggedUser().getId();
+
             switch (option) {
                 case 1:
-                    showReviewRequestsListMenu("submission_date", null, null);
+                    new ManageReviews().listReviews(userId, "submission_date_desc", null, null);
                     break;
                 case 2:
-                    showReviewRequestsListMenu("submission_date_desc", null, null);
+                    new ManageReviews().listReviews(userId, "submission_date", null, null);
                     break;
                 case 3:
-                    showReviewRequestsListMenu("serial_number", null, null);
+                    new ManageReviews().listReviews(userId, "serial_number_desc", null, null);
                     break;
                 case 4:
-                    showReviewRequestsListMenu("serial_number_desc", null, null);
+                    new ManageReviews().listReviews(userId, "serial_number", null, null);
                     break;
                 case 5:
+                    new ManageReviews().listReviews(userId, null, "date", InputReader.readString("Insira a data (DD-MM-AAAA): "));
                     break;
                 case 6:
+                    new ManageReviews().listReviews(userId, null, "title", InputReader.readString("Insira o título: "));
                     break;
                 case 7:
+                    new ManageReviews().listReviews(userId, null, "status", InputReader.readString("Insira o status: "));
                     break;
                 case 0:
                     break;

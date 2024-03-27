@@ -28,35 +28,37 @@ public class ManageReviews {
         return this.reviews;
     }
 
-    public String getSortedReviews(long authorId, String sortType) {
+    public void listReviews(long authorId, String sortType, String searchType, String search) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
 
-        
+        ResultSet resultSet;
 
-        ResultSet resultSet = dbWrapper.query("CALL get_reviews_by_author(?, ?, 1)", new Object[]{authorId, sortType});
+        if (sortType != null) {
+            resultSet = dbWrapper.query("CALL get_reviews_by_author(?, ?, 1)", new Object[]{authorId, sortType});
+        } else {
+            resultSet = dbWrapper.query("CALL search_author_reviews_by_" + searchType + "(?, ?)", new Object[]{authorId, search});
+        }
 
         try {
             if (resultSet == null) {
-                return null;
+                return;
             }
 
-            String sortedReviews = "Data de submissão\t\tNúmero de série\t\tTítulo\t\tStatus\n\n";
+            System.out.println("Data de submissão\t\tNúmero de série\t\tTítulo\t\tStatus\n");
 
             while (resultSet.next()) {
-                sortedReviews += resultSet.getString("submission_date")
+                System.out.println(resultSet.getString("submission_date")
                         + "\t\t" + resultSet.getString("serial_number")
                         + "\t\t" + resultSet.getString("title")
-                        + "\t\t" + resultSet.getString("status") + "\n";
+                        + "\t\t" + resultSet.getString("status"));
             }
             
-            return sortedReviews;
+            System.out.println();
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return null;
     }
 
     /**
