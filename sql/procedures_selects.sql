@@ -397,3 +397,61 @@ BEGIN
 	SELECT MAX(id) as `max` FROM reviews;
 END$$
 DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`get_reviews_by_author`;
+DELIMITER $$
+CREATE PROCEDURE `get_reviews_by_author`()
+BEGIN
+	DECLARE page_start INT;
+	DECLARE page_end INT;
+    SET page_start = (page-1)*10;
+	SET page_end = page*10;
+    
+	SELECT reviews.submission_date, reviews.serial_number, books.title, reviews.status
+	FROM reviews
+	LEFT JOIN books 
+	ON reviews.book_id = books.id
+	ORDER BY
+		CASE WHEN sort_type = 'submission_date' THEN reviews.submission_date END ASC,
+		CASE WHEN sort_type = 'submission_date_desc' THEN reviews.submission_date END DESC,
+		CASE WHEN sort_type = 'serial_number' THEN reviews.serial_number END ASC,
+		CASE WHEN sort_type = 'serial_number_desc' THEN reviews.submission_date END DESC
+	LIMIT page_start, page_end;
+END$$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`search_author_reviews_by_date`;
+DELIMITER $$
+CREATE PROCEDURE `search_author_reviews_by_date`()
+BEGIN
+	SELECT reviews.submission_date, reviews.serial_number, books.title, reviews.status
+	FROM reviews
+	LEFT JOIN books 
+	ON reviews.book_id = books.id
+    WHERE date_format(reviews.submission_date, '%d-%m-%Y') LIKE search;
+END$$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`search_author_reviews_by_title`;
+DELIMITER $$
+CREATE PROCEDURE `search_author_reviews_by_title`()
+BEGIN
+	SELECT reviews.submission_date, reviews.serial_number, books.title, reviews.status
+	FROM reviews
+	LEFT JOIN books 
+	ON reviews.book_id = books.id
+    WHERE books.title LIKE CONCAT('%', search, '%');
+END$$
+DELIMITER ;
+
+DROP PROCEDURE IF EXISTS `PA_TP`.`search_author_reviews_by_status`;
+DELIMITER $$
+CREATE PROCEDURE `search_author_reviews_by_status`()
+BEGIN
+	SELECT reviews.submission_date, reviews.serial_number, books.title, reviews.status
+	FROM reviews
+	LEFT JOIN books 
+	ON reviews.book_id = books.id
+    WHERE reviews.status LIKE CONCAT('%', search, '%');
+END$$
+DELIMITER ;
