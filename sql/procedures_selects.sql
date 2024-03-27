@@ -139,17 +139,13 @@ BEGIN
     SET page_start = (page-1)*10;
 	SET page_end = page*10;
     
-    IF sort_order = 'ASC' THEN
-		SELECT id, name, username, password, email, active, deleted, role_id
-		FROM users
-        ORDER BY name ASC
-		LIMIT page_start, page_end;
-	ELSE
-		SELECT id, name, username, password, email, active, deleted, role_id
-		FROM users
-        ORDER BY name DESC
-		LIMIT page_start, page_end;
-    END IF;
+	SELECT id, name, username, password, email, active, deleted, role_id
+	FROM users
+	ORDER BY
+		CASE WHEN sort_order = 'ASC' THEN name END ASC,
+		CASE WHEN sort_order = 'DESC' THEN namee END DESC
+	LIMIT page_start, page_end;
+    
 END $$
 DELIMITER ;
 
@@ -259,46 +255,27 @@ BEGIN
 	DECLARE page_end INT;
     SET page_start = (page-1)*10;
 	SET page_end = page*10;
-    
-    IF sort_order = 'ASC' THEN
-		SELECT books.id as "id", 
-        books.title as "title", 
-        books.subtitle as "subtitle", 
-        books.pages as "pages", 
-        books.words as "words", 
-        books.isbn as "isbn", 
-        books.edition as "edition",
-        books.submission_date as "submission_date", 
-        books.approval_date as "approval_date", 
-        books.literary_style_id as "literary_style_id", 
-        books.publication_type as "publication_type", 
-        books.author_id as "author_id"
-		FROM books
-        INNER JOIN authors
-        ON authors.user_id = books.author_id
-        WHERE authors.user_id = a_author_id
-        ORDER BY submission_date ASC
-		LIMIT page_start, page_end;
-	ELSE
-		SELECT books.id as "id", 
-        books.title as "title", 
-        books.subtitle as "subtitle", 
-        books.pages as "pages", 
-        books.words as "words", 
-        books.isbn as "isbn", 
-        books.edition as "edition",
-        books.submission_date as "submission_date", 
-        books.approval_date as "approval_date", 
-        books.literary_style_id as "literary_style_id", 
-        books.publication_type as "publication_type", 
-        books.author_id as "author_id"
-		FROM books
-        INNER JOIN authors
-        ON authors.user_id = books.author_id
-        WHERE authors.user_id = a_author_id
-        ORDER BY submission_date DESC
-		LIMIT page_start, page_end;
-    END IF;
+
+	SELECT books.id as "id", 
+	books.title as "title", 
+	books.subtitle as "subtitle", 
+	books.pages as "pages", 
+	books.words as "words", 
+	books.isbn as "isbn", 
+	books.edition as "edition",
+	books.submission_date as "submission_date", 
+	books.approval_date as "approval_date", 
+	books.literary_style_id as "literary_style_id", 
+	books.publication_type as "publication_type", 
+	books.author_id as "author_id"
+	FROM books
+	INNER JOIN authors
+	ON authors.user_id = books.author_id
+	WHERE authors.user_id = a_author_id
+	ORDER BY 
+		CASE WHEN sort_order = 'ASC' THEN books.submission_date END ASC,
+		CASE WHEN sort_order = 'DESC' THEN books.submission_date END DESC
+	LIMIT page_start, page_end;
 END $$
 DELIMITER ;
 
@@ -310,46 +287,27 @@ BEGIN
 	DECLARE page_end INT;
     SET page_start = (page-1)*10;
 	SET page_end = page*10;
-    
-    IF sort_order = 'ASC' THEN
-		SELECT books.id as "id", 
-        books.title as "title", 
-        books.subtitle as "subtitle", 
-        books.pages as "pages", 
-        books.words as "words", 
-        books.isbn as "isbn", 
-        books.edition as "edition",
-        books.submission_date as "submission_date", 
-        books.approval_date as "approval_date", 
-        books.literary_style_id as "literary_style_id", 
-        books.publication_type as "publication_type", 
-        books.author_id as "author_id"
-		FROM books
-        INNER JOIN authors
-        ON authors.user_id = books.author_id
-        WHERE authors.user_id = a_author_id
-        ORDER BY title ASC
-		LIMIT page_start, page_end;
-	ELSE
-		SELECT books.id as "id", 
-        books.title as "title", 
-        books.subtitle as "subtitle", 
-        books.pages as "pages", 
-        books.words as "words", 
-        books.isbn as "isbn", 
-        books.edition as "edition",
-        books.submission_date as "submission_date", 
-        books.approval_date as "approval_date", 
-        books.literary_style_id as "literary_style_id", 
-        books.publication_type as "publication_type", 
-        books.author_id as "author_id"
-		FROM books
-        INNER JOIN authors
-        ON authors.user_id = books.author_id
-        WHERE authors.user_id = a_author_id
-        ORDER BY title DESC
-		LIMIT page_start, page_end;
-    END IF;
+
+	SELECT books.id as "id", 
+	books.title as "title", 
+	books.subtitle as "subtitle", 
+	books.pages as "pages", 
+	books.words as "words", 
+	books.isbn as "isbn", 
+	books.edition as "edition",
+	books.submission_date as "submission_date", 
+	books.approval_date as "approval_date", 
+	books.literary_style_id as "literary_style_id", 
+	books.publication_type as "publication_type", 
+	books.author_id as "author_id"
+	FROM books
+	INNER JOIN authors
+	ON authors.user_id = books.author_id
+	WHERE authors.user_id = a_author_id
+	ORDER BY
+		CASE WHEN sort_order = 'ASC' THEN books.title END ASC,
+		CASE WHEN sort_order = 'DESC' THEN books.title END DESC
+	LIMIT page_start, page_end;
 END $$
 DELIMITER ;
 

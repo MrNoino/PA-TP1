@@ -1,6 +1,7 @@
 package tp1.controller;
 
 import java.util.ArrayList;
+import tp1.model.DbWrapper;
 import tp1.model.License;
 
 /**
@@ -23,32 +24,23 @@ public class ManageLicenses {
     }
 
     /**
-     * Adds a license
+     * Insert a license in the database
      *
-     * @param license The license to add to the list
-     * @return Confirms if a license was added successfully
+     * @param license The license to be inserted in the database
+     * @return Confirms if a license was inserted successfully
      */
-    public boolean addLicense(License license) {
+    public boolean insertLicense(License license) {
         return true;
     }
 
     /**
-     * Updates a license
+     * Updates a license quantity in the database
      *
-     * @param license The license to be updated
-     * @return Confirms if a license was updated successfully
+     * @param quantity tge amount to be updated
+     * @return Confirms if the quantity was updated successfully
      */
-    public boolean updateLicense(License license) {
-        return true;
-    }
-
-    /**
-     * Deletes a license
-     *
-     * @param license The license to be deleted
-     * @return Confirms if a license was deleted successfully
-     */
-    public boolean deleteLicense(License license) {
+    public boolean updateLicenseQuantity(int quantity) {
+        DbWrapper dbWrapper = new DbWrapper();
         return true;
     }
 }

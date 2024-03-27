@@ -25,7 +25,7 @@ public class ManagerViews {
             option = InputReader.readInt("**** MENU DE GESTOR ****\n"
                     + "1. Utilizadores\n"
                     + "2. Pedidos De Revisão\n"
-                    + "3. Licensas\n"
+                    + "3. Licenças\n"
                     + "4. Auditioria\n"
                     + "5. Perfil\n"
                     + "0. Terminar Sessão\n\n"
@@ -551,9 +551,9 @@ public class ManagerViews {
     private void showLicensesMenu(){
         int option;
         do {
-            option = InputReader.readInt("**** LICENSAS ****\n"
-                    + "1. Inserir Licensa\n"
-                    + "2. Autalizar Quantidade de Licensas\n"
+            option = InputReader.readInt("**** LICENÇAS ****\n"
+                    + "1. Inserir Licença\n"
+                    + "2. Autalizar Quantidade de Licenças\n"
                     + "0. Sair\n\n"
                     + "Escolha: ", 0, 2);
             System.out.println();

@@ -25,7 +25,7 @@ public class AuthorViews {
             option = InputReader.readInt("**** MENU DE AUTOR ****\n"
                     + "1. Obras\n"
                     + "2. Pedidos de Revisão\n"
-                    + "3. Atualizar Perfil\n"
+                    + "3. Perfil\n"
                     + "0. Terminar Sessão\n\n"
                     + "Escolha: ", 0, 3);
             System.out.println();
@@ -38,7 +38,7 @@ public class AuthorViews {
                     showReviewRequestsMenu();
                     break;
                 case 3:
-                    showUpdateProfileMenu();
+                    showProfileMenu();
                     break;
                 case 0:
                     break;
@@ -347,6 +347,31 @@ public class AuthorViews {
         } while (option != 0);
     }
 
+    private void showProfileMenu(){
+        int option;
+        do {
+            option = InputReader.readInt("**** PERFIL ****\n"
+                    + "1. Atualizar\n"
+                    + "2. Eliminar\n"
+                    + "0. Voltar\n\n"
+                    + "Escolha: ", 0, 2);
+            System.out.println();
+
+            switch (option) {
+                case 1:
+                    this.showUpdateProfileMenu();
+                    break;
+                case 2:
+                    this.showDeleteProfileMenu();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("\nOpção inválida, tente novamente\n");
+            }
+        } while (option != 0);
+    }
+    
     private void showUpdateProfileMenu() {
 
         System.out.println("Atualizar Perfil\n");
@@ -405,6 +430,21 @@ public class AuthorViews {
             System.out.println("\nAtualizado com sucesso\n");
         } else {
             System.out.println("\nErro ao atualizar\n");
+        }
+    }
+    
+    private void showDeleteProfileMenu(){
+        System.out.println("Eliminar Perfil\n");
+
+        int option = InputReader.readInt("Deseja mesmo eliminar o perfil?\n1. Sim\n0. Não\n\nEscolha: ", 0, 1);
+        
+        switch (option) {
+            case 1:
+                break;
+            case 0:
+                break;
+            default:
+                System.out.println("\nOpção inválida\n");
         }
     }
 }

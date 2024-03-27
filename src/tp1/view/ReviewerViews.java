@@ -3,11 +3,9 @@ package tp1.view;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import tp1.controller.ManageLogs;
-import tp1.controller.ManageManagers;
 import tp1.controller.ManageReviewers;
 import tp1.controller.ManageUsers;
 import tp1.model.Log;
-import tp1.model.Manager;
 import tp1.model.Reviewer;
 
 public class ReviewerViews {
@@ -19,7 +17,7 @@ public class ReviewerViews {
             option = InputReader.readInt("**** MENU DE REVISOR ****\n"
                     + "1. Listar Pedidos De Revisão\n"
                     + "2. Rever uma obra\n"
-                    + "3. Atualizar Perfil\n"
+                    + "3. Perfil\n"
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 3);
             System.out.println();
@@ -31,7 +29,7 @@ public class ReviewerViews {
                 case 2:
                     break;
                 case 3:
-                    showUpdateProfileMenu();
+                    showProfileMenu();
                     break;
                 case 0:
                     new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(), 
@@ -81,6 +79,31 @@ public class ReviewerViews {
         }
     }
 
+    private void showProfileMenu(){
+        int option;
+        do {
+            option = InputReader.readInt("**** PERFIL ****\n"
+                    + "1. Atualizar\n"
+                    + "2. Eliminar\n"
+                    + "0. Voltar\n\n"
+                    + "Escolha: ", 0, 2);
+            System.out.println();
+
+            switch (option) {
+                case 1:
+                    this.showUpdateProfileMenu();
+                    break;
+                case 2:
+                    this.showDeleteProfileMenu();
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("\nOpção inválida, tente novamente\n");
+            }
+        } while (option != 0);
+    }
+    
     private void showUpdateProfileMenu() {
 
         System.out.println("Atualizar Perfil\n");
@@ -128,6 +151,21 @@ public class ReviewerViews {
             System.out.println("\nAtualizado com sucesso\n");
         } else {
             System.out.println("\nErro ao atualizar\n");
+        }
+    }
+    
+    private void showDeleteProfileMenu(){
+        System.out.println("Eliminar Perfil\n");
+
+        int option = InputReader.readInt("Deseja mesmo eliminar o perfil?\n1. Sim\n0. Não\n\nEscolha: ", 0, 1);
+        
+        switch (option) {
+            case 1:
+                break;
+            case 0:
+                break;
+            default:
+                System.out.println("\nOpção inválida\n");
         }
     }
 }
