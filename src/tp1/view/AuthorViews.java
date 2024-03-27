@@ -268,7 +268,7 @@ public class AuthorViews {
 
             switch (option) {
                 case 1:
-                    showReviewRequestsListMenu();
+                    showReviewRequestsListMenu("submission_date_desc", null, null);
                     break;
                 case 2:
 
@@ -289,13 +289,13 @@ public class AuthorViews {
                     message += "\nEscolha: ";
 
                     Long bookId = books.get(InputReader.readInt(message, 1, books.size()) - 1).getId();
-                    
+
                     ManageReviews manageReviews = new ManageReviews();
                     boolean success = manageReviews.addReview(bookId, Main.getLoggedUser().getId());
-                    
-                    if(success){
+
+                    if (success) {
                         System.out.println("Pedido revisão adicionado com sucesso\n");
-                    }else{
+                    } else {
                         System.out.println("Ocorreu um erro ao pedir revisão\n");
                     }
 
@@ -308,8 +308,14 @@ public class AuthorViews {
         } while (option != 0);
     }
 
-    private void showReviewRequestsListMenu() {
+    private void showReviewRequestsListMenu(String sortType, String searchType, String search) {
         int option;
+        String list = "";
+        
+        if(sortType != null && searchType == null && search == null){
+            list = new ManageReviews().getSortedReviews(Main.getLoggedUser().getId(), sortType);
+        }
+        
 
         do {
             option = InputReader.readInt("**** LISTAR PEDIDOS DE REVISÃO ****\n"
@@ -321,17 +327,21 @@ public class AuthorViews {
                     + "6. Pesquisar Por Título\n"
                     + "7. Pesquisar Por Estado\n"
                     + "0. Voltar\n\n"
-                    + "Escolha: ", 0, 7);
-            System.out.println();
-
+                    + list
+                    + "\n\nEscolha: ", 0, 7);
+            
             switch (option) {
                 case 1:
+                    showReviewRequestsListMenu("submission_date", null, null);
                     break;
                 case 2:
+                    showReviewRequestsListMenu("submission_date_desc", null, null);
                     break;
                 case 3:
+                    showReviewRequestsListMenu("serial_number", null, null);
                     break;
                 case 4:
+                    showReviewRequestsListMenu("serial_number_desc", null, null);
                     break;
                 case 5:
                     break;
