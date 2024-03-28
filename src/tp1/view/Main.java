@@ -66,7 +66,7 @@ public class Main {
         }
         BufferedWriter output = new BufferedWriter( writer );
         try {
-            output.write(new SimpleDateFormat("dd-mm-yyyy").format(new Date()) + "\n" + (executionQuantity+1));
+            output.write(new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "\n" + (executionQuantity+1));
         } catch (IOException e) {
             e.printStackTrace();
         } finally{

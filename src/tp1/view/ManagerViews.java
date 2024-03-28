@@ -340,15 +340,16 @@ public class ManagerViews {
             option = InputReader.readInt("**** ATUALIZAR UTILIZADORES ****\n"
                     + "1. Atualizar Tudo\n"
                     + "2. Ativar/Desativar conta\n"
+                    + "3. Eliminar conta\n"
                     + "0. Voltar\n\n"
-                    + "Escolha: ", 0, 4);
+                    + "Escolha: ", 0, 3);
             System.out.println();
             
             if (option == 0) {
                 continue;
             }
             
-            long id = InputReader.readLong("ID: ");
+            long id = InputReader.readLong("ID do utilizador: ");
             
             User user = new ManageUsers().getUser(id);
             
@@ -479,6 +480,22 @@ public class ManagerViews {
                             } else {
                                 System.out.println("\nEstado não alterado\n");
                             }
+                            break;
+                        case 0:
+                            break;
+                        default:
+                            System.out.println("\nOpção inválida\n");
+                    }
+                    break;
+                case 3:
+                    int subOption = InputReader.readInt("Deseja mesmo eliminar o perfil?\n1. Sim\n0. Não\n\nEscolha: ", 0, 1);
+        
+                    switch (subOption) {
+                        case 1:
+                            if(manageUsers.deleteUser(id))
+                                System.out.println("\nEliminado com sucesso\n");
+                            else
+                                System.out.println("\nNão eliminado\n");
                             break;
                         case 0:
                             break;

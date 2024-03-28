@@ -54,6 +54,7 @@ public class ManageUsers {
 
     /**
      * Search in the database if the username exists
+     *
      * @param username username to be search
      * @return if the username exists
      */
@@ -80,6 +81,7 @@ public class ManageUsers {
 
     /**
      * Search in the database if the email exists
+     *
      * @param email email to be search
      * @return if the email exists
      */
@@ -106,6 +108,7 @@ public class ManageUsers {
 
     /**
      * Search in the database if the NIF exists
+     *
      * @param nif nif to be search
      * @return if the nif exists
      */
@@ -159,6 +162,7 @@ public class ManageUsers {
 
     /**
      * Change the user status in the database
+     *
      * @param id id of the user to be chnaged
      * @param active status to be changed
      * @return if the status was changed
@@ -176,6 +180,7 @@ public class ManageUsers {
 
     /**
      * Get users from database by defining sorting order of the name and page
+     *
      * @param sortOrder sorting order of the name
      * @param page page to be retrieve
      * @return a list of users
@@ -210,9 +215,10 @@ public class ManageUsers {
         return null;
 
     }
-    
+
     /**
-     * Get users by name from database 
+     * Get users by name from database
+     *
      * @param name name to be searched
      * @return a list of users
      */
@@ -239,15 +245,16 @@ public class ManageUsers {
                         resultSet.getInt("role_id")));
             }
             return this.users;
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
-    
+
     /**
-     * Get users by username from database 
+     * Get users by username from database
+     *
      * @param username username to be searched
      * @return a list of users
      */
@@ -274,15 +281,16 @@ public class ManageUsers {
                         resultSet.getInt("role_id")));
             }
             return this.users;
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
-    
+
     /**
-     * Get users by role from database 
+     * Get users by role from database
+     *
      * @param role role to be searched
      * @return a list of users
      */
@@ -309,10 +317,21 @@ public class ManageUsers {
                         resultSet.getInt("role_id")));
             }
             return this.users;
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public boolean deleteUser(long id) {
+        DbWrapper dbWrapper = new DbWrapper();
+        boolean updated = dbWrapper.manipulate("CALL change_deleted_user(?, ?);", new Object[]{id, true}) > 0;
+        if (updated && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                    new SimpleDateFormat("yyyy-mm-dd").format(new Date()),
+                    "Eliminou Utilizador (ID: " + id + ")"));
+        }
+        return updated;
     }
 }
