@@ -1,6 +1,5 @@
 package tp1.view;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,6 +11,7 @@ import tp1.controller.ManageUsers;
 import tp1.model.Author;
 import tp1.model.Book;
 import tp1.model.LiteraryStyle;
+import tp1.model.Review;
 
 public class AuthorViews {
 
@@ -195,16 +195,16 @@ public class AuthorViews {
             ArrayList<Book> books = null;
             switch (option) {
                 case 1:
-                    books = manageBooks.getBooks(Main.getLoggedUser().getId(), "submission_date", "DESC", 1);
+                    this.showListBooksPaginatedMenu( "submission_date", "DESC");
                     break;
                 case 2:
-                    books = manageBooks.getBooks(Main.getLoggedUser().getId(), "submission_date", "ASC", 1);
+                    this.showListBooksPaginatedMenu( "submission_date", "ASC");
                     break;
                 case 3:
-                    books = manageBooks.getBooks(Main.getLoggedUser().getId(), "title", "ASC", 1);
+                    this.showListBooksPaginatedMenu( "title", "ASC");
                     break;
                 case 4:
-                    books = manageBooks.getBooks(Main.getLoggedUser().getId(), "title", "DESC", 1);
+                    this.showListBooksPaginatedMenu("title", "DESC");
                     break;
                 case 5:
                     books = manageBooks.getBooksBySubmissionDate(Main.getLoggedUser().getId(),
@@ -220,29 +220,79 @@ public class AuthorViews {
                     System.out.println("Opção inválida, tente novamente\n");
             }
 
-            if (books.isEmpty()) {
-                System.out.println("\nNenhuma obra encontrada\n");
-                continue;
-            }
+            if(option >= 5 && option <= 6){
+                if (books.isEmpty()) {
+                    System.out.println("\nNenhuma obra encontrada\n");
+                    continue;
+                }
 
-            System.out.println("| ID | Título | Subtítulo | Nº Páginas | Nº Palavras | ISBN | Edição | Data de Submissão |"
-                    + " Data de aprovação | Id estilo literário | Tipo de publicação | Id author |");
-            for (Book book : books) {
-                System.out.println("| " + book.getId() + " | "
-                        + book.getTitle() + " | "
-                        + book.getSubtitle() + " | "
-                        + book.getPages() + " | "
-                        + book.getWords() + " | "
-                        + book.getIsbn() + " | "
-                        + book.getEdition() + " | "
-                        + book.getSubmissionDate() + " | "
-                        + book.getApprovalDate() + " | "
-                        + book.getLiteracyStyleId() + " | "
-                        + book.getPublicationType() + " | "
-                        + book.getAuthorId() + " | ");
+                System.out.println("| ID | Título | Subtítulo | Nº Páginas | Nº Palavras | ISBN | Edição | Data de Submissão |"
+                        + " Data de aprovação | Id estilo literário | Tipo de publicação | Id author |");
+                for (Book book : books) {
+                    System.out.println("| " + book.getId() + " | "
+                            + book.getTitle() + " | "
+                            + book.getSubtitle() + " | "
+                            + book.getPages() + " | "
+                            + book.getWords() + " | "
+                            + book.getIsbn() + " | "
+                            + book.getEdition() + " | "
+                            + book.getSubmissionDate() + " | "
+                            + book.getApprovalDate() + " | "
+                            + book.getLiteracyStyleId() + " | "
+                            + book.getPublicationType() + " | "
+                            + book.getAuthorId() + " | ");
+                }
+                System.out.println();
             }
-            System.out.println();
+            
         } while (option != 0);
+    }
+    
+    private void showListBooksPaginatedMenu(String orderField, String sortOrder){
+        int page = 1;
+        int option;
+        do{
+            System.out.println("\tPágina " + page + "\n");
+            ArrayList<Book> books =  new ManageBooks().getBooks(Main.getLoggedUser().getId(), orderField, sortOrder, page);
+            if (books.isEmpty()) {
+                System.out.println("Nenhuma obra encontrada\n");
+            }else{
+
+                System.out.println("| ID | Título | Subtítulo | Nº Páginas | Nº Palavras | ISBN | Edição | Data de Submissão |"
+                        + " Data de aprovação | Id estilo literário | Tipo de publicação | Id author |");
+                for (Book book : books) {
+                    System.out.println("| " + book.getId() + " | "
+                            + book.getTitle() + " | "
+                            + book.getSubtitle() + " | "
+                            + book.getPages() + " | "
+                            + book.getWords() + " | "
+                            + book.getIsbn() + " | "
+                            + book.getEdition() + " | "
+                            + book.getSubmissionDate() + " | "
+                            + book.getApprovalDate() + " | "
+                            + book.getLiteracyStyleId() + " | "
+                            + book.getPublicationType() + " | "
+                            + book.getAuthorId() + " | ");
+                }
+                System.out.println();
+            }
+            option = InputReader.readInt("1. Próxima Página\n2. Página anterior\n0. Voltar\n\nEscolha: ", 0, 2);
+            System.out.println();
+            switch (option) {
+                case 1:
+                    if(!books.isEmpty())
+                        page++;
+                    break;
+                case 2:
+                    if(page > 1)
+                        page--;
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("\nOpção inválida, tente novamente\n");
+            }
+        }while(option != 0);
     }
 
     private void showReviewRequestsMenu() {
@@ -347,6 +397,33 @@ public class AuthorViews {
         } while (option != 0);
     }
 
+    private void showReviewRequestsListPaginatedMenu(String orderField, String sortOrder){
+        int page = 1;
+        int option;
+        do{
+            
+            ArrayList<Review> reviews = new ManageReviews().getReviewsByAuthor(Main.getLoggedUser().getId(), "submission_date_desc", null, null);
+            System.out.println("\tPágina " + page + "\n");
+            
+            option = InputReader.readInt("1. Próxima Página\n2. Página anterior\n0. Voltar\n\nEscolha: ", 0, 2);
+            System.out.println();
+            switch (option) {
+                case 1:
+                    if(!reviews.isEmpty())
+                        page++;
+                    break;
+                case 2:
+                    if(page > 1)
+                        page--;
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("\nOpção inválida, tente novamente\n");
+            }
+        }while(option != 0);
+    }
+    
     private void showProfileMenu() {
         int option;
         do {

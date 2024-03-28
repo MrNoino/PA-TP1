@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import tp1.controller.ManageLogs;
 import tp1.controller.ManageReviewers;
-import tp1.controller.ManageReviews;
 import tp1.controller.ManageUsers;
 import tp1.model.Log;
 import tp1.model.Reviewer;

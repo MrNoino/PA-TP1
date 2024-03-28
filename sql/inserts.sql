@@ -1,7 +1,5 @@
 USE `PA_TP` ;
 
-SET AUTOCOMMIT=0;
-
 INSERT INTO roles (role)
 VALUES
 ('Gestor'),
@@ -22,7 +20,3 @@ VALUES
 #CALL insert_reviewer('Afonso Fonseca', 'afonso', 'pass', 'afonso@gmail.com', 2, '123456789', '912345678', 'OHP', 'Doutoramento em Português', 'Literatura');
 
 #CALL insert_author('Joana Marques', 'joana', 'pass', 'joana@gmail.com', 3, '987654321', '918765432', 'Seia', 4);
-
-COMMIT;
-
-SET AUTOCOMMIT=1;

@@ -7,6 +7,7 @@ import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import tp1.model.Book;
 import tp1.model.DbWrapper;
 import tp1.model.Log;
 import tp1.model.Review;
@@ -31,10 +32,9 @@ public class ManageReviews {
         return this.reviews;
     }
 
-    public void listReviews(long authorId, String sortType, String searchType, String search) {
+    public ArrayList<Review> getReviewsByAuthor(long authorId, String sortType, String searchType, String search) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
-
         ResultSet resultSet;
 
         if (sortType != null) {
@@ -45,37 +45,45 @@ public class ManageReviews {
 
         try {
             if (resultSet == null) {
-                return;
+                return null;
             }
             if (Main.getLoggedUser() != null) {
                 new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
                         new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
                         "Listou Revisões"));
             }
-            System.out.println("Data de submissão\t\tNúmero de série\t\tTítulo\t\tStatus\n");
 
             while (resultSet.next()) {
-                System.out.println(resultSet.getString("submission_date")
-                        + "\t\t" + resultSet.getString("serial_number")
-                        + "\t\t" + resultSet.getString("title")
-                        + "\t\t" + resultSet.getString("status"));
+                this.reviews.add(new Review(resultSet.getLong("id"),
+                        resultSet.getString("serial_number"),
+                        resultSet.getString("submission_date"),
+                        null,
+                        -1,
+                        null,
+                        -1,
+                        new Book(-1, resultSet.getString("title"), null, -1, -1, null, null, null, null, -1, null, authorId),
+                        -1,
+                        -1,
+                        -1,
+                        resultSet.getString("status")));
             }
-            
-            System.out.println();
-
+            return this.reviews;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            dbWrapper.disconnect();
         }
+        return null;
     }
 
-    /**
-     * Inserts a review in the database
-     *
-     * @param bookId book id associated to the review
-     * @param authorId author id associated to the review
-     * @return Confirms if a review was inserted successfully
-     */
-    public boolean insertReview(Long bookId, Long authorId) {
+/**
+ * Inserts a review in the database
+ *
+ * @param bookId book id associated to the review
+ * @param authorId author id associated to the review
+ * @return Confirms if a review was inserted successfully
+ */
+public boolean insertReview(Long bookId, Long authorId) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
 

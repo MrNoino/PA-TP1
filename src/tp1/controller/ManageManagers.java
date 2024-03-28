@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import tp1.model.Author;
 import tp1.model.DbWrapper;
 import tp1.model.Log;
 import tp1.model.Manager;

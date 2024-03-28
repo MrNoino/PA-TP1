@@ -143,7 +143,7 @@ BEGIN
 	FROM users
 	ORDER BY
 		CASE WHEN sort_order = 'ASC' THEN name END ASC,
-		CASE WHEN sort_order = 'DESC' THEN namee END DESC
+		CASE WHEN sort_order = 'DESC' THEN name END DESC
 	LIMIT page_start, page_end;
     
 END $$

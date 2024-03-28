@@ -108,46 +108,10 @@ public class ManagerViews {
             ArrayList<User> users;
             switch (option) {
                 case 1:
-                    users = manageUsers.getUsers("ASC", 1);
-                    
-                    if (users == null) {
-                        continue;
-                    } else if (users.isEmpty()) {
-                        System.out.println("\nNenhum utilizador encontrado\n");
-                        continue;
-                    }
-                    System.out.println("| ID | Nome | Nome de Utilizador | Email | Ativo | Eliminado | ID de Cargo |");
-                    for (User user : users) {
-                        System.out.println("| " + user.getId() + " | "
-                                + user.getName() + " | "
-                                + user.getUsername() + " | "
-                                + user.getEmail() + " | "
-                                + (user.isActive() ? "Sim" : "Não") + " | "
-                                + (user.isDeleted() ? "Sim" : "Não" + " | ")
-                                + user.getRoleId() + " |");
-                    }
-                    System.out.println();
+                    showListUsersOrderByNameMenu("ASC");
                     break;
                 case 2:
-                    users = manageUsers.getUsers("DESC", 1);
-                    
-                    if (users == null) {
-                        continue;
-                    } else if (users.isEmpty()) {
-                        System.out.println("\nNenhum utilizador encontrado\n");
-                        continue;
-                    }
-                    System.out.println("| ID | Nome | Nome de Utilizador | Email | Ativo | Eliminado | ID de Cargo |");
-                    for (User user : users) {
-                        System.out.println("| " + user.getId() + " | "
-                                + user.getName() + " | "
-                                + user.getUsername() + " | "
-                                + user.getEmail() + " | "
-                                + (user.isActive() ? "Sim" : "Não") + " | "
-                                + (user.isDeleted() ? "Sim" : "Não" + " | ")
-                                + user.getRoleId() + " |");
-                    }
-                    System.out.println();
+                    showListUsersOrderByNameMenu("DESC");
                     break;
                 case 3:
                     users = manageUsers.getUsersByName(InputReader.readString("Nome a pesquisar: "));
@@ -218,6 +182,50 @@ public class ManagerViews {
                     System.out.println("\nOpção inválida, tente novamente\n");
             }
         } while (option != 0);
+    }
+    
+    private void showListUsersOrderByNameMenu(String sortOder){
+        int option;
+        int page = 1;
+        do{
+            
+            System.out.println("\tPágina " + page + "\n");
+            ArrayList<User> users = new ManageUsers().getUsers(sortOder, page);    
+            if (users == null) {
+                return;
+            } else if (users.isEmpty()) {
+                System.out.println("Nenhum utilizador encontrado\n");
+            }else{
+                System.out.println("| ID | Nome | Nome de Utilizador | Email | Ativo | Eliminado | ID de Cargo |");
+                for (User user : users) {
+                    System.out.println("| " + user.getId() + " | "
+                            + user.getName() + " | "
+                            + user.getUsername() + " | "
+                            + user.getEmail() + " | "
+                            + (user.isActive() ? "Sim" : "Não") + " | "
+                            + (user.isDeleted() ? "Sim" : "Não" + " | ")
+                            + user.getRoleId() + " |");
+                }
+            }
+            System.out.println();
+            option = InputReader.readInt("1. Próxima Página\n2. Página anterior\n0. Voltar\n\nEscolha: ", 0, 2);
+            System.out.println();
+            switch (option) {
+                case 1:
+                    if(!users.isEmpty())
+                        page++;
+                    break;
+                case 2:
+                    if(page > 1)
+                        page--;
+                    break;
+                case 0:
+                    break;
+                default:
+                    System.out.println("\nOpção inválida, tente novamente\n");
+            }
+            
+        }while(option != 0);
     }
     
     private void showInsertUserMenu() {
@@ -469,16 +477,16 @@ public class ManagerViews {
                     switch (active) {
                         case 1:
                             if (manageUsers.updateUserStatus(id, true)) {
-                                System.out.println("\nEstado do utilizador alterado\n");
+                                System.out.println("Estado do utilizador alterado\n");
                             } else {
                                 System.out.println("\nEstado não alterado\n");
                             }
                             break;
                         case 2:
                             if (manageUsers.updateUserStatus(id, false)) {
-                                System.out.println("\nEstado do utilizador alterado\n");
+                                System.out.println("Estado do utilizador alterado\n");
                             } else {
-                                System.out.println("\nEstado não alterado\n");
+                                System.out.println("Estado não alterado\n");
                             }
                             break;
                         case 0:
