@@ -90,11 +90,11 @@ public class Review {
         this.cost = cost;
     }
 
-    public Book getBookId() {
+    public Book getBook() {
         return book;
     }
 
-    public void setBookId(Book book) {
+    public void setBook(Book book) {
         this.book = book;
     }
 

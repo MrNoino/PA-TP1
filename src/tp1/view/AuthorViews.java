@@ -195,13 +195,13 @@ public class AuthorViews {
             ArrayList<Book> books = null;
             switch (option) {
                 case 1:
-                    this.showListBooksPaginatedMenu( "submission_date", "DESC");
+                    this.showListBooksPaginatedMenu("submission_date", "DESC");
                     break;
                 case 2:
-                    this.showListBooksPaginatedMenu( "submission_date", "ASC");
+                    this.showListBooksPaginatedMenu("submission_date", "ASC");
                     break;
                 case 3:
-                    this.showListBooksPaginatedMenu( "title", "ASC");
+                    this.showListBooksPaginatedMenu("title", "ASC");
                     break;
                 case 4:
                     this.showListBooksPaginatedMenu("title", "DESC");
@@ -220,7 +220,7 @@ public class AuthorViews {
                     System.out.println("Opção inválida, tente novamente\n");
             }
 
-            if(option >= 5 && option <= 6){
+            if (option >= 5 && option <= 6) {
                 if (books.isEmpty()) {
                     System.out.println("\nNenhuma obra encontrada\n");
                     continue;
@@ -244,19 +244,19 @@ public class AuthorViews {
                 }
                 System.out.println();
             }
-            
+
         } while (option != 0);
     }
-    
-    private void showListBooksPaginatedMenu(String orderField, String sortOrder){
+
+    private void showListBooksPaginatedMenu(String orderField, String sortOrder) {
         int page = 1;
         int option;
-        do{
+        do {
             System.out.println("\tPágina " + page + "\n");
-            ArrayList<Book> books =  new ManageBooks().getBooks(Main.getLoggedUser().getId(), orderField, sortOrder, page);
+            ArrayList<Book> books = new ManageBooks().getBooks(Main.getLoggedUser().getId(), orderField, sortOrder, page);
             if (books.isEmpty()) {
                 System.out.println("Nenhuma obra encontrada\n");
-            }else{
+            } else {
 
                 System.out.println("| ID | Título | Subtítulo | Nº Páginas | Nº Palavras | ISBN | Edição | Data de Submissão |"
                         + " Data de aprovação | Id estilo literário | Tipo de publicação | Id author |");
@@ -280,19 +280,21 @@ public class AuthorViews {
             System.out.println();
             switch (option) {
                 case 1:
-                    if(!books.isEmpty())
+                    if (!books.isEmpty()) {
                         page++;
+                    }
                     break;
                 case 2:
-                    if(page > 1)
+                    if (page > 1) {
                         page--;
+                    }
                     break;
                 case 0:
                     break;
                 default:
                     System.out.println("\nOpção inválida, tente novamente\n");
             }
-        }while(option != 0);
+        } while (option != 0);
     }
 
     private void showReviewRequestsMenu() {
@@ -316,7 +318,7 @@ public class AuthorViews {
                     ArrayList<Book> books = manageBooks.getBooksByAuthor(Main.getLoggedUser().getId());
 
                     if (books.isEmpty()) {
-                        System.out.println("Não existem obras em seu nome");
+                        System.out.println("Não existem obras em seu nome\n");
                         continue;
                     }
 
@@ -363,31 +365,33 @@ public class AuthorViews {
                     + "7. Pesquisar Por Estado\n"
                     + "0. Voltar\n\n"
                     + "Escolha: ", 0, 7);
+            
+            System.out.println();
 
             ManageReviews manageReviews = new ManageReviews();
             long userId = Main.getLoggedUser().getId();
 
             switch (option) {
                 case 1:
-                    new ManageReviews().listReviews(userId, "submission_date_desc", null, null);
+                    this.showReviewRequestsListPaginatedMenu("submission_date_desc");
                     break;
                 case 2:
-                    new ManageReviews().listReviews(userId, "submission_date", null, null);
+                    this.showReviewRequestsListPaginatedMenu( "submission_date");
                     break;
                 case 3:
-                    new ManageReviews().listReviews(userId, "serial_number_desc", null, null);
+                    this.showReviewRequestsListPaginatedMenu( "serial_number_desc");
                     break;
                 case 4:
-                    new ManageReviews().listReviews(userId, "serial_number", null, null);
+                    this.showReviewRequestsListPaginatedMenu( "serial_number");
                     break;
                 case 5:
-                    new ManageReviews().listReviews(userId, null, "date", InputReader.readDate("Insira a data (DD-MM-AAAA): ", "dd-MM-yyyy"));
+                    this.showReviewRequestsSearchedMenu("date");
                     break;
                 case 6:
-                    new ManageReviews().listReviews(userId, null, "title", InputReader.readString("Insira o título: "));
+                    this.showReviewRequestsSearchedMenu("title");
                     break;
                 case 7:
-                    new ManageReviews().listReviews(userId, null, "status", InputReader.readString("Insira o status: "));
+                    this.showReviewRequestsSearchedMenu("status");
                     break;
                 case 0:
                     break;
@@ -397,33 +401,77 @@ public class AuthorViews {
         } while (option != 0);
     }
 
-    private void showReviewRequestsListPaginatedMenu(String orderField, String sortOrder){
+    private void showReviewRequestsListPaginatedMenu(String sortType) {
         int page = 1;
         int option;
-        do{
-            
-            ArrayList<Review> reviews = new ManageReviews().getReviewsByAuthor(Main.getLoggedUser().getId(), "submission_date_desc", null, null);
+        do {
+
+            ArrayList<Review> reviews = new ManageReviews().getReviewsByAuthor(Main.getLoggedUser().getId(), sortType, page);
             System.out.println("\tPágina " + page + "\n");
+
+            if(reviews.isEmpty()){
+                System.out.println("Nenhuma revisão encontrada\n");
+            }else{
+                System.out.println("| Data de Submissão | Número de Série | Título | Estado |\n");
+                for(Review review : reviews){
+                    System.out.println("| " + review.getSubmissionDate()
+                    + " | " + review.getSerialNumber()
+                    + " | " + review.getBook().getTitle()
+                    + " | " + review.getStatus() + " |");
+                }
+                System.out.println();
+            }
             
             option = InputReader.readInt("1. Próxima Página\n2. Página anterior\n0. Voltar\n\nEscolha: ", 0, 2);
             System.out.println();
             switch (option) {
                 case 1:
-                    if(!reviews.isEmpty())
+                    if (!reviews.isEmpty()) {
                         page++;
+                    }
                     break;
                 case 2:
-                    if(page > 1)
+                    if (page > 1) {
                         page--;
+                    }
                     break;
                 case 0:
                     break;
                 default:
                     System.out.println("\nOpção inválida, tente novamente\n");
             }
-        }while(option != 0);
+        } while (option != 0);
     }
     
+    private void showReviewRequestsSearchedMenu(String searchField){
+        ArrayList<Review> reviews = new ArrayList<Review>();
+        switch (searchField.toLowerCase()) {
+            case "date":
+                reviews = new ManageReviews().getReviewsByDate(Main.getLoggedUser().getId(), InputReader.readDate("Data de Submissão a pesquisar: ", "dd-MM-yyyy"));
+                break;
+            case "title":
+                reviews = new ManageReviews().getReviewsByTitle(Main.getLoggedUser().getId(), InputReader.readString("Título a pesquisar: "));
+                break;
+            case "status":
+                reviews = new ManageReviews().getReviewsByStatus(Main.getLoggedUser().getId(), InputReader.readString("Estado a pesquisar: "));
+                break;
+            default:
+                throw new AssertionError();
+        }
+        if(reviews.isEmpty()){
+            System.out.println("Nenhuma revisão encontrada\n");
+            return;
+        }
+        System.out.println("| Data de Submissão | Número de Série | Título | Estado |\n");
+        for(Review review : reviews){
+            System.out.println("| " + review.getSubmissionDate()
+            + " | " + review.getSerialNumber()
+            + " | " + review.getBook().getTitle()
+            + " | " + review.getStatus() + " |");
+        }
+        System.out.println();
+    }
+
     private void showProfileMenu() {
         int option;
         do {
