@@ -207,8 +207,8 @@ public class AuthorViews {
                     books = manageBooks.getBooks(Main.getLoggedUser().getId(), "title", "DESC", 1);
                     break;
                 case 5:
-                    String date = InputReader.readDate("Data de submisssão a pesquisar: ", "dd-mm-yyyy");
-                    books = manageBooks.getBooksBySubmissionDate(Main.getLoggedUser().getId(), date);
+                    books = manageBooks.getBooksBySubmissionDate(Main.getLoggedUser().getId(),
+                            InputReader.readDate("Data de submisssão a pesquisar: ", "dd-mm-yyyy"));
                     break;
 
                 case 6:
@@ -281,7 +281,7 @@ public class AuthorViews {
                     Long bookId = books.get(InputReader.readInt(message, 1, books.size()) - 1).getId();
 
                     ManageReviews manageReviews = new ManageReviews();
-                    boolean success = manageReviews.addReview(bookId, Main.getLoggedUser().getId());
+                    boolean success = manageReviews.insertReview(bookId, Main.getLoggedUser().getId());
 
                     if (success) {
                         System.out.println("Pedido revisão adicionado com sucesso\n");
@@ -331,7 +331,7 @@ public class AuthorViews {
                     new ManageReviews().listReviews(userId, "serial_number", null, null);
                     break;
                 case 5:
-                    new ManageReviews().listReviews(userId, null, "date", InputReader.readString("Insira a data (DD-MM-AAAA): "));
+                    new ManageReviews().listReviews(userId, null, "date", InputReader.readDate("Insira a data (DD-MM-AAAA): ", "dd-MM-yyyy"));
                     break;
                 case 6:
                     new ManageReviews().listReviews(userId, null, "title", InputReader.readString("Insira o título: "));
@@ -347,7 +347,7 @@ public class AuthorViews {
         } while (option != 0);
     }
 
-    private void showProfileMenu(){
+    private void showProfileMenu() {
         int option;
         do {
             option = InputReader.readInt("**** PERFIL ****\n"
@@ -371,7 +371,7 @@ public class AuthorViews {
             }
         } while (option != 0);
     }
-    
+
     private void showUpdateProfileMenu() {
 
         System.out.println("Atualizar Perfil\n");
@@ -432,12 +432,12 @@ public class AuthorViews {
             System.out.println("\nErro ao atualizar\n");
         }
     }
-    
-    private void showDeleteProfileMenu(){
+
+    private void showDeleteProfileMenu() {
         System.out.println("Eliminar Perfil\n");
 
         int option = InputReader.readInt("Deseja mesmo eliminar o perfil?\n1. Sim\n0. Não\n\nEscolha: ", 0, 1);
-        
+
         switch (option) {
             case 1:
                 break;

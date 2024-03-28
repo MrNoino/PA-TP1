@@ -6,8 +6,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import tp1.model.DbWrapper;
+import tp1.model.Log;
 import tp1.model.Review;
+import tp1.view.Main;
 
 /**
  * A class to manage reviews on the database
@@ -56,7 +59,11 @@ public class ManageReviews {
             if (resultSet == null) {
                 return;
             }
-
+            if (Main.getLoggedUser() != null) {
+                new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                        new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                        "Listou Revisões"));
+            }
             System.out.println("Data de submissão\t\tNúmero de série\t\tTítulo\t\tStatus\n");
 
             while (resultSet.next()) {
@@ -74,12 +81,13 @@ public class ManageReviews {
     }
 
     /**
-     * Adds a review
+     * Inserts a review in the database
      *
-     * @param review The review to add to the list
-     * @return Confirms if a review was added successfully
+     * @param bookId book id associated to the review
+     * @param authorId author id associated to the review
+     * @return Confirms if a review was inserted successfully
      */
-    public boolean addReview(Long bookId, Long authorId) {
+    public boolean insertReview(Long bookId, Long authorId) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
 
@@ -90,7 +98,7 @@ public class ManageReviews {
             if (resultSet == null) {
                 return false;
             }
-
+            
             while (resultSet.next()) {
                 maxId = resultSet.getLong("max");
             }
@@ -103,7 +111,15 @@ public class ManageReviews {
         LocalDateTime now = LocalDateTime.now();
         String serialNumber = (maxId + 1) + formatter.format(now);
 
-        return dbWrapper.manipulate("CALL insert_review(?, ?, ?)", new Object[]{serialNumber, bookId, authorId}) > 0;
+        boolean inserted = dbWrapper.manipulate("CALL insert_review(?, ?, ?)", new Object[]{serialNumber, bookId, authorId}) > 0;
+        
+        if (inserted && Main.getLoggedUser() != null) {
+            new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
+                    new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
+                    "Inseriu Revisão"));
+        }
+        
+        return inserted;
     }
 
     /**

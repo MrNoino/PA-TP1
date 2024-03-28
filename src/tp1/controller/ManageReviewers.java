@@ -40,26 +40,27 @@ public class ManageReviewers {
         dbWrapper.connect();
         ResultSet resultSet = dbWrapper.query("CALL get_reviewer_by_id(?);", new Object[]{id});
         try {
-            if(resultSet == null || !resultSet.next())
+            if (resultSet == null || !resultSet.next()) {
                 return null;
+            }
             if (Main.getLoggedUser() != null) {
                 new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
                         new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
                         "Pesquisou Revisor por ID: " + id));
             }
-            return new Reviewer(resultSet.getLong("id"), 
-                    resultSet.getString("name"), 
-                    resultSet.getString("username"), 
-                    resultSet.getString("email"), 
-                    resultSet.getBoolean("active"), 
-                    resultSet.getBoolean("deleted"), 
+            return new Reviewer(resultSet.getLong("id"),
+                    resultSet.getString("name"),
+                    resultSet.getString("username"),
+                    resultSet.getString("email"),
+                    resultSet.getBoolean("active"),
+                    resultSet.getBoolean("deleted"),
                     resultSet.getInt("role_id"),
                     resultSet.getString("nif"),
                     resultSet.getString("phone"),
                     resultSet.getString("address"),
                     resultSet.getString("graduation"),
                     resultSet.getString("specialization"));
-            
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -74,16 +75,16 @@ public class ManageReviewers {
      */
     public boolean insertReviewer(Reviewer reviewer) {
         DbWrapper dbWrapper = new DbWrapper();
-        boolean inserted =  dbWrapper.manipulate("CALL insert_reviewer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{reviewer.getName(),
-                                                                                                        reviewer.getUsername(),
-                                                                                                        reviewer.getPassword(),
-                                                                                                        reviewer.getEmail(),
-                                                                                                        reviewer.getRoleId(),
-                                                                                                        reviewer.getNif(),
-                                                                                                        reviewer.getPhone(),
-                                                                                                        reviewer.getAddress(),
-                                                                                                        reviewer.getGraduation(),
-                                                                                                        reviewer.getSpecialization()}) > 0;
+        boolean inserted = dbWrapper.manipulate("CALL insert_reviewer(?, ?, ?, ?, ?, ?, ?, ?, ?, ?);", new Object[]{reviewer.getName(),
+            reviewer.getUsername(),
+            reviewer.getPassword(),
+            reviewer.getEmail(),
+            reviewer.getRoleId(),
+            reviewer.getNif(),
+            reviewer.getPhone(),
+            reviewer.getAddress(),
+            reviewer.getGraduation(),
+            reviewer.getSpecialization()}) > 0;
         if (inserted && Main.getLoggedUser() != null) {
             new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
                     new SimpleDateFormat("yyyy-mm-dd").format(new java.util.Date()),
