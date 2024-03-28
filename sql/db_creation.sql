@@ -197,6 +197,7 @@ DROP TABLE IF EXISTS `PA_TP`.`Reviews` ;
 
 CREATE TABLE IF NOT EXISTS `PA_TP`.`Reviews` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `random_code` INT NOT NULL,
   `serial_number` VARCHAR(128) NOT NULL,
   `submission_date` DATE NOT NULL DEFAULT (CURRENT_DATE),
   `approval_date` DATE NULL,

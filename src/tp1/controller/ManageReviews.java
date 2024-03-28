@@ -240,8 +240,9 @@ public boolean insertReview(Long bookId, Long authorId) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
         LocalDateTime now = LocalDateTime.now();
         String serialNumber = (maxId + 1) + formatter.format(now);
+        int random_code = 1 + (int)(Math.random() * 1000000);
 
-        boolean inserted = dbWrapper.manipulate("CALL insert_review(?, ?, ?)", new Object[]{serialNumber, bookId, authorId}) > 0;
+        boolean inserted = dbWrapper.manipulate("CALL insert_review(?, ?, ?, ?)", new Object[]{random_code, serialNumber, bookId, authorId}) > 0;
         
         if (inserted && Main.getLoggedUser() != null) {
             new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),

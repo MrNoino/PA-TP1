@@ -67,10 +67,10 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `PA_TP`.`insert_review`;
 DELIMITER $$
-CREATE PROCEDURE `insert_review`(IN a_serial_number VARCHAR(128), IN a_book_id BIGINT, IN a_author_id BIGINT)
+CREATE PROCEDURE `insert_review`(IN a_random_code INT, IN a_serial_number VARCHAR(128), IN a_book_id BIGINT, IN a_author_id BIGINT)
 BEGIN
-	INSERT INTO reviews (serial_number, book_id, author_id, status)
-    VALUES (a_serial_number, a_book_id, a_author_id, 'iniciada');
+	INSERT INTO reviews (random_code, serial_number, book_id, author_id, status)
+    VALUES (a_random_code, a_serial_number, a_book_id, a_author_id, 'iniciada');
 END$$
 DELIMITER ;
 
