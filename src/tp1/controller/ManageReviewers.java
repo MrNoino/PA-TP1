@@ -15,6 +15,9 @@ public class ManageReviewers {
 
     private ArrayList<Reviewer> reviewers;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageReviewers() {
         reviewers = new ArrayList<Reviewer>();
     }
@@ -27,6 +30,11 @@ public class ManageReviewers {
         return this.reviewers;
     }
     
+    /**
+     * Gets the reviewer from the database with the given id
+     * @param id The reviewer id
+     * @return Reviewer
+     */
     public Reviewer getReviewer(long id){
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
@@ -59,7 +67,7 @@ public class ManageReviewers {
     }
 
     /**
-     * Insert a reviewer in the databsae
+     * Insert a reviewer in the database
      *
      * @param reviewer The reviewer to insert
      * @return Confirms if a reviewer was inserted successfully

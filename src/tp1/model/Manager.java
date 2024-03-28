@@ -6,7 +6,7 @@ package tp1.model;
 public class Manager extends User{
 
     /**
-     * Class constutor that assigns the attributes
+     * Class constructor that assigns the attributes
      * @param aId id of the manager
      * @param aName name of the manager
      * @param aUsername username of the manager
@@ -21,7 +21,7 @@ public class Manager extends User{
     }
     
     /**
-     * Class constutor that assigns the attributes except password
+     * Class constructor that assigns the attributes except password
      * @param aId id of the manager
      * @param aName name of the manager
      * @param aUsername username of the manager

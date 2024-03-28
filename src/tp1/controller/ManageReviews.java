@@ -16,6 +16,9 @@ public class ManageReviews {
 
     private ArrayList<Review> reviews;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageReviews() {
         reviews = new ArrayList<Review>();
     }
@@ -28,6 +31,15 @@ public class ManageReviews {
         return this.reviews;
     }
 
+    /**
+     * Gets the reviews from the database
+     *
+     * @param authorId The author id
+     * @param sortType (can be null) The sort type
+     * @param searchType (can be null) The search type ["submission_date_desc",
+     * "submission_date", "serial_number_desc", "serial_number"]
+     * @param search (can be null) The search text
+     */
     public void listReviews(long authorId, String sortType, String searchType, String search) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
@@ -53,7 +65,7 @@ public class ManageReviews {
                         + "\t\t" + resultSet.getString("title")
                         + "\t\t" + resultSet.getString("status"));
             }
-            
+
             System.out.println();
 
         } catch (SQLException e) {

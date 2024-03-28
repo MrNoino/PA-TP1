@@ -10,12 +10,15 @@ public class ManageNotifications {
 
     private ArrayList<Notification> notifications;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageNotifications() {
         notifications = new ArrayList<Notification>();
     }
 
     /**
-     *
+     * 
      * @return Returns a list of notifications
      */
     public ArrayList<Notification> getNotifications() {

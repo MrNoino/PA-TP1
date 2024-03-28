@@ -10,12 +10,14 @@ public class ManageNotes {
 
     private ArrayList<Note> notes;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageNotes() {
         notes = new ArrayList<Note>();
     }
 
     /**
-     *
      * @return Returns a list of notes
      */
     public ArrayList<Note> getNotes() {

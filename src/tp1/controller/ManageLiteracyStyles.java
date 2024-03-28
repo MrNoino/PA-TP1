@@ -17,13 +17,16 @@ public class ManageLiteracyStyles {
 
     private ArrayList<LiteraryStyle> literacyStyles;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageLiteracyStyles() {
         literacyStyles = new ArrayList<LiteraryStyle>();
     }
 
     /**
-     *
-     * @return Returns a list of literacy styles
+     * Gets the literacy styles from the database
+     * @return A list of literacy styles
      */
     public ArrayList<LiteraryStyle> getLiteracyStyles() {
         DbWrapper dbWrapper = new DbWrapper();

@@ -10,6 +10,9 @@ public class ManageReviewLicenses {
 
     private ArrayList<ReviewLicense> reviewLicenses;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageReviewLicenses() {
         reviewLicenses = new ArrayList<ReviewLicense>();
     }

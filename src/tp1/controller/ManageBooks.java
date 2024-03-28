@@ -18,10 +18,19 @@ public class ManageBooks {
 
     private ArrayList<Book> books;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageBooks() {
         books = new ArrayList<Book>();
     }
 
+    /**
+     * Gets the book from the database with the given id
+     * @param authorId The author id
+     * @param bookId The book id
+     * @return Book
+     */
     public Book getBookById(long authorId, long bookId) {
 
         DbWrapper dbWrapper = new DbWrapper();
@@ -56,8 +65,12 @@ public class ManageBooks {
     }
 
     /**
-     *
-     * @return Returns a list of books
+     * Gets the books from the database
+     * @param authorId The author id
+     * @param orderField The order field ["title", "submission_date"]
+     * @param sortOrder The order for the sorting ["ASC", "DESC"]
+     * @param page The listing page
+     * @return A list of books
      */
     public ArrayList<Book> getBooks(long authorId, String orderField, String sortOrder, int page) {
 
@@ -105,6 +118,12 @@ public class ManageBooks {
         return null;
     }
 
+    /**
+     * Gets the books from the database given the submission date
+     * @param authorId  The author id
+     * @param submissionDate The submission date
+     * @return A list of books
+     */
     public ArrayList<Book> getBooksBySubmissionDate(long authorId, String submissionDate) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
@@ -140,6 +159,12 @@ public class ManageBooks {
         return null;
     }
 
+    /**
+     * Gets the books from the database given the ISBN
+     * @param authorId The author id
+     * @param isbn The book ISBN
+     * @return A list of books
+     */
     public ArrayList<Book> getBooksByIsbn(long authorId, String isbn) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
@@ -175,6 +200,11 @@ public class ManageBooks {
         return null;
     }
 
+    /**
+     * Gets the author books from the database
+     * @param authorId The author id
+     * @return A list of books
+     */
     public ArrayList<Book> getBooksByAuthor(long authorId){
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
@@ -208,7 +238,11 @@ public class ManageBooks {
         return null;
     }
     
-    
+    /** 
+     * Checks if any book in the database has the given title
+     * @param title
+     * @return Confirms if a book exists with the same title
+     */
     public boolean existsTitle(String title) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
@@ -230,6 +264,11 @@ public class ManageBooks {
         return false;
     }
 
+       /**
+        * Checks if any book in the database as the given ISBN
+        * @param isbn The ISBN
+        * @return Confirms if a book exists with the same ISBN
+        */
     public boolean existsIsbn(String isbn) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
@@ -253,7 +292,6 @@ public class ManageBooks {
 
     /**
      * Insert a book in the database
-     *
      * @param book The book to insert in the database
      * @return Confirms if a book was inserted successfully
      */
