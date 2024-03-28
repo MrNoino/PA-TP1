@@ -18,13 +18,16 @@ public class ManageLicenses {
 
     private ArrayList<License> licenses;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageLicenses() {
         licenses = new ArrayList<License>();
     }
 
     /**
-     *
-     * @return Returns a list of licenses
+     * Gets the licenses from the database
+     * @return A list of licenses
      */
     public ArrayList<License> getLicenses() {
         DbWrapper dbWrapper = new DbWrapper();

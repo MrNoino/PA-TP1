@@ -3,7 +3,6 @@ package tp1.controller;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -20,6 +19,9 @@ public class ManageReviews {
 
     private ArrayList<Review> reviews;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageReviews() {
         reviews = new ArrayList<Review>();
     }
@@ -32,6 +34,15 @@ public class ManageReviews {
         return this.reviews;
     }
 
+    /**
+     * Gets the reviews from the database
+     *
+     * @param authorId The author id
+     * @param sortType (can be null) The sort type
+     * @param searchType (can be null) The search type ["submission_date_desc",
+     * "submission_date", "serial_number_desc", "serial_number"]
+     * @param search (can be null) The search text
+     */
     public ArrayList<Review> getReviewsByAuthor(long authorId, String sortType, String searchType, String search) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
@@ -66,7 +77,7 @@ public class ManageReviews {
                         -1,
                         -1,
                         resultSet.getString("status")));
-            }
+            }         
             return this.reviews;
         } catch (SQLException e) {
             e.printStackTrace();

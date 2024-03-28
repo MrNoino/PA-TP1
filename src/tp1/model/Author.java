@@ -11,7 +11,7 @@ public class Author extends User{
     private int literaryStyleId;
 
     /**
-     * Class construtor that assigns the attributes
+     * Class constructor that assigns the attributes
      * @param aId id of the author
      * @param aName name of the author
      * @param aUsername username of the author
@@ -36,7 +36,7 @@ public class Author extends User{
     }
     
     /**
-     * Class construtor that assigns the attributes except password
+     * Class constructor that assigns the attributes except password
      * @param aId id of the author
      * @param aName name of the author
      * @param aUsername username of the author
@@ -54,42 +54,81 @@ public class Author extends User{
         this(aId, aName, aUsername, null, aEmail, aActive, aDeleted, aRoleId, aNif, aPhone, aAddress, aActivityBeginDate, aLiteraryStyleId);
     }
 
+    /**
+     * @return The NIF
+     */
     public String getNif() {
         return nif;
     }
 
+    /**
+     * Sets the the author NIF
+     * @param nif 
+     */
     public void setNif(String nif) {
         this.nif = nif;
     }
 
+    /**
+     * Gets the author phone number
+     * @return The phone number
+     */
     public String getPhone() {
         return phone;
     }
 
+    /**
+     * Sets the phone number
+     * @param phone The phone number
+     */
     public void setPhone(String phone) {
         this.phone = phone;
     }
 
+    /**
+     * Gets the address
+     * @return The address
+     */
     public String getAddress() {
         return address;
     }
 
+    /**
+     * Sets the address
+     * @param address The address
+     */
     public void setAddress(String address) {
         this.address = address;
     }
 
+    /**
+     * Gets the activity begin date
+     * @return The activity begin date
+     */
     public String getActivityBeginDate() {
         return activityBeginDate;
     }
 
+    /**
+     * Sets the activity begin date
+     * @param activityBeginDate The activity begin date
+     */
     public void setActivityBeginDate(String activityBeginDate) {
         this.activityBeginDate = activityBeginDate;
     }
 
+    /**
+     * Gets the literacy style id
+     * @return The literacy style id
+     */
     public int getLiteraryStyleId() {
         return this.literaryStyleId;
     }
 
+    /**
+     * Sets the literacy style id
+     * @param literaryStyleId The literacy style id
+     */
     public void setLiteraryStyleId(int literaryStyleId) {
         this.literaryStyleId = literaryStyleId;
     }

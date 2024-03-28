@@ -49,6 +49,11 @@ public class ManageManagers {
         }
     }
 
+    /**
+     * Gets the manager from the database with the given id
+     * @param id The manager id
+     * @return Manager
+     */
     public Manager getManager(long id) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();

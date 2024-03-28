@@ -14,6 +14,9 @@ public class ManageUsers {
 
     private ArrayList<User> users;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageUsers() {
 
         users = new ArrayList<User>();
@@ -324,6 +327,11 @@ public class ManageUsers {
         return null;
     }
 
+    /**
+     * Deletes a user from the database
+     * @param id The user id
+     * @return Confirms if the user was deleted
+     */
     public boolean deleteUser(long id) {
         DbWrapper dbWrapper = new DbWrapper();
         boolean updated = dbWrapper.manipulate("CALL change_deleted_user(?, ?);", new Object[]{id, true}) > 0;

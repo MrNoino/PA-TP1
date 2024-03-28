@@ -1,6 +1,6 @@
 package tp1.model;
 /**
- *
+ * A class that represents a book
  */
 public class Book {
     private long id;
@@ -16,6 +16,21 @@ public class Book {
     private String publicationType;
     private long authorId;
 
+    /**
+     * Class constructor that assigns the attributes
+     * @param aId the book name
+     * @param aTitle the book title
+     * @param aSubtitle the book subtitle
+     * @param aPages the book page count
+     * @param aWords the book word count
+     * @param aIsbn the book ISBN
+     * @param aEdition the book edition number
+     * @param aSubmissionDate the book submission date
+     * @param aApprovalDate the book approval date
+     * @param aLiteracyStyleId the book literacy style id
+     * @param aPublicationType the book publication type
+     * @param aAuthorId the book author id
+     */
     public Book(long aId, String aTitle, String aSubtitle, int aPages, int aWords, String aIsbn, String aEdition, String aSubmissionDate, String aApprovalDate, int aLiteracyStyleId, String aPublicationType, long aAuthorId) {
         this.id = aId;
         this.title = aTitle;

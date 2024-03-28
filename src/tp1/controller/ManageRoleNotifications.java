@@ -10,6 +10,9 @@ public class ManageRoleNotifications {
 
     private ArrayList<RoleNotification> roleNotifications;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageRoleNotifications() {
         roleNotifications = new ArrayList<RoleNotification>();
     }

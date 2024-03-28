@@ -15,6 +15,9 @@ public class ManageAuthors {
 
     private ArrayList<Author> authors;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageAuthors() {
         authors = new ArrayList<Author>();
     }
@@ -27,6 +30,11 @@ public class ManageAuthors {
         return this.authors;
     }
     
+    /**
+     * Gets the author from the database with the given id
+     * @param id The author id
+     * @return Author
+     */
     public Author getAuthor(long id){
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();

@@ -13,13 +13,17 @@ public class ManageLogs {
 
     private ArrayList<Log> logs;
 
+    /**
+     * Class constructor initializing the ArrayList
+     */
     public ManageLogs() {
         logs = new ArrayList<Log>();
     }
 
     /**
-     *
-     * @return Returns a list of logs
+     * Gets the logs from the database
+     * @param page The list page
+     * @return A list of logs
      */
     public ArrayList<Log> getLogs(int page) {
 
@@ -46,9 +50,9 @@ public class ManageLogs {
     }
 
     /**
-     *
+     * Gets the user logs from the database given the id
      * @param userId id of the user
-     * @return Returns a list of logs
+     * @return A list of logs
      */
     public ArrayList<Log> getLogsByUser(long userId) {
 
