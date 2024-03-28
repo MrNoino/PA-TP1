@@ -358,7 +358,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `PA_TP`.`get_reviews_by_author`;
 DELIMITER $$
-CREATE PROCEDURE `get_reviews_by_author`()
+CREATE PROCEDURE `get_reviews_by_author`(IN a_author_id BIGINT, IN sort_type VARCHAR(64), IN page INT)
 BEGIN
 	DECLARE page_start INT;
 	DECLARE page_end INT;
@@ -367,7 +367,7 @@ BEGIN
     
 	SELECT reviews.submission_date, reviews.serial_number, books.title, reviews.status
 	FROM reviews
-	LEFT JOIN books 
+	INNER JOIN books 
 	ON reviews.book_id = books.id
 	ORDER BY
 		CASE WHEN sort_type = 'submission_date' THEN reviews.submission_date END ASC,
@@ -380,11 +380,11 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `PA_TP`.`search_author_reviews_by_date`;
 DELIMITER $$
-CREATE PROCEDURE `search_author_reviews_by_date`()
+CREATE PROCEDURE `search_author_reviews_by_date`(IN a_author_id BIGINT, IN search varchar(16))
 BEGIN
 	SELECT reviews.submission_date, reviews.serial_number, books.title, reviews.status
 	FROM reviews
-	LEFT JOIN books 
+	INNER JOIN books 
 	ON reviews.book_id = books.id
     WHERE date_format(reviews.submission_date, '%d-%m-%Y') LIKE search;
 END$$
@@ -392,11 +392,11 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `PA_TP`.`search_author_reviews_by_title`;
 DELIMITER $$
-CREATE PROCEDURE `search_author_reviews_by_title`()
+CREATE PROCEDURE `search_author_reviews_by_title`(IN a_author_id BIGINT, IN search VARCHAR(256))
 BEGIN
 	SELECT reviews.submission_date, reviews.serial_number, books.title, reviews.status
 	FROM reviews
-	LEFT JOIN books 
+	INNER JOIN books 
 	ON reviews.book_id = books.id
     WHERE books.title LIKE CONCAT('%', search, '%');
 END$$
@@ -404,11 +404,11 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `PA_TP`.`search_author_reviews_by_status`;
 DELIMITER $$
-CREATE PROCEDURE `search_author_reviews_by_status`()
+CREATE PROCEDURE `search_author_reviews_by_status`(IN a_author_id BIGINT, IN search VARCHAR(256))
 BEGIN
 	SELECT reviews.submission_date, reviews.serial_number, books.title, reviews.status
 	FROM reviews
-	LEFT JOIN books 
+	INNER JOIN books 
 	ON reviews.book_id = books.id
     WHERE reviews.status LIKE CONCAT('%', search, '%');
 END$$
