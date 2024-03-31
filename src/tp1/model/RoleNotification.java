@@ -1,7 +1,5 @@
 package tp1.model;
 
-import java.time.LocalDate;
-
 /**
  *
  */
@@ -10,7 +8,7 @@ public class RoleNotification {
     private long id;
     private boolean read;
     private String content;
-    private LocalDate datetime;
+    private String datetime;
     private int roleId;
 
     /**
@@ -22,7 +20,7 @@ public class RoleNotification {
      * @param aDatetime the role notification date
      * @param aRoleId the role notification role id
      */
-    public RoleNotification(long aId, boolean aRead, String aContent, LocalDate aDatetime, int aRoleId) {
+    public RoleNotification(long aId, boolean aRead, String aContent, String aDatetime, int aRoleId) {
         this.id = aId;
         this.read = aRead;
         this.content = aContent;
@@ -89,7 +87,7 @@ public class RoleNotification {
      *
      * @return the role notification date
      */
-    public LocalDate getDatetime() {
+    public String getDatetime() {
         return datetime;
     }
 
@@ -98,7 +96,7 @@ public class RoleNotification {
      *
      * @param datetime the role notification date
      */
-    public void setDatetime(LocalDate datetime) {
+    public void setDatetime(String datetime) {
         this.datetime = datetime;
     }
 

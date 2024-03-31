@@ -1,7 +1,5 @@
 package tp1.model;
 
-import java.time.LocalDate;
-
 /**
  * A class that represents a note
  */
@@ -10,7 +8,7 @@ public class Note {
     private String description;
     private int page;
     private int paragraph;
-    private LocalDate date;
+    private String date;
     private long reviewId;
 
     /**
@@ -22,7 +20,7 @@ public class Note {
      * @param aDate the note date
      * @param aReviewId the note review id
      */
-    public Note(long aId, String aDescription, int aPage, int aParagraph, LocalDate aDate, long aReviewId) {
+    public Note(long aId, String aDescription, int aPage, int aParagraph, String aDate, long aReviewId) {
         this.id = aId;
         this.description = aDescription;
         this.page = aPage;
@@ -99,7 +97,7 @@ public class Note {
      * Get the note local date
      * @return the note local date
      */
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -107,7 +105,7 @@ public class Note {
      * Sets the note date
      * @param date the note date
      */
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

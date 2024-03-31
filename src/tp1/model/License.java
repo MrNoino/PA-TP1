@@ -1,7 +1,5 @@
 package tp1.model;
 
-import java.time.LocalDate;
-
 /**
  * A class that represents a License 
  */

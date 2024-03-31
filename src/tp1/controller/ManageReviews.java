@@ -27,14 +27,6 @@ public class ManageReviews {
     }
 
     /**
-     *
-     * @return Returns a list of reviews
-     */
-    public ArrayList<Review> getReviews() {
-        return this.reviews;
-    }
-
-    /**
      * Gets the reviewsof the author from the database
      *
      * @param authorId the author id
@@ -57,6 +49,7 @@ public class ManageReviews {
 
             while (resultSet.next()) {
                 this.reviews.add(new Review(-1,
+                        -1,
                         resultSet.getString("serial_number"),
                         resultSet.getString("submission_date"),
                         null,
@@ -101,6 +94,7 @@ public class ManageReviews {
 
             while (resultSet.next()) {
                 this.reviews.add(new Review(-1,
+                        -1,
                         resultSet.getString("serial_number"),
                         resultSet.getString("submission_date"),
                         null,
@@ -145,6 +139,7 @@ public class ManageReviews {
 
             while (resultSet.next()) {
                 this.reviews.add(new Review(-1,
+                        -1,
                         resultSet.getString("serial_number"),
                         resultSet.getString("submission_date"),
                         null,
@@ -189,6 +184,7 @@ public class ManageReviews {
 
             while (resultSet.next()) {
                 this.reviews.add(new Review(-1,
+                        -1,
                         resultSet.getString("serial_number"),
                         resultSet.getString("submission_date"),
                         null,
@@ -210,14 +206,14 @@ public class ManageReviews {
         return null;
     }
     
-/**
- * Inserts a review in the database
- *
- * @param bookId book id associated to the review
- * @param authorId author id associated to the review
- * @return Confirms if a review was inserted successfully
- */
-public boolean insertReview(Long bookId, Long authorId) {
+    /**
+     * Inserts a review in the database
+     *
+     * @param bookId book id associated to the review
+     * @param authorId author id associated to the review
+     * @return Confirms if a review was inserted successfully
+     */
+    public boolean insertReview(Long bookId, Long authorId) {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
 
@@ -251,25 +247,5 @@ public boolean insertReview(Long bookId, Long authorId) {
         }
         
         return inserted;
-    }
-
-    /**
-     * Updates a review
-     *
-     * @param review The review to be updated
-     * @return Confirms if a review was updated successfully
-     */
-    public boolean updateReview(Review review) {
-        return true;
-    }
-
-    /**
-     * Deletes a review
-     *
-     * @param review The review to be deleted
-     * @return Confirms if a review was deleted successfully
-     */
-    public boolean deleteReview(Review review) {
-        return true;
     }
 }

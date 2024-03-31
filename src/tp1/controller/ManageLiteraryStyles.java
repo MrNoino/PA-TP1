@@ -5,30 +5,28 @@ import tp1.model.DbWrapper;
 import tp1.model.LiteraryStyle;
 import java.sql.*;
 import java.text.SimpleDateFormat;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import tp1.model.Log;
 import tp1.view.Main;
 
 /**
- * A class to manage literacy styles on the database
+ * A class to manage literary styles on the database
  */
-public class ManageLiteracyStyles {
+public class ManageLiteraryStyles {
 
     private ArrayList<LiteraryStyle> literacyStyles;
 
     /**
      * Class constructor initializing the ArrayList
      */
-    public ManageLiteracyStyles() {
+    public ManageLiteraryStyles() {
         literacyStyles = new ArrayList<LiteraryStyle>();
     }
 
     /**
-     * Gets the literacy styles from the database
+     * Gets the literary styles from the database
      * @return A list of literacy styles
      */
-    public ArrayList<LiteraryStyle> getLiteracyStyles() {
+    public ArrayList<LiteraryStyle> getLiteraryStyles() {
         DbWrapper dbWrapper = new DbWrapper();
         dbWrapper.connect();
         ResultSet resultSet = dbWrapper.query("SELECT * FROM get_literary_styles;");

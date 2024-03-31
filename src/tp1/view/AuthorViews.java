@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import tp1.controller.ManageAuthors;
 import tp1.controller.ManageBooks;
-import tp1.controller.ManageLiteracyStyles;
+import tp1.controller.ManageLiteraryStyles;
 import tp1.controller.ManageReviews;
 import tp1.controller.ManageUsers;
 import tp1.model.Author;
@@ -62,7 +62,7 @@ public class AuthorViews {
             ManageBooks manageBooks = new ManageBooks();
             String title, subtitle, isbn, edition, msg, publicationType;
             int pages, words, literaryStyleId;
-            ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
+            ManageLiteraryStyles manageLiteracyStyles = new ManageLiteraryStyles();
             ArrayList<LiteraryStyle> literaryStyles;
             switch (option) {
                 case 1:
@@ -87,7 +87,7 @@ public class AuthorViews {
 
                     edition = InputReader.readString("Edição: ");
 
-                    literaryStyles = manageLiteracyStyles.getLiteracyStyles();
+                    literaryStyles = manageLiteracyStyles.getLiteraryStyles();
                     if (literaryStyles == null) {
                         System.out.println("\nEstilos literários inixestentes\n");
                         return;
@@ -137,7 +137,7 @@ public class AuthorViews {
 
                     edition = InputReader.readString("Edição: ");
 
-                    literaryStyles = manageLiteracyStyles.getLiteracyStyles();
+                    literaryStyles = manageLiteracyStyles.getLiteraryStyles();
                     if (literaryStyles == null) {
                         System.out.println("\nEstilos literários inixestentes\n");
                         return;
@@ -238,7 +238,7 @@ public class AuthorViews {
                             + book.getEdition() + " | "
                             + book.getSubmissionDate() + " | "
                             + book.getApprovalDate() + " | "
-                            + book.getLiteracyStyleId() + " | "
+                            + book.getLiteraryStyleId() + " | "
                             + book.getPublicationType() + " | "
                             + book.getAuthorId() + " | ");
                 }
@@ -270,7 +270,7 @@ public class AuthorViews {
                             + book.getEdition() + " | "
                             + book.getSubmissionDate() + " | "
                             + book.getApprovalDate() + " | "
-                            + book.getLiteracyStyleId() + " | "
+                            + book.getLiteraryStyleId() + " | "
                             + book.getPublicationType() + " | "
                             + book.getAuthorId() + " | ");
                 }
@@ -526,8 +526,8 @@ public class AuthorViews {
         String phone = InputReader.readString("Telemóvel: ", "\nTelemóvel inválido, tente novamente\n", "[239]\\d{8}"),
                 address = InputReader.readString("Morada: ");
 
-        ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
-        ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteracyStyles();
+        ManageLiteraryStyles manageLiteracyStyles = new ManageLiteraryStyles();
+        ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteraryStyles();
         if (literaryStyles == null) {
             System.out.println("\nEstilos literários inixestentes.\n");
             return;

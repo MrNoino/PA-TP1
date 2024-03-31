@@ -12,7 +12,7 @@ public class Book {
     private String edition;
     private String submissionDate;
     private String approvalDate;
-    private int literacyStyleId;
+    private int literaryStyleId;
     private String publicationType;
     private long authorId;
 
@@ -31,7 +31,7 @@ public class Book {
      * @param aPublicationType the book publication type
      * @param aAuthorId the book author id
      */
-    public Book(long aId, String aTitle, String aSubtitle, int aPages, int aWords, String aIsbn, String aEdition, String aSubmissionDate, String aApprovalDate, int aLiteracyStyleId, String aPublicationType, long aAuthorId) {
+    public Book(long aId, String aTitle, String aSubtitle, int aPages, int aWords, String aIsbn, String aEdition, String aSubmissionDate, String aApprovalDate, int aLiteraryStyleId, String aPublicationType, long aAuthorId) {
         this.id = aId;
         this.title = aTitle;
         this.subtitle = aSubtitle;
@@ -41,7 +41,7 @@ public class Book {
         this.edition = aEdition;
         this.submissionDate = aSubmissionDate;
         this.approvalDate = aApprovalDate;
-        this.literacyStyleId = aLiteracyStyleId;
+        this.literaryStyleId = aLiteraryStyleId;
         this.publicationType = aPublicationType;
         this.authorId = aAuthorId;
     }
@@ -86,8 +86,8 @@ public class Book {
         return approvalDate;
     }
 
-    public int getLiteracyStyleId() {
-        return literacyStyleId;
+    public int getLiteraryStyleId() {
+        return literaryStyleId;
     }
 
     public String getPublicationType() {
@@ -97,7 +97,53 @@ public class Book {
     public long getAuthorId() {
         return authorId;
     }
-    
-    
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public void setSubtitle(String subtitle) {
+        this.subtitle = subtitle;
+    }
+
+    public void setPages(int pages) {
+        this.pages = pages;
+    }
+
+    public void setWords(int words) {
+        this.words = words;
+    }
+
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
+
+    public void setEdition(String edition) {
+        this.edition = edition;
+    }
+
+    public void setSubmissionDate(String submissionDate) {
+        this.submissionDate = submissionDate;
+    }
+
+    public void setApprovalDate(String approvalDate) {
+        this.approvalDate = approvalDate;
+    }
+
+    public void setLiteraryStyleId(int literaryStyleId) {
+        this.literaryStyleId = literaryStyleId;
+    }
+
+    public void setPublicationType(String publicationType) {
+        this.publicationType = publicationType;
+    }
+
+    public void setAuthorId(long authorId) {
+        this.authorId = authorId;
+    }
     
 }

@@ -1,7 +1,5 @@
 package tp1.model;
 
-import java.io.Serializable;
-
 /**
  * A class that represents an User
  */

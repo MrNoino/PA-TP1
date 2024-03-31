@@ -21,14 +21,6 @@ public class ManageAuthors {
     public ManageAuthors() {
         authors = new ArrayList<Author>();
     }
-
-    /**
-     *
-     * @return Returns a list of authors
-     */
-    public ArrayList<Author> getAuthors() {
-        return this.authors;
-    }
     
     /**
      * Gets the author from the database with the given id

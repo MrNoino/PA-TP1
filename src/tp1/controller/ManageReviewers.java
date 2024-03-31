@@ -21,14 +21,6 @@ public class ManageReviewers {
     public ManageReviewers() {
         reviewers = new ArrayList<Reviewer>();
     }
-
-    /**
-     *
-     * @return Returns a list of reviewers
-     */
-    public ArrayList<Reviewer> getReviewers() {
-        return this.reviewers;
-    }
     
     /**
      * Gets the reviewer from the database with the given id

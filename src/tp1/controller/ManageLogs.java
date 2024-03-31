@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import tp1.model.Log;
 import tp1.model.DbWrapper;
 import java.sql.*;
-import tp1.model.User;
 
 /**
  * A class to manage logs on the database

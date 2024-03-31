@@ -18,9 +18,7 @@ public class ManageUsers {
      * Class constructor initializing the ArrayList
      */
     public ManageUsers() {
-
         users = new ArrayList<User>();
-
     }
 
     /**

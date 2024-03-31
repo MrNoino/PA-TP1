@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import tp1.controller.ManageAuthors;
 import tp1.controller.ManageLicenses;
-import tp1.controller.ManageLiteracyStyles;
+import tp1.controller.ManageLiteraryStyles;
 import tp1.controller.ManageLogs;
 import tp1.controller.ManageManagers;
 import tp1.controller.ManageReviewers;
@@ -261,8 +261,8 @@ public class ManagerViews {
                 
                 switch (option) {
                     case 1:
-                        ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
-                        ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteracyStyles();
+                        ManageLiteraryStyles manageLiteracyStyles = new ManageLiteraryStyles();
+                        ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteraryStyles();
                         if (literaryStyles == null) {
                             System.out.println("\nEstilos literários inixestentes\n");
                             return;
@@ -434,8 +434,8 @@ public class ManagerViews {
                             }
                             phone = InputReader.readString("Telemóvel: ", "\nTelemóvel inválido, tente novamente\n", "[239]\\d{8}");
                             address = InputReader.readString("Morada: ");
-                            ManageLiteracyStyles manageLiteracyStyles = new ManageLiteracyStyles();
-                            ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteracyStyles();
+                            ManageLiteraryStyles manageLiteracyStyles = new ManageLiteraryStyles();
+                            ArrayList<LiteraryStyle> literaryStyles = manageLiteracyStyles.getLiteraryStyles();
                             if (literaryStyles == null) {
                                 System.out.println("\nEstilos literários inixestentes.\n");
                                 break;

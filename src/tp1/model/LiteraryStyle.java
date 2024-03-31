@@ -48,5 +48,4 @@ public class LiteraryStyle {
     public void setLiteraryStyle(String literaryStyle) {
         this.literaryStyle = literaryStyle;
     }
-    
 }

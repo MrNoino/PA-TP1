@@ -8,7 +8,6 @@ import java.util.Date;
 import tp1.model.Book;
 import tp1.model.DbWrapper;
 import tp1.model.Log;
-import tp1.model.User;
 import tp1.view.Main;
 
 /**
@@ -303,7 +302,7 @@ public class ManageBooks {
             book.getWords(),
             book.getIsbn(),
             book.getEdition(),
-            book.getLiteracyStyleId(),
+            book.getLiteraryStyleId(),
             book.getPublicationType(),
             book.getAuthorId()}) > 0;
 
@@ -330,7 +329,7 @@ public class ManageBooks {
             book.getWords(),
             book.getIsbn(),
             book.getEdition(),
-            book.getLiteracyStyleId(),
+            book.getLiteraryStyleId(),
             book.getPublicationType(),
             book.getAuthorId()}) > 0;
         
