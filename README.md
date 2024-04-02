@@ -2,7 +2,8 @@
 
 ## Prerequisites
 
-* MySQL Server 8.
+* MySQL Server 8;
+* JDK > 8.
 
 ## Setup
 
@@ -16,7 +17,8 @@
 
 ## Pré Requisitos
 
-* Servidor MySQL 8.
+* Servidor MySQL 8;
+* JDK > 8.
 
 ## Setup
 

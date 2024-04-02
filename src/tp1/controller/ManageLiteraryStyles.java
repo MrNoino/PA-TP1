@@ -42,7 +42,7 @@ public class ManageLiteraryStyles {
                 this.literacyStyles.add(new LiteraryStyle(resultSet.getInt("id"), resultSet.getString("literary_style")));
             
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter os estilos literários\n");
             return null;
         }finally{
             dbWrapper.disconnect();

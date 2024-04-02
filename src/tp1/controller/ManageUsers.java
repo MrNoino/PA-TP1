@@ -24,6 +24,8 @@ public class ManageUsers {
     /**
      * Checks if the login credentials are correct
      *
+     * @param username username of the user
+     * @param password password of the user
      * @return The id of the user
      */
     public User login(String username, String password) {
@@ -46,7 +48,7 @@ public class ManageUsers {
                     resultSet.getInt("role_id"));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao iniciar sessão\n");
             return null;
         } finally {
             dbWrapper.disconnect();
@@ -73,7 +75,7 @@ public class ManageUsers {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao verificar o nome de utilizador\n");
         } finally {
             dbWrapper.disconnect();
         }
@@ -100,7 +102,7 @@ public class ManageUsers {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao verificar o email\n");
         } finally {
             dbWrapper.disconnect();
         }
@@ -127,7 +129,7 @@ public class ManageUsers {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao verificar o NIF\n");
         } finally {
             dbWrapper.disconnect();
         }
@@ -156,7 +158,7 @@ public class ManageUsers {
             return new User(resultSet.getLong("id"), resultSet.getString("name"), resultSet.getString("username"), resultSet.getString("email"), resultSet.getBoolean("active"), resultSet.getBoolean("deleted"), resultSet.getInt("role_id"));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter o utilizador\n");
         }
         return null;
     }
@@ -211,7 +213,7 @@ public class ManageUsers {
             return this.users;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter os utilizadores\n");
         }
         return null;
 
@@ -248,7 +250,7 @@ public class ManageUsers {
             return this.users;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter os utilizadores\n");
         }
         return null;
     }
@@ -284,7 +286,7 @@ public class ManageUsers {
             return this.users;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter os utilizadores\n");
         }
         return null;
     }
@@ -320,7 +322,7 @@ public class ManageUsers {
             return this.users;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter os utilizadores\n");
         }
         return null;
     }

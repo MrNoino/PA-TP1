@@ -42,7 +42,7 @@ public class ManageLogs {
             }
             return this.logs;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter os logs\n");
         }
 
         return null;
@@ -71,7 +71,7 @@ public class ManageLogs {
             }
             return this.logs;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter os logs\n");
         }
 
         return null;

@@ -55,6 +55,7 @@ public class Author extends User{
     }
 
     /**
+     * Gets the NIF
      * @return The NIF
      */
     public String getNif() {
@@ -63,7 +64,7 @@ public class Author extends User{
 
     /**
      * Sets the the author NIF
-     * @param nif 
+     * @param nif the nif of the author
      */
     public void setNif(String nif) {
         this.nif = nif;

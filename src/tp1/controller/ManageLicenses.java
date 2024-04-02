@@ -50,7 +50,7 @@ public class ManageLicenses {
             return this.licenses;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter as licensas");
         }
         return null;
     }

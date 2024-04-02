@@ -54,7 +54,7 @@ public class ManageAuthors {
                     resultSet.getInt("literary_style_id"));
             
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter o autor\n");
         }
         return null;
     }

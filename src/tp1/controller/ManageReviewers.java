@@ -54,7 +54,7 @@ public class ManageReviewers {
                     resultSet.getString("specialization"));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter o revisor\n");
         }
         return null;
     }

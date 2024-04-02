@@ -331,6 +331,7 @@ public class AuthorViews {
                     message += "\nEscolha: ";
 
                     Long bookId = books.get(InputReader.readInt(message, 1, books.size()) - 1).getId();
+                    System.out.println();
 
                     ManageReviews manageReviews = new ManageReviews();
                     boolean success = manageReviews.insertReview(bookId, Main.getLoggedUser().getId());
@@ -487,7 +488,8 @@ public class AuthorViews {
                     this.showUpdateProfileMenu();
                     break;
                 case 2:
-                    this.showDeleteProfileMenu();
+                    //this.showDeleteProfileMenu();
+                    System.out.println("Funcionalidade não implementada\n");
                     break;
                 case 0:
                     break;

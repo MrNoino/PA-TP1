@@ -107,7 +107,7 @@ public class User {
     /**
      * Sets the user username
      *
-     * @param username
+     * @param username username of the user
      */
     public void setUsername(String username) {
         this.username = username;

@@ -25,9 +25,9 @@ public class Log {
     
     /**
      * Class constructor that assigns the attributes besides the id
-     * @param aUserId
-     * @param aDatetime
-     * @param aAction 
+     * @param aUserId the log user id
+     * @param aDatetime the log date
+     * @param aAction the log action
      */
     public Log(long aUserId, String aDatetime, String aAction) {
         this.id = -1;

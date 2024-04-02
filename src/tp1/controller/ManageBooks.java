@@ -58,7 +58,7 @@ public class ManageBooks {
                     resultSet.getInt("author_id"));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter o livro\n");
         }
         return null;
     }
@@ -112,7 +112,7 @@ public class ManageBooks {
             return this.books;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter as obras\n");
         }
         return null;
     }
@@ -153,7 +153,7 @@ public class ManageBooks {
             return this.books;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter as obras");
         }
         return null;
     }
@@ -194,7 +194,7 @@ public class ManageBooks {
             return this.books;
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter as obras\n");
         }
         return null;
     }
@@ -231,7 +231,7 @@ public class ManageBooks {
             }
             return this.books;
         }catch(SQLException e){
-            e.printStackTrace();
+            System.out.println("\nErro ao obter as obras\n");
         }
         
         return null;
@@ -239,7 +239,7 @@ public class ManageBooks {
     
     /** 
      * Checks if any book in the database has the given title
-     * @param title
+     * @param title title to search
      * @return Confirms if a book exists with the same title
      */
     public boolean existsTitle(String title) {
@@ -256,7 +256,7 @@ public class ManageBooks {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao verificar o título\n");
         } finally {
             dbWrapper.disconnect();
         }
@@ -282,7 +282,7 @@ public class ManageBooks {
                 return true;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao verificar o ISBN\n");
         } finally {
             dbWrapper.disconnect();
         }

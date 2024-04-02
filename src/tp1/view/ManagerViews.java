@@ -521,7 +521,7 @@ public class ManagerViews {
     }
     
     private void showReviewRequestsMenu() {
-        
+        System.out.println("Funcionalidade não implementada\n");
     }
     
     private void showListReviewsMenu() {
@@ -698,7 +698,8 @@ public class ManagerViews {
                     this.showUpdateProfileMenu();
                     break;
                 case 2:
-                    this.showDeleteProfileMenu();
+                    System.out.println("Funcionalidade não implementada\n");                    
+                    //this.showDeleteProfileMenu();
                     break;
                 case 0:
                     break;

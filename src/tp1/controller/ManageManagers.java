@@ -42,7 +42,7 @@ public class ManageManagers {
 
             return resultSet.getInt("total_managers");
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter o número total de gestores\n");
             return -1;
         } finally {
             dbWrapper.disconnect();
@@ -78,7 +78,7 @@ public class ManageManagers {
                     resultSet.getInt("role_id"));
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter o gestor\n");
         }
         return null;
     }

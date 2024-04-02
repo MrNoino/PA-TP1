@@ -31,6 +31,8 @@ public class ManageReviews {
      *
      * @param authorId the author id
      * @param sortType the field and sort order
+     * @param page page of the query
+     * @return the list of reviews
      */
     public ArrayList<Review> getReviewsByAuthor(long authorId, String sortType, int page) {
         DbWrapper dbWrapper = new DbWrapper();
@@ -64,7 +66,7 @@ public class ManageReviews {
             }         
             return this.reviews;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter as revisões\n");
         } finally {
             dbWrapper.disconnect();
         }
@@ -109,7 +111,7 @@ public class ManageReviews {
             }         
             return this.reviews;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter as revisões\n");
         } finally {
             dbWrapper.disconnect();
         }
@@ -154,7 +156,7 @@ public class ManageReviews {
             }         
             return this.reviews;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter as revisões\n");
         } finally {
             dbWrapper.disconnect();
         }
@@ -199,7 +201,7 @@ public class ManageReviews {
             }         
             return this.reviews;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter as revisões\n");
         } finally {
             dbWrapper.disconnect();
         }
@@ -230,7 +232,9 @@ public class ManageReviews {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao obter o id mais alto\n");
+            dbWrapper.disconnect();
+            return false;
         }
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");

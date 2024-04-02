@@ -1,11 +1,7 @@
 package tp1.view;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import tp1.controller.ManageLogs;
 import tp1.controller.ManageReviewers;
 import tp1.controller.ManageUsers;
-import tp1.model.Log;
 import tp1.model.Reviewer;
 
 public class ReviewerViews {
@@ -24,27 +20,26 @@ public class ReviewerViews {
 
             switch (option) {
                 case 1:
-                    showReviewRequestsMenu("submission_date");
+                    System.out.println("Funcionalidade não implementada\n");
+                    //showReviewRequestsMenu();
                     break;
                 case 2:
+                    System.out.println("Funcionalidade não implementada\n");
                     break;
                 case 3:
                     showProfileMenu();
                     break;
                 case 0:
-                    new ManageLogs().insertLog(new Log(Main.getLoggedUser().getId(),
-                            new SimpleDateFormat("yyyy-mm-dd").format(new Date()),
-                            Main.getLoggedUser().getUsername() + " terminou sessão"));
                     break;
                 default:
-                    throw new AssertionError();
+                    System.out.println("\nOpção inválida, tente novamente\n");
             }
         } while (option != 0);
 
         Main.logout();
     }
 
-    private void showReviewRequestsMenu(String sortType) {
+    private void showReviewRequestsMenu() {
 
         String menu = "**** LISTAR PEDIDOS DE REVISÃO ****\n"
                 + "1. Listar Por Data De Criação (Recente)\n"
@@ -58,10 +53,9 @@ public class ReviewerViews {
                 + "\n\nEscolha: ";
 
         int input = InputReader.readInt(menu, 0, 7);
+        System.out.println();
 
         switch (input) {
-            case 0:
-                break;
             case 1:
                 break;
             case 2:
@@ -76,8 +70,10 @@ public class ReviewerViews {
                 break;
             case 7:
                 break;
+            case 0: 
+                break;
             default:
-                throw new AssertionError();
+                System.out.println("\nOpção inválida, tente novamente\n");
         }
     }
 
@@ -96,7 +92,8 @@ public class ReviewerViews {
                     this.showUpdateProfileMenu();
                     break;
                 case 2:
-                    this.showDeleteProfileMenu();
+                    System.out.println("Funcionalidade não implementada\n");
+                    //this.showDeleteProfileMenu();
                     break;
                 case 0:
                     break;

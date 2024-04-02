@@ -1,7 +1,7 @@
 package tp1.model;
 
 /**
- *
+ * A class that representes a role notification
  */
 public class RoleNotification {
 

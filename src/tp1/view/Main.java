@@ -40,20 +40,20 @@ public class Main {
             try {
                 reader = new FileReader(file);
             } catch (FileNotFoundException e) {
-                e.printStackTrace();
+                System.out.println("\nFicheiro não encontrado\n");
             }
             BufferedReader input = new BufferedReader( reader );
             try { 
                 input.readLine();
                 executionQuantity = Long.parseLong(input.readLine());
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("\nErro ao ler os valores da data de última execução e número de execuções\n");
             } finally{
                 try {
                     input.close();
                     reader.close();
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("\nErro ao fechar a stream de entrada\n");
                 }
             }
         }
@@ -62,19 +62,19 @@ public class Main {
         try {
             writer = new FileWriter( file );
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao criar a stream de saída\n");
         }
         BufferedWriter output = new BufferedWriter( writer );
         try {
             output.write(new SimpleDateFormat("dd-MM-yyyy").format(new Date()) + "\n" + (executionQuantity+1));
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("\nErro ao gravar o ficheiro com data da última execução e número de execuções\n");
         } finally{
             try {
                 output.close();
                 writer.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("\nErro ao fehcar a stream de saída\n");
             }
         }
 

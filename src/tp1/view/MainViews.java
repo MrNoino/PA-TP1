@@ -41,7 +41,7 @@ public class MainViews {
                         }
                     }
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    System.out.println("\nErro ao verificar o nome de utilizador\n");
                     insertedManager = false;
                     continue;
                 } finally {
@@ -58,7 +58,7 @@ public class MainViews {
                         }
                     }
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    System.out.println("\nErro ao verificar o email\n");
                     insertedManager = false;
                     continue;
                 } finally {
