@@ -9,3 +9,4 @@ nbdist/
 .nb-gradle/
 system_execution.txt
 db_properties.txt
+dist/
