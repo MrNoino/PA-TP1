@@ -1,5 +1,7 @@
 # PA - PW 1 (EN)
 
+This is the pratical work nº1 at the subject Applied Programming. The theme for this project in general is to develop a Desktop Platform for a Publisher. In this case at the TW 1 the main goal is to create a command line program to help a Publisher to process books. 
+
 ## Prerequisites
 
 * MySQL Server 8;
@@ -15,6 +17,7 @@
 
 # PA - TP 1 (PT)
 
+Este é o trabalho prático nº1 na cadeira de Programação Aplicada. O tema do projeto em geral é desenvolver uma Plataforma Desktop para uma Editora. No caso do TP 1 o objetivo é criar um programa em linha de comandos para ajudar uma Editora a processar obras.
 ## Pré Requisitos
 
 * Servidor MySQL 8;
